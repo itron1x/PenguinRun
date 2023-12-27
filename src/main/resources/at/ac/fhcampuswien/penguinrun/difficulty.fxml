@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="at.ac.fhcampuswien.penguinrun.Difficulty"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.penguinrun.Difficulty">
+   <children>
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@/img/bgMenu.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="backBtn" layoutX="502.0" layoutY="448.0" mnemonicParsing="false" onAction="#onBack" prefHeight="43.0" prefWidth="138.0" text="Back" />
+      <Button layoutX="502.0" layoutY="149.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="132.0" text="Einfach" />
+      <Button layoutX="502.0" layoutY="203.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="132.0" text="Mittel" />
+      <Button layoutX="502.0" layoutY="256.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="132.0" text="Button" />
+   </children>
+</Pane>

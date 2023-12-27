@@ -1,0 +1,11 @@
+#startBtn{
+    -fx-background-image: url("/img/btnStartUnsel.png");
+    -fx-background-size: 105%;
+    -fx-background-position: center;
+}
+
+#startBtn:hover{
+    -fx-background-image: url("/img/btnStartSel.png");
+    -fx-background-size: 105%;
+    -fx-background-position: center;
+}
