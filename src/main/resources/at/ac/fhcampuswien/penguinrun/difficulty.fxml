@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -11,9 +12,21 @@
             <Image url="@/img/bgMenu.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="backBtn" layoutX="502.0" layoutY="448.0" mnemonicParsing="false" onAction="#onBack" prefHeight="43.0" prefWidth="138.0" text="Back" />
-      <Button layoutX="502.0" layoutY="149.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="132.0" text="Einfach" />
-      <Button layoutX="502.0" layoutY="203.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="132.0" text="Mittel" />
-      <Button layoutX="502.0" layoutY="256.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="132.0" text="Button" />
+      <Button id="backBtn" fx:id="backBtn" cancelButton="true" layoutX="50.0" layoutY="32.0" mnemonicParsing="false" onAction="#onBack" prefHeight="32.0" prefWidth="121.0" text="&lt; BACK">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button id="einfachBtn" fx:id="einfachBtn" defaultButton="true" layoutX="496.0" layoutY="219.0" mnemonicParsing="false" onAction="#setEasy" prefHeight="61.0" prefWidth="251.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button id="mittelBtn" fx:id="mittelBtn" layoutX="496.0" layoutY="299.0" mnemonicParsing="false" onAction="#setMiddle" prefHeight="65.0" prefWidth="251.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button id="schwerBtn" fx:id="schwerBtn" layoutX="496.0" layoutY="383.0" mnemonicParsing="false" onAction="#setHard" prefHeight="65.0" prefWidth="251.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </Pane>
