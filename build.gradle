@@ -26,7 +26,7 @@ tasks.withType(JavaCompile) {
 
 application {
   mainModule = 'at.ac.fhcampuswien.penguinrun'
-  mainClass = 'at.ac.fhcampuswien.penguinrun.HelloApplication'
+  mainClass = 'at.ac.fhcampuswien.penguinrun.Main'
 }
 
 javafx {
