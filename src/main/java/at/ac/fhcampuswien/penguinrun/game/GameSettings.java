@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.penguinrun;
+package at.ac.fhcampuswien.penguinrun.game;
 
 public class GameSettings {
     public static final int scale = 4;

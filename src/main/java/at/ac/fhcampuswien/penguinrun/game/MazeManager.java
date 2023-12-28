@@ -1,5 +1,6 @@
-package at.ac.fhcampuswien.penguinrun;
+package at.ac.fhcampuswien.penguinrun.game;
 
+import at.ac.fhcampuswien.penguinrun.game.GameSettings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 

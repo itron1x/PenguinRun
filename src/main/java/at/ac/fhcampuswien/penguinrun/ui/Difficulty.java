@@ -1,5 +1,7 @@
-package at.ac.fhcampuswien.penguinrun;
+package at.ac.fhcampuswien.penguinrun.ui;
 
+import at.ac.fhcampuswien.penguinrun.game.GameManager;
+import at.ac.fhcampuswien.penguinrun.game.GameSettings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

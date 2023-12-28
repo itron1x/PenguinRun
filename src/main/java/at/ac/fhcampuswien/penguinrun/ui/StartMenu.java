@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.penguinrun;
+package at.ac.fhcampuswien.penguinrun.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

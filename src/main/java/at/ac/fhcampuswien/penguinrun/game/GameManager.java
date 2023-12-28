@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.penguinrun;
+package at.ac.fhcampuswien.penguinrun.game;
 
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
@@ -6,11 +6,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Player implements Initializable {
+public class GameManager implements Initializable {
+    @FXML
+    private TilePane tilePane;
 
     @FXML
     private ImageView pgn;
@@ -19,11 +22,15 @@ public class Player implements Initializable {
     private boolean downPressed = false; //S + DOWN
     private boolean leftPressed = false; //A + LEFT
     private boolean rightPressed = false; //D + RIGHT
-    private final int speed = 1; //Movement Speed Penguin
+    private final int speed = GameSettings.speed; //Movement Speed Penguin
 
     Image pgnStill = new Image("img/pgnStill.png",true);
     Image pgnAnim = new Image("img/pgnAnim.gif",true);
-    
+
+    public void generateMaze(int sizeBoard){
+        MazeManager maze = new MazeManager(sizeBoard,tilePane);
+        maze.generateMaze();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -72,9 +79,6 @@ public class Player implements Initializable {
         }
     }
 
-    /**
-     * For continuous movement + Collision Detection for Window(Stage)
-     */
     private void continuousMovement() {
         new AnimationTimer() {
             @Override
@@ -103,6 +107,4 @@ public class Player implements Initializable {
         }.start();
     }
 }
-
-
 
