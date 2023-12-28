@@ -3,13 +3,17 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TilePane prefHeight="0.0" prefWidth="0.0" />
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@/img/bgMenu.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pgn" fitHeight="32.0" fitWidth="32.0" layoutX="275.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@/img/pgnStill.png" />
          </image>
       </ImageView>
    </children>
