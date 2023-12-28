@@ -30,7 +30,8 @@ public class Player implements Initializable {
         continuousMovement();
     }
 
-    public void handleKeyPressed(KeyEvent event) {
+    public void keyPressed(KeyEvent event) {
+        pgn.setImage(pgnAnim);
         switch (event.getCode()) {
             //WASD + ARROW KEYS
             case W, UP:
@@ -71,15 +72,37 @@ public class Player implements Initializable {
         }
     }
 
-    private void setupKeyHandlers() {
+    /**
+     * For continuous movement + Collision Detection for Window(Stage)
+     */
+    private void continuousMovement() {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (upPressed) { pgn.setLayoutY(pgn.getLayoutY() - 2); }
-                if (downPressed) { pgn.setLayoutY(pgn.getLayoutY() + 2); }
-                if (leftPressed) { pgn.setLayoutX(pgn.getLayoutX() - 2); }
-                if (rightPressed) { pgn.setLayoutX(pgn.getLayoutX() + 2); }
+                double newX = pgn.getLayoutX();
+                double newY = pgn.getLayoutY();
+                double playerWidth = pgn.getFitWidth();
+                double playerHeight = pgn.getFitHeight();
+
+                if (upPressed && newY > -15) {
+                    newY -= speed;
+                }
+                if (downPressed && newY < 715 - playerHeight) {
+                    newY += speed;
+                }
+                if (leftPressed && newX > -15) {
+                    newX -= speed;
+                }
+                if (rightPressed && newX < 1275 - playerWidth) {
+                    newX += speed;
+                }
+
+                pgn.setLayoutX(newX);
+                pgn.setLayoutY(newY);
             }
         }.start();
     }
 }
+
+
+

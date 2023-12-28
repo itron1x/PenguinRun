@@ -12,7 +12,7 @@
             <Image url="@/img/bgMenu.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="pgn" fitHeight="32.0" fitWidth="32.0" layoutX="94.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true" x="10.0" y="10.0">
+      <ImageView fx:id="pgn" fitHeight="32.0" fitWidth="32.0" layoutX="94.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" x="10.0" y="10.0">
          <image>
             <Image url="@/img/pgnStill.png" />
          </image>
