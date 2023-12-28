@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.penguinrun.ui;
+package at.ac.fhcampuswien.penguinrun;
 
 import at.ac.fhcampuswien.penguinrun.game.GameManager;
 import at.ac.fhcampuswien.penguinrun.game.GameSettings;

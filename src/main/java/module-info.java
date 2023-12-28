@@ -5,8 +5,6 @@ module at.ac.fhcampuswien.penguinrun {
 
     opens at.ac.fhcampuswien.penguinrun to javafx.fxml;
     exports at.ac.fhcampuswien.penguinrun;
-    exports at.ac.fhcampuswien.penguinrun.ui;
-    opens at.ac.fhcampuswien.penguinrun.ui to javafx.fxml;
     exports at.ac.fhcampuswien.penguinrun.game;
     opens at.ac.fhcampuswien.penguinrun.game to javafx.fxml;
 }
