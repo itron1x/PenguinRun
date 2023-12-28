@@ -16,17 +16,18 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button id="einfachBtn" fx:id="einfachBtn" defaultButton="true" layoutX="496.0" layoutY="219.0" mnemonicParsing="false" onAction="#setEasy" prefHeight="61.0" prefWidth="251.0">
+      <Button id="einfachBtn" defaultButton="true" layoutX="496.0" layoutY="219.0" mnemonicParsing="false" onAction="#setEasy" prefHeight="61.0" prefWidth="251.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button id="mittelBtn" fx:id="mittelBtn" layoutX="496.0" layoutY="299.0" mnemonicParsing="false" onAction="#setMiddle" prefHeight="65.0" prefWidth="251.0">
+      <Button id="mittelBtn" layoutX="496.0" layoutY="299.0" mnemonicParsing="false" onAction="#setMiddle" prefHeight="65.0" prefWidth="251.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button id="schwerBtn" fx:id="schwerBtn" layoutX="496.0" layoutY="383.0" mnemonicParsing="false" onAction="#setHard" prefHeight="65.0" prefWidth="251.0">
+      <Button id="schwerBtn" layoutX="496.0" layoutY="383.0" mnemonicParsing="false" onAction="#setHard" prefHeight="65.0" prefWidth="251.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
+      <Button fx:id="startGame" layoutX="588.0" layoutY="493.0" mnemonicParsing="false" onAction="#startGame" text="Start Game" />
    </children>
 </Pane>
