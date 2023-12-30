@@ -70,13 +70,13 @@ import java.util.Collections;
             }
         }
         public void drawTiles(){
-            tilePane.setPrefColumns(size -1);
-            tilePane.setPrefRows(size -1);
+            tilePane.setPrefColumns(size);
+            tilePane.setPrefRows(size);
 
             BackgroundImage bgImageOrange = new BackgroundImage(orange, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,new BackgroundSize(100,100,true,true,true,true));
             BackgroundImage bgImageDark = new BackgroundImage(darkOrange, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,new BackgroundSize(100,100,true,true,true,true));
-            for (int i = 0; i < size -1; i++) {
-                for (int j = 0; j < size -1; j++) {
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
                     Pane pane = new Pane();
                     pane.setPrefHeight(height);
                     pane.setPrefWidth(width);
@@ -91,8 +91,8 @@ import java.util.Collections;
             System.out.println();
             char space = (char) 32;
             char raute = (char) 217;
-            for (int i = 0; i < size - 1; i++) {
-                for (int j = 0; j < size - 1; j++) {
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
                     if (gameBoard[i][j] == 0) {
                         System.out.printf("\u001B[36m %2s", space);
                     } else System.out.printf("\u001B[36m %2s", raute);
@@ -106,6 +106,7 @@ import java.util.Collections;
             fillGameboard();
             recursion(1, 1);
             gameBoard[1][0] = 0;
+            gameBoard[size - 2][size - 1] = 0;
             drawTiles();
             //printMaze(gameBoard);
         }

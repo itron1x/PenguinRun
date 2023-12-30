@@ -30,6 +30,10 @@ public class GameManager implements Initializable {
     public void generateMaze(int sizeBoard){
         MazeManager maze = new MazeManager(sizeBoard,tilePane);
         maze.generateMaze();
+        pgn.setFitHeight(GameSettings.scale * 8);
+        pgn.setFitWidth(GameSettings.scale * 8);
+        pgn.setX(pgn.getFitWidth() / 2);
+        pgn.setY(GameSettings.scale * 15.5);
     }
 
     @Override
