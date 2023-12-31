@@ -23,9 +23,8 @@ public class GameManager implements Initializable {
     private boolean leftPressed = false; //A + LEFT
     private boolean rightPressed = false; //D + RIGHT
     private final int speed = GameSettings.speed; //Movement Speed Penguin
-
-    Image pgnStill = new Image("img/pgnStill.png",true);
-    Image pgnAnim = new Image("img/pgnAnim.gif",true);
+    private static final Image pgnStill = new Image("img/pgnStill.png",true);
+    private static final Image pgnAnim = new Image("img/pgnAnim.gif",true);
 
     public void generateMaze(int sizeBoard){
         MazeManager maze = new MazeManager(sizeBoard,tilePane);

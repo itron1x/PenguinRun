@@ -18,7 +18,7 @@ import java.util.Objects;
 public class Difficulty {
     @FXML
     private Button backBtn;
-    public static int difficulty = 51;
+    private static int difficulty = 51;
 
     public void onBack() throws IOException {
         Stage stage = (Stage) backBtn.getScene().getWindow();

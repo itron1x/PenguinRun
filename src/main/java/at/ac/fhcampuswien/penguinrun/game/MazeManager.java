@@ -1,6 +1,5 @@
 package at.ac.fhcampuswien.penguinrun.game;
 
-import at.ac.fhcampuswien.penguinrun.game.GameSettings;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
@@ -8,14 +7,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 
     public class MazeManager {
-        ArrayList<Integer> directions = new ArrayList<>();
-        int size;
-        int height = 10 * GameSettings.scale;
-        int width = 10 * GameSettings.scale;
-        public int[][] gameBoard;
-        Image orange = new Image("tiles/blue_bright.png",true);
-        Image darkOrange = new Image("tiles/blue.png",true);
-        TilePane tilePane;
+        private final ArrayList<Integer> directions = new ArrayList<>();
+        private final int size;
+        private final int height = 10 * GameSettings.scale;
+        private final int width = 10 * GameSettings.scale;
+        private final int[][] gameBoard;
+        private final Image orange = new Image("tiles/blue_bright.png",true);
+        private final Image darkOrange = new Image("tiles/blue.png",true);
+        private final TilePane tilePane;
 
         public MazeManager(int size, TilePane tilePane) {
             this.gameBoard = new int[size][size];
