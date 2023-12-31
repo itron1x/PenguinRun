@@ -32,8 +32,10 @@ public class GameManager implements Initializable {
         maze.generateMaze();
         pgn.setFitHeight(GameSettings.scale * 8);
         pgn.setFitWidth(GameSettings.scale * 8);
+        pgn.setLayoutX((pgn.getFitWidth() / 2) * -1);
+        pgn.setLayoutY((pgn.getFitHeight() / 2) * - 1);
         pgn.setX(pgn.getFitWidth() / 2);
-        pgn.setY(GameSettings.scale * 15.5);
+        pgn.setY(GameSettings.scale * 15);
     }
 
     @Override
@@ -92,16 +94,16 @@ public class GameManager implements Initializable {
                 double playerWidth = pgn.getFitWidth();
                 double playerHeight = pgn.getFitHeight();
 
-                if (upPressed && newY > -15) {
+                if (upPressed && newY > (-2 * playerHeight)) {
                     newY -= speed;
                 }
-                if (downPressed && newY < 715 - playerHeight) {
+                if (downPressed && newY < 720 - (2.7 * playerHeight)) {
                     newY += speed;
                 }
-                if (leftPressed && newX > -15) {
+                if (leftPressed && newX > (-0.7 * playerWidth)) {
                     newX -= speed;
                 }
-                if (rightPressed && newX < 1275 - playerWidth) {
+                if (rightPressed && newX < 1280 - (1.3 * playerWidth)) {
                     newX += speed;
                 }
 
