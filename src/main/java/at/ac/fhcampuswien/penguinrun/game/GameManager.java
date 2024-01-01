@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.penguinrun.game;
 
+import at.ac.fhcampuswien.penguinrun.Difficulty;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,6 +13,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GameManager implements Initializable {
+
+
+    public double mapHeight = (10*GameSettings.scale)*Difficulty.getDifficulty();
+    public double newX;
+    public double newY;
+
+    private Camera camera;
+
     @FXML
     private TilePane tilePane;
 
@@ -26,6 +35,11 @@ public class GameManager implements Initializable {
     private static final Image pgnStill = new Image("img/pgnStill.png",true);
     private static final Image pgnAnim = new Image("img/pgnAnim.gif",true);
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources){
+        camera = new Camera(1280, 720,mapHeight);
+        continuousMovement();
+    }
     public void generateMaze(int sizeBoard){
         MazeManager maze = new MazeManager(sizeBoard,tilePane);
         maze.generateMaze();
@@ -37,10 +51,6 @@ public class GameManager implements Initializable {
         pgn.setY(GameSettings.scale * 15);
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        continuousMovement();
-    }
 
     public void keyPressed(KeyEvent event) {
         pgn.setImage(pgnAnim);
@@ -83,33 +93,40 @@ public class GameManager implements Initializable {
                 break;
         }
     }
-
-    private void continuousMovement() {
+     public void continuousMovement() {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                double newX = pgn.getLayoutX();
-                double newY = pgn.getLayoutY();
-                double playerWidth = pgn.getFitWidth();
-                double playerHeight = pgn.getFitHeight();
 
-                if (upPressed && newY > (-2 * playerHeight)) {
-                    newY -= speed;
-                }
-                if (downPressed && newY < 720 - (2.7 * playerHeight)) {
-                    newY += speed;
-                }
-                if (leftPressed && newX > (-0.7 * playerWidth)) {
-                    newX -= speed;
-                }
-                if (rightPressed && newX < 1280 - (1.3 * playerWidth)) {
-                    newX += speed;
-                }
+                    double positionX = newX - camera.getCameraX();
+                    double positionY = newY - camera.getCameraY();
+                    double playerHeight = pgn.getFitHeight();
+                    double playerWidth = pgn.getFitWidth();
 
-                pgn.setLayoutX(newX);
-                pgn.setLayoutY(newY);
+                    if (upPressed && positionY > (-2 * playerHeight)) {
+                        newY -= speed;
+                    }
+                    if (downPressed && positionY < 720 - (2.7 * playerHeight)) {
+                        newY += speed;
+                    }
+                    if (leftPressed && positionX > (-0.7 * playerWidth)) {
+                        newX -= speed;
+                    }
+                    if (rightPressed && positionX < 1280 - (1.3 * playerWidth)) {
+                        newX += speed;
+                    }
+
+                    camera.updateCamPos(newX,newY);
+
+                pgn.setLayoutX(newX-camera.getCameraX());
+                pgn.setLayoutY(newY-camera.getCameraY());
+
+                tilePane.setTranslateX(-camera.getCameraX());
+                tilePane.setTranslateY(-camera.getCameraY());
+
             }
         }.start();
     }
 }
+
 

@@ -18,6 +18,11 @@ import java.util.Objects;
 public class Difficulty {
     @FXML
     private Button backBtn;
+
+    public static int getDifficulty() {
+        return difficulty;
+    }
+
     private static int difficulty = 51;
 
     public void onBack() throws IOException {
@@ -66,4 +71,5 @@ public class Difficulty {
     public void setHard(ActionEvent action) {
         difficulty = GameSettings.hard;
     }
+
 }
