@@ -16,8 +16,8 @@ public class GameManager implements Initializable {
 
 
     public double mapHeight = (10*GameSettings.scale)*Difficulty.getDifficulty();
-    public double newX;
-    public double newY;
+    private double newX;
+    private double newY;
 
     private Camera camera;
 
@@ -34,23 +34,15 @@ public class GameManager implements Initializable {
     private final int speed = GameSettings.speed; //Movement Speed Penguin
     private static final Image pgnStill = new Image("img/pgnStill.png",true);
     private static final Image pgnAnim = new Image("img/pgnAnim.gif",true);
+    private MazeManager mazeM;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources){
-        camera = new Camera(GameSettings.windowWidth, GameSettings.windowHeight,mapHeight);
-        continuousMovement();
-    }
     public void generateMaze(int sizeBoard){
-        MazeManager maze = new MazeManager(sizeBoard,tilePane);
-        maze.generateMaze();
+        mazeM = new MazeManager(sizeBoard,tilePane);
+        mazeM.generateMaze();
         pgn.setFitHeight(GameSettings.scale * 8);
         pgn.setFitWidth(GameSettings.scale * 8);
-        newX = (pgn.getFitWidth() / 2) * -1;
-        newY = (pgn.getFitWidth() / 2) * -1;
-        pgn.setLayoutX((pgn.getFitWidth() / 2) * -1);
-        pgn.setLayoutY((pgn.getFitHeight() / 2) * - 1);
-        pgn.setX(pgn.getFitWidth() / 2);
-        pgn.setY(GameSettings.scale * 15);
+        newY = GameSettings.scale * 10 + 10;
+        newX = GameSettings.scale * 10 + 10;
     }
 
 
@@ -100,34 +92,45 @@ public class GameManager implements Initializable {
             @Override
             public void handle(long now) {
 
-                    double positionX = newX - camera.getCameraX();
-                    double positionY = newY - camera.getCameraY();
-                    double playerHeight = pgn.getFitHeight();
-                    double playerWidth = pgn.getFitWidth();
+                    double possibleX = newX;
+                    double possibleY = newY;
+                    double possibleXWithPadding = possibleX;
+                    double possibleYWithPadding = possibleY;
 
-                    if (upPressed && positionY > (-2 * playerHeight)) {
-                        newY -= speed;
+                    if (upPressed) {
+                        possibleY -= speed;
+                        possibleYWithPadding = possibleY - GameSettings.scale * 2;
                     }
-                    if (downPressed && positionY < GameSettings.windowHeight - (2.7 * playerHeight)) {
-                        newY += speed;
+                    if (downPressed) {
+                        possibleY += speed;
+                        possibleYWithPadding = possibleY + GameSettings.scale * 2;
                     }
-                    if (leftPressed && positionX > (-0.7 * playerWidth)) {
-                        newX -= speed;
+                    if (leftPressed){
+                        possibleX -= speed;
+                        possibleXWithPadding = possibleX - GameSettings.scale * 2;
                     }
-                    if (rightPressed && positionX < GameSettings.windowWidth - (1.3 * playerWidth)) {
-                        newX += speed;
+                    if (rightPressed) {
+                        possibleX += speed;
+                        possibleXWithPadding = possibleX + GameSettings.scale * 2;
                     }
 
-                    camera.updateCamPos(newX,newY);
+                if (canMoveTo(possibleXWithPadding, possibleYWithPadding)){
+                        newX = possibleX;
+                        newY = possibleY;
+                    }
 
-                pgn.setLayoutX(newX-camera.getCameraX());
-                pgn.setLayoutY(newY-camera.getCameraY());
+                camera.updateCamPos(newX,newY);
+
+                pgn.setLayoutX(newX - (pgn.getFitHeight() / 2) -camera.getCameraX());
+                pgn.setLayoutY(newY - (pgn.getFitHeight() / 2) -camera.getCameraY());
 
                 tilePane.setTranslateX(-camera.getCameraX());
                 tilePane.setTranslateY(-camera.getCameraY());
-
             }
         }.start();
+    }
+    public boolean canMoveTo(double newX, double newY) {
+        return mazeM.getTileType((int) newX , (int) newY) == 0;
     }
 }
 

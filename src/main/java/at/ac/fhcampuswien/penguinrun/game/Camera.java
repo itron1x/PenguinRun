@@ -19,7 +19,6 @@ public class Camera{
         cameraY = penY - ((screenHeight)/2 - GameSettings.scale * 20);
         cameraX = Math.max(0, Math.min(mapSize-screenWidth, cameraX));
         cameraY = Math.max(0,Math.min(mapSize-screenHeight,cameraY));
-
     }
     public double getCameraX(){
         return cameraX;

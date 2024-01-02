@@ -20,6 +20,8 @@ import java.util.Collections;
             this.gameBoard = new int[size][size];
             this.size = size;
             this.tilePane = tilePane;
+            this.tilePane.setLayoutX(0);
+            this.tilePane.setLayoutY(0);
         }
 
         public void generateDirections() {
@@ -108,5 +110,10 @@ import java.util.Collections;
             gameBoard[size - 2][size - 1] = 0;
             drawTiles();
             //printMaze(gameBoard);
+        }
+        public int getTileType(int x, int y){
+            int indexY = (int) Math.floor(Math.abs(x)/(double) width);
+            int indexX = (int) Math.floor(Math.abs(y)/(double) height);
+            return gameBoard[indexX][indexY];
         }
     }
