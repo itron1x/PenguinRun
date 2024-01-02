@@ -37,7 +37,7 @@ public class GameManager implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        camera = new Camera(1280, 720,mapHeight);
+        camera = new Camera(GameSettings.windowWidth, GameSettings.windowHeight,mapHeight);
         continuousMovement();
     }
     public void generateMaze(int sizeBoard){
@@ -45,6 +45,8 @@ public class GameManager implements Initializable {
         maze.generateMaze();
         pgn.setFitHeight(GameSettings.scale * 8);
         pgn.setFitWidth(GameSettings.scale * 8);
+        newX = (pgn.getFitWidth() / 2) * -1;
+        newY = (pgn.getFitWidth() / 2) * -1;
         pgn.setLayoutX((pgn.getFitWidth() / 2) * -1);
         pgn.setLayoutY((pgn.getFitHeight() / 2) * - 1);
         pgn.setX(pgn.getFitWidth() / 2);
@@ -106,13 +108,13 @@ public class GameManager implements Initializable {
                     if (upPressed && positionY > (-2 * playerHeight)) {
                         newY -= speed;
                     }
-                    if (downPressed && positionY < 720 - (2.7 * playerHeight)) {
+                    if (downPressed && positionY < GameSettings.windowHeight - (2.7 * playerHeight)) {
                         newY += speed;
                     }
                     if (leftPressed && positionX > (-0.7 * playerWidth)) {
                         newX -= speed;
                     }
-                    if (rightPressed && positionX < 1280 - (1.3 * playerWidth)) {
+                    if (rightPressed && positionX < GameSettings.windowWidth - (1.3 * playerWidth)) {
                         newX += speed;
                     }
 

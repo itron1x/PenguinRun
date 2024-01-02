@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.penguinrun;
 
+import at.ac.fhcampuswien.penguinrun.game.GameSettings;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,7 +15,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Font.loadFont(getClass().getResource("Maze.ttf").toExternalForm(),10);
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("start-menu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+        Scene scene = new Scene(fxmlLoader.load(), GameSettings.windowWidth, GameSettings.windowHeight);
 
         Image icon = new Image("/img/pgnBig.png");
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/at/ac/fhcampuswien/penguinrun/style.css")).toExternalForm());

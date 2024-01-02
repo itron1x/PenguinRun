@@ -30,7 +30,7 @@ public class Difficulty {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("start-menu.fxml"));
         Parent root = loader.load();
 
-        Scene scene = new Scene(root, 1280,720);
+        Scene scene = new Scene(root, GameSettings.windowWidth,GameSettings.windowHeight);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/at/ac/fhcampuswien/penguinrun/style.css")).toExternalForm());
         stage.setTitle("PenguinRun");
         stage.setScene(scene);
@@ -41,7 +41,7 @@ public class Difficulty {
         Parent root = loader.load();
         GameManager controllerPlayer = loader.getController();
 
-        Scene scene = new Scene(root, 1280,720);
+        Scene scene = new Scene(root, GameSettings.windowWidth,GameSettings.windowHeight);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/at/ac/fhcampuswien/penguinrun/style.css")).toExternalForm());
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
