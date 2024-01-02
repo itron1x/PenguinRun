@@ -11,8 +11,8 @@ public class Camera{
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.mapSize = mapSize;
-        this.cameraX = 0;
-        this.cameraY = 0;
+        this.cameraX = GameSettings.scale * 10;
+        this.cameraY = GameSettings.scale * 10;
     }
     public void updateCamPos(double penX, double penY){
         cameraX = penX -((screenWidth)/2 - GameSettings.scale * 10);

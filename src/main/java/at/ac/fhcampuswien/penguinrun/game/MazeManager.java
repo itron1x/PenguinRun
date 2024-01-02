@@ -12,8 +12,8 @@ import java.util.Collections;
         private final int height = 10 * GameSettings.scale;
         private final int width = 10 * GameSettings.scale;
         private final int[][] gameBoard;
-        private final Image orange = new Image("tiles/blue_bright.png",true);
-        private final Image darkOrange = new Image("tiles/blue.png",true);
+        private final Image wall = new Image("tiles/blue_bright.png",true);
+        private final Image path = new Image("tiles/blue.png",true);
         private final TilePane tilePane;
 
         public MazeManager(int size, TilePane tilePane) {
@@ -73,9 +73,11 @@ import java.util.Collections;
         public void drawTiles(){
             tilePane.setPrefColumns(size);
             tilePane.setPrefRows(size);
+            tilePane.setPrefTileHeight(height);
+            tilePane.setPrefTileWidth(width);
 
-            BackgroundImage bgImageOrange = new BackgroundImage(orange, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,new BackgroundSize(100,100,true,true,true,true));
-            BackgroundImage bgImageDark = new BackgroundImage(darkOrange, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,new BackgroundSize(100,100,true,true,true,true));
+            BackgroundImage bgImageOrange = new BackgroundImage(wall, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,new BackgroundSize(width,height,true,true,true,true));
+            BackgroundImage bgImageDark = new BackgroundImage(path, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,new BackgroundSize(width,height,true,true,true,true));
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                     Pane pane = new Pane();

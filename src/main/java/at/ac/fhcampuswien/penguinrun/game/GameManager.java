@@ -45,6 +45,11 @@ public class GameManager implements Initializable {
         newX = GameSettings.scale * 10 + 10;
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources){
+        camera = new Camera(GameSettings.windowWidth, GameSettings.windowHeight,mapHeight);
+        continuousMovement();
+    }
 
     public void keyPressed(KeyEvent event) {
         pgn.setImage(pgnAnim);
@@ -53,18 +58,30 @@ public class GameManager implements Initializable {
             case W, UP:
                 pgn.setRotate(0);
                 upPressed = true;
+                leftPressed = false;
+                downPressed = false;
+                rightPressed = false;
                 break;
             case A, LEFT:
                 pgn.setRotate(-90);
+                upPressed = false;
                 leftPressed = true;
+                downPressed = false;
+                rightPressed = false;
                 break;
             case S, DOWN:
                 pgn.setRotate(180);
+                upPressed = false;
                 downPressed = true;
+                leftPressed = false;
+                rightPressed = false;
                 break;
             case D, RIGHT:
                 pgn.setRotate(90);
+                upPressed = false;
                 rightPressed = true;
+                leftPressed = false;
+                downPressed = false;
                 break;
         }
     }

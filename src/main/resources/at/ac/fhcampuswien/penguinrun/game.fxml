@@ -12,7 +12,7 @@
          </image>
       </ImageView>
       <TilePane fx:id="tilePane" />
-      <ImageView fx:id="pgn" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+      <ImageView fx:id="pgn" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
          <image>
             <Image url="@/img/pgnStill.png" />
          </image>
