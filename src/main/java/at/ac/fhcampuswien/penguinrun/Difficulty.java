@@ -20,6 +20,9 @@ public class Difficulty {
     @FXML
     private Button backBtn;
 
+    @FXML
+    private Button startGame;
+
     public static int getDifficulty() {
         return difficulty;
     }
@@ -64,12 +67,15 @@ public class Difficulty {
         game.generateMaze(difficulty);
     }
     public void setEasy(ActionEvent action) {
+        startGame.setDisable(false);
         difficulty = GameSettings.easy;
     }
     public void setMiddle(ActionEvent action) {
+        startGame.setDisable(false);
         difficulty = GameSettings.middle;
     }
     public void setHard(ActionEvent action) {
+        startGame.setDisable(false);
         difficulty = GameSettings.hard;
     }
 

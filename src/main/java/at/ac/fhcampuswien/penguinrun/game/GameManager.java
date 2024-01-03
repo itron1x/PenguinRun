@@ -20,7 +20,7 @@ public class GameManager implements Initializable {
     private double newY;
 
     private Camera camera;
-    private Label timerLabel;
+    //private Label timerLabel;
 
 
 
@@ -46,8 +46,8 @@ public class GameManager implements Initializable {
         mazeM.generateMaze();
         pgn.setFitHeight(GameSettings.scale * 8);
         pgn.setFitWidth(GameSettings.scale * 8);
-        newY = GameSettings.scale * 10 + 10;
-        newX = GameSettings.scale * 10 + 10;
+        newY = GameSettings.scale * 15;
+        newX = GameSettings.scale * 5;
     }
 
     @Override

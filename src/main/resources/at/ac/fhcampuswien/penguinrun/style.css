@@ -85,3 +85,27 @@
      -fx-background-size: 105%;
      -fx-background-position: center;
  }
+#startGameBtn{
+    -fx-background-color: transparent;
+    -fx-background-image: url("/img/btn/startgameUNSEL.png");
+    -fx-background-size: 100%;
+    -fx-background-position: center;
+}
+#startGameBtn:hover{
+    -fx-background-color: transparent;
+    -fx-background-image: url("/img/btn/startgameSEL.png");
+    -fx-background-size: 100%;
+    -fx-background-position: center;
+}
+#startGameBtn:focused{
+    -fx-background-color: transparent;
+    -fx-background-image: url("/img/btn/startgameSEL.png");
+    -fx-background-size: 100%;
+    -fx-background-position: center;
+}
+#startGameBtn:disabled{
+    -fx-background-color: transparent;
+    -fx-background-image: url("/img/btn/startgameGR.png");
+    -fx-background-size: 100%;
+    -fx-background-position: center;
+}
