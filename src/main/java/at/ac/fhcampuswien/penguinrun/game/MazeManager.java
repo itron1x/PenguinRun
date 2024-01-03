@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.penguinrun.game;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
@@ -11,9 +12,7 @@ import java.util.Collections;
         private final int size;
         private final int height = 10 * GameSettings.scale;
         private final int width = 10 * GameSettings.scale;
-        private final int[][] gameBoard;
-        private final Image wall = new Image("tiles/blue_bright.png",true);
-        private final Image path = new Image("tiles/blue.png",true);
+        private int[][] gameBoard;
         private final TilePane tilePane;
 
         public MazeManager(int size, TilePane tilePane) {
@@ -75,8 +74,9 @@ import java.util.Collections;
             tilePane.setPrefRows(size);
             tilePane.setPrefTileHeight(height);
             tilePane.setPrefTileWidth(width);
-
-            BackgroundImage bgImageOrange = new BackgroundImage(wall, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,new BackgroundSize(width,height,true,true,true,true));
+            TileManager tiles = new TileManager();
+            gameBoard = tiles.setCorners(gameBoard, size);
+            /*BackgroundImage bgImageOrange = new BackgroundImage(wall, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,new BackgroundSize(width,height,true,true,true,true));
             BackgroundImage bgImageDark = new BackgroundImage(path, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,new BackgroundSize(width,height,true,true,true,true));
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
@@ -86,6 +86,15 @@ import java.util.Collections;
                     if (gameBoard[i][j] == 1)pane.setBackground(new Background(bgImageOrange));
                     else pane.setBackground(new Background(bgImageDark));
                     tilePane.getChildren().add(pane);
+                }
+            }*/
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    ImageView image = new ImageView();
+                    image.setFitHeight(height);
+                    image.setFitWidth(width);
+                    image.setImage(tiles.setTile(gameBoard,i,j));
+                    tilePane.getChildren().add(image);
                 }
             }
         }
