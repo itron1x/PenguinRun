@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.penguinrun;
 
 import at.ac.fhcampuswien.penguinrun.game.GameManager;
 import at.ac.fhcampuswien.penguinrun.game.GameSettings;
+import at.ac.fhcampuswien.penguinrun.game.Timer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,6 +19,8 @@ import java.util.Objects;
 public class Difficulty {
     @FXML
     private Button backBtn;
+
+    private Timer gameTimer;
 
     public static int getDifficulty() {
         return difficulty;
@@ -61,6 +64,10 @@ public class Difficulty {
 
         GameManager game = loader.getController();
         game.generateMaze(difficulty);
+
+        //Starts Countdown
+        gameTimer.resetTimer();
+        gameTimer.startTimer();
     }
     public void setEasy(ActionEvent action) {
         difficulty = GameSettings.easy;

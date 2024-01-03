@@ -20,6 +20,12 @@ public class GameManager implements Initializable {
     private double newY;
 
     private Camera camera;
+    private Label timerLabel;
+
+    @FXML
+    private VBox timerContainer;
+
+    private Timer gameTimer;
 
     @FXML
     private TilePane tilePane;
