@@ -20,8 +20,6 @@ public class Difficulty {
     @FXML
     private Button backBtn;
 
-    private Timer gameTimer;
-
     public static int getDifficulty() {
         return difficulty;
     }
@@ -64,10 +62,6 @@ public class Difficulty {
 
         GameManager game = loader.getController();
         game.generateMaze(difficulty);
-
-        //Starts Countdown
-        gameTimer.resetTimer();
-        gameTimer.startTimer();
     }
     public void setEasy(ActionEvent action) {
         difficulty = GameSettings.easy;

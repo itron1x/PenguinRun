@@ -23,9 +23,6 @@ public class GameManager implements Initializable {
     private Label timerLabel;
 
 
-    // To be continued :)
-    @FXML
-    private VBox timerContainer;
 
     private Timer gameTimer;
 
