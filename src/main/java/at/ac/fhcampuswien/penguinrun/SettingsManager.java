@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.Properties;
 
 public class SettingsManager {
@@ -54,8 +55,8 @@ public class SettingsManager {
     }
 
     public static void music(){
-        String path = "C:\\Users\\noahp\\Downloads\\BGMusic.mp3";
-        Media media = new Media(Paths.get(path).toUri().toString());
+        String path = "/music/BGMusic.mp3";
+        Media media = new Media(Objects.requireNonNull(SettingsManager.class.getResource("/music/BGMusic.mp3")).toExternalForm());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Looping music
         mediaPlayer.play();
