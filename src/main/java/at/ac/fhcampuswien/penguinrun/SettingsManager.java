@@ -56,7 +56,7 @@ public class SettingsManager {
 
     public static void music(){
         String path = "/music/BGMusic.mp3";
-        Media media = new Media(Objects.requireNonNull(SettingsManager.class.getResource("/music/BGMusic.mp3")).toExternalForm());
+        Media media = new Media(Objects.requireNonNull(SettingsManager.class.getResource(path)).toExternalForm());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Looping music
         mediaPlayer.play();
