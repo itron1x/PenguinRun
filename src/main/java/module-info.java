@@ -1,6 +1,7 @@
 module at.ac.fhcampuswien.penguinrun {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
 
 
     opens at.ac.fhcampuswien.penguinrun to javafx.fxml;

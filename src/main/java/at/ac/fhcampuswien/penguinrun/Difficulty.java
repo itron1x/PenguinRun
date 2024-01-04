@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
@@ -27,6 +28,32 @@ public class Difficulty {
     }
 
     private static int difficulty = 51;
+
+    @FXML
+    private Slider volumeSlider;
+
+    @FXML
+    public void initialize() {
+        // Load saved volume setting
+        String volumeSetting = SettingsManager.loadSetting("volume", "0.1");
+        double volume = Double.parseDouble(volumeSetting);
+
+        // Initial value of volume slider
+        volumeSlider.setValue(volume);
+
+        // Loaded volume setting
+        SettingsManager.setVolume(volume);
+
+        // Slider configuring
+        volumeSlider.setSnapToTicks(true);
+        volumeSlider.setMajorTickUnit(0.25);
+
+        // listener to save the volume setting whenever it is changed by the user
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            SettingsManager.setVolume(newValue.doubleValue()); // Adjust and save the volume setting
+            SettingsManager.saveSetting("volume", String.valueOf(newValue.doubleValue()));
+        });
+    }
 
     public void onBack() throws IOException {
         Stage stage = (Stage) backBtn.getScene().getWindow();

@@ -51,7 +51,7 @@ public class GameManager implements Initializable {
     private boolean exitConfirmation = false;
 
     @FXML
-    public Label countdownLabel;
+    private Label countdownLabel;
     private int secondsRemaining = 60;
     private Timeline timeline;
 
@@ -78,6 +78,20 @@ public class GameManager implements Initializable {
     public void initialize(URL location, ResourceBundle resources){
         camera = new Camera(GameSettings.windowWidth, GameSettings.windowHeight,mapHeight);
         continuousMovement();
+
+        // initialize Countdown
+        countdownLabel.setText("Time remaining: " + secondsRemaining + " seconds");
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            if (secondsRemaining > 0) {
+                secondsRemaining--;
+                countdownLabel.setText("Time remaining: " + secondsRemaining + " seconds");
+            } else {
+                countdownLabel.setText("Time's up!");
+                timeline.stop();
+            }
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 
     private void pauseGame() {

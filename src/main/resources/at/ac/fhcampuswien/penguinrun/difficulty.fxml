@@ -32,5 +32,12 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
+      <Slider fx:id="volumeSlider"
+              min="0" max="1"
+              value="0.5"
+              blockIncrement="0.1"
+              majorTickUnit="0.25"
+              snapToTicks="true" />
+
    </children>
 </Pane>
