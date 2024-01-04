@@ -246,6 +246,8 @@ public class GameManager implements Initializable {
             @Override
             public void handle(long now) {
 
+                    double borderStart = pgn.getLayoutX();
+
                     double possibleX = newX;
                     double possibleY = newY;
                     double possibleXWithPadding = possibleX;
@@ -259,7 +261,7 @@ public class GameManager implements Initializable {
                         possibleY += speed;
                         possibleYWithPadding = possibleY + GameSettings.scale * 2;
                     }
-                    if (leftPressed){
+                    if (leftPressed && borderStart > -15){
                         possibleX -= speed;
                         possibleXWithPadding = possibleX - GameSettings.scale * 2;
                     }
