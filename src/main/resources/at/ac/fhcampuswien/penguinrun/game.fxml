@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.TilePane?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-
-
-
-
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.penguinrun.game.GameManager">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.TextArea?>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.penguinrun.game.GameManager">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -20,6 +15,12 @@
          </image>
       </ImageView>
       <TilePane fx:id="tilePane" />
+      <!-- Inhalte des Pause-Menüs -->
+      <Text fx:id="safe" visible="false" layoutX="520.0" layoutY="480.0" text="Wollen Sie fortfahren? Ja Nein" />
+      <Pane fx:id="pauseMenu" visible="false" >
+         <Button fx:id="resumeBtn" layoutX="470.0" layoutY="250.0" mnemonicParsing="false" onAction="#resumeGame" text="Spiel fortsetzen" />
+         <Button fx:id="mainMenuBtn" layoutX="505.0" layoutY="350.0" mnemonicParsing="false" onAction="#backToMainMenu" text="Spiel beenden" />
+      </Pane>
       <ImageView fx:id="pgn" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
          <image>
             <Image url="@/img/pgnStill.png" />
@@ -28,6 +29,5 @@
             <Rectangle2D minX="10.0" minY="10.0" />
          </viewport>
       </ImageView>
-      <Label layoutX="1099.0" layoutY="32.0" style="-fx-font-family: 'Helvetica'; -fx-font-size: 24; -fx-background-color: transparent;" text="Time Left:"/>
    </children>
 </Pane>

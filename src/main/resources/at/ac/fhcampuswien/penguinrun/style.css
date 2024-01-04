@@ -85,6 +85,24 @@
      -fx-background-size: 105%;
      -fx-background-position: center;
  }
+#resumeBtn, #mainMenuBtn {
+    -fx-background-color: transparent;
+    -fx-font-family: Maze;
+    -fx-text-fill: orange;
+    -fx-font-size: 50;
+}
+#resumeBtn:hover, #mainMenuBtn:hover {
+    -fx-background-color: transparent;
+    -fx-font-family: Maze;
+    -fx-text-fill: red;
+    -fx-font-size: 50;
+}
+#safe {
+    -fx-background-color: transparent;
+    -fx-font-family: Maze;
+    -fx-text-fill: red;
+    -fx-font-size: 25;
+}
 #startGameBtn{
     -fx-background-color: transparent;
     -fx-background-image: url("/img/btn/startgameUNSEL.png");

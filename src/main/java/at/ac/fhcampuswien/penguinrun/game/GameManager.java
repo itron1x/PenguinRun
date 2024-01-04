@@ -3,22 +3,28 @@ package at.ac.fhcampuswien.penguinrun.game;
 import at.ac.fhcampuswien.penguinrun.Difficulty;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GameManager implements Initializable {
 
-
     public double mapHeight = (10*GameSettings.scale)*Difficulty.getDifficulty();
     private double newX;
     private double newY;
-
     private Camera camera;
     //private Label timerLabel;
 
@@ -31,6 +37,15 @@ public class GameManager implements Initializable {
 
     @FXML
     private ImageView pgn;
+
+
+    @FXML
+    private Pane pauseMenu;
+    @FXML
+    private Text safe;
+    private boolean isPaused = false;
+    private boolean exitConfirmation = false;
+
 
     private boolean upPressed = false; //W + UP
     private boolean downPressed = false; //S + DOWN
@@ -56,38 +71,108 @@ public class GameManager implements Initializable {
         continuousMovement();
     }
 
+    private void pauseGame() {
+        // Zeige das Pause-Menü
+        pauseMenu.setVisible(true);
+        //Blende, "Dimmen"
+        tilePane.setBlendMode(BlendMode.MULTIPLY);
+    }
+
+    public void resumeGame() {
+        tilePane.setVisible(true);
+        pauseMenu.setVisible(false);
+        tilePane.setBlendMode(BlendMode.SRC_OVER);
+        safe.setVisible(false);
+        exitConfirmation = false;
+    }
+
+    public void backToMainMenu() {
+        if (exitConfirmation) {
+            // Wenn die Exit-Bestätigung aktiviert ist, dann führe die Rückkehr zum Hauptmenü durch
+            performBackToMainMenu();
+            safe.setVisible(false);
+        } else {
+            // Wenn die Exit-Bestätigung nicht aktiviert ist, dann zeige die Bestätigungsfrage
+            showExitConfirmation();
+        }
+    }
+
+    private void showExitConfirmation() {
+        exitConfirmation = true;
+        //System.out.println("Möchten Sie das Spiel wirklich beenden? Wenn ja drücken Sie nochmal auf den Hauptmenu Button");
+        safe.setVisible(true);
+    }
+
+    private void performBackToMainMenu() {
+        try {
+            // Lade die Startmenü-FXML-Datei
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/at/ac/fhcampuswien/penguinrun/start-menu.fxml"));
+            Pane startMenuPane = loader.load();
+
+            // Erstelle eine neue Szene mit dem Startmenü
+            Scene startMenuScene = new Scene(startMenuPane, GameSettings.windowWidth, GameSettings.windowHeight);
+
+            // Lade css
+            startMenuScene.getStylesheets().add(getClass().getResource("/at/ac/fhcampuswien/penguinrun/style.css").toExternalForm());
+
+            // Hole die Stage vom aktuellen Node, Tilepane
+            Stage stage = (Stage) tilePane.getScene().getWindow();
+
+            // Setze die Scene auf die Stage
+            stage.setScene(startMenuScene);
+
+            // Zeigt Stage
+            stage.show();
+
+            // Setze die Exit-Bestätigung zurück, da wir nun zum Hauptmenü zurückgekehrt sind
+            exitConfirmation = false;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void keyPressed(KeyEvent event) {
-        pgn.setImage(pgnAnim);
-        switch (event.getCode()) {
-            //WASD + ARROW KEYS
-            case W, UP:
-                pgn.setRotate(0);
-                upPressed = true;
-                leftPressed = false;
-                downPressed = false;
-                rightPressed = false;
-                break;
-            case A, LEFT:
-                pgn.setRotate(-90);
-                upPressed = false;
-                leftPressed = true;
-                downPressed = false;
-                rightPressed = false;
-                break;
-            case S, DOWN:
-                pgn.setRotate(180);
-                upPressed = false;
-                downPressed = true;
-                leftPressed = false;
-                rightPressed = false;
-                break;
-            case D, RIGHT:
-                pgn.setRotate(90);
-                upPressed = false;
-                rightPressed = true;
-                leftPressed = false;
-                downPressed = false;
-                break;
+        if (event.getCode() == KeyCode.ESCAPE) {
+            if (!isPaused) {
+                pauseGame();
+                isPaused = true;
+            } else {
+                resumeGame();
+                isPaused = false;
+            }
+        } else {
+            pgn.setImage(pgnAnim);
+            switch (event.getCode()) {
+                //WASD + ARROW KEYS
+                case W, UP:
+                    pgn.setRotate(0);
+                    upPressed = true;
+                    leftPressed = false;
+                    downPressed = false;
+                    rightPressed = false;
+                    break;
+                case A, LEFT:
+                    pgn.setRotate(-90);
+                    upPressed = false;
+                    leftPressed = true;
+                    downPressed = false;
+                    rightPressed = false;
+                    break;
+                case S, DOWN:
+                    pgn.setRotate(180);
+                    upPressed = false;
+                    downPressed = true;
+                    leftPressed = false;
+                    rightPressed = false;
+                    break;
+                case D, RIGHT:
+                    pgn.setRotate(90);
+                    upPressed = false;
+                    rightPressed = true;
+                    leftPressed = false;
+                    downPressed = false;
+                    break;
+            }
         }
     }
 
