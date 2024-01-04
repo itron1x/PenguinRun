@@ -99,6 +99,7 @@ public class GameManager implements Initializable {
         pauseMenu.setVisible(true);
         //Blende, "Dimmen"
         tilePane.setBlendMode(BlendMode.MULTIPLY);
+        timeline.pause();
     }
 
     public void resumeGame() {
@@ -107,6 +108,7 @@ public class GameManager implements Initializable {
         tilePane.setBlendMode(BlendMode.SRC_OVER);
         safe.setVisible(false);
         exitConfirmation = false;
+        timeline.play();
     }
 
     public void backToMainMenu() {
