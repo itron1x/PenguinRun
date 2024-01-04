@@ -1,7 +1,12 @@
 package at.ac.fhcampuswien.penguinrun.game;
 
 import at.ac.fhcampuswien.penguinrun.Difficulty;
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,17 +25,16 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.scene.control.Label;
+import javafx.util.Duration;
+
 public class GameManager implements Initializable {
 
     public double mapHeight = (10*GameSettings.scale)*Difficulty.getDifficulty();
     private double newX;
     private double newY;
     private Camera camera;
-    //private Label timerLabel;
 
-
-
-    private Timer gameTimer;
 
     @FXML
     private TilePane tilePane;
@@ -45,6 +49,11 @@ public class GameManager implements Initializable {
     private Text safe;
     private boolean isPaused = false;
     private boolean exitConfirmation = false;
+
+    @FXML
+    public Label countdownLabel;
+    private int secondsRemaining = 60;
+    private Timeline timeline;
 
 
     private boolean upPressed = false; //W + UP
@@ -129,6 +138,28 @@ public class GameManager implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void initialize() {
+        //Initialize the countdown label and start the countdown
+        countdownLabel.setText("Time remaining: " + secondsRemaining + " seconds");
+
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (secondsRemaining > 0) {
+                    secondsRemaining--;
+                    countdownLabel.setText("Time remaining: " + secondsRemaining + " seconds");
+                } else {
+                    countdownLabel.setText("Time's up!");
+                    timeline.stop();
+                }
+            }
+        }));
+
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 
     public void keyPressed(KeyEvent event) {
