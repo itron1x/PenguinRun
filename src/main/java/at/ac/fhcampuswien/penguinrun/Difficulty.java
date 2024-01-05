@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.penguinrun;
 
 import at.ac.fhcampuswien.penguinrun.game.GameManager;
 import at.ac.fhcampuswien.penguinrun.game.GameSettings;
+import at.ac.fhcampuswien.penguinrun.game.MediaManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -32,17 +33,16 @@ public class Difficulty {
     @FXML
     private Slider volumeSlider;
 
-    @FXML
-    public void initialize() {
+   public void initialize() {
         // Load saved volume setting
-        String volumeSetting = SettingsManager.loadSetting("volume", "0.1");
+        String volumeSetting = MediaManager.loadSetting("volume", "0.1");
         double volume = Double.parseDouble(volumeSetting);
 
         // Initial value of volume slider
         volumeSlider.setValue(volume);
 
         // Loaded volume setting
-        SettingsManager.setVolume(volume);
+        MediaManager.setVolume(volume);
 
         // Slider configuring
         volumeSlider.setSnapToTicks(true);
@@ -50,8 +50,8 @@ public class Difficulty {
 
         // listener to save the volume setting whenever it is changed by the user
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            SettingsManager.setVolume(newValue.doubleValue()); // Adjust and save the volume setting
-            SettingsManager.saveSetting("volume", String.valueOf(newValue.doubleValue()));
+            MediaManager.setVolume(newValue.doubleValue()); // Adjust and save the volume setting
+            MediaManager.saveSetting("volume", String.valueOf(newValue.doubleValue()));
         });
     }
 
@@ -77,6 +77,9 @@ public class Difficulty {
             @Override
             public void handle(KeyEvent event) {
                 controllerPlayer.keyPressed(event);
+                controllerPlayer.startTimer(event);
+                controllerPlayer.getDimmBackground().setVisible(false);
+                controllerPlayer.getStartText().setVisible(false);
             }
         });
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -104,5 +107,17 @@ public class Difficulty {
         startGame.setDisable(false);
         difficulty = GameSettings.hard;
     }
+
+    public void changeVolume(){
+        if (volumeSlider.getOpacity() == 0) {
+            volumeSlider.setDisable(false);
+            volumeSlider.setOpacity(1);
+        }
+        else {
+            volumeSlider.setDisable(true);
+            volumeSlider.setOpacity(0);
+        }
+    }
+
 
 }

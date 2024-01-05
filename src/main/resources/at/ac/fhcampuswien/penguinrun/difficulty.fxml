@@ -12,7 +12,7 @@
             <Image url="@/img/bgMenu.jpg" />
          </image>
       </ImageView>
-      <Button id="backBtn" fx:id="backBtn" cancelButton="true" layoutX="50.0" layoutY="32.0" mnemonicParsing="false" onAction="#onBack" prefHeight="32.0" prefWidth="121.0" text="&lt; BACK">
+      <Button id="backBtn" fx:id="backBtn" cancelButton="true" layoutX="14.0" layoutY="32.0" mnemonicParsing="false" onAction="#onBack" prefHeight="32.0" prefWidth="157.0" text="&lt; ZURÜCK">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
@@ -32,12 +32,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Slider fx:id="volumeSlider"
-              min="0" max="1"
-              value="0.5"
-              blockIncrement="0.1"
-              majorTickUnit="0.25"
-              snapToTicks="true" />
-
+      <Slider fx:id="volumeSlider" blockIncrement="0.1" disable="true" focusTraversable="false" layoutX="16.0" layoutY="534.0" majorTickUnit="0.25" max="1.0" opacity="0.0" orientation="VERTICAL" value="0.1" />
+      <Button fx:id="volumeBtn" focusTraversable="false" layoutX="7.0" layoutY="681.0" mnemonicParsing="false" onAction="#changeVolume" prefHeight="25.0" prefWidth="31.0" />
    </children>
 </Pane>

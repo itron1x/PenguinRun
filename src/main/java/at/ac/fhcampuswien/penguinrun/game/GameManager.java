@@ -5,20 +5,18 @@ import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.effect.BlendMode;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,44 +27,53 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 
 public class GameManager implements Initializable {
-
     public double mapHeight = (10*GameSettings.scale)*Difficulty.getDifficulty();
     private double newX;
     private double newY;
     private Camera camera;
-
-
     @FXML
     private TilePane tilePane;
-
     @FXML
     private ImageView pgn;
-
-
     @FXML
     private Pane pauseMenu;
     @FXML
     private Text safe;
-    private boolean isPaused = false;
-    private boolean exitConfirmation = false;
-
     @FXML
     private Text end;
-
     @FXML
     private Label countdownLabel;
-    private int secondsRemaining = 10;
+    @FXML
+    private Slider volumeSlider;
+    @FXML
+    private Rectangle dimmBackground;
+    @FXML
+    private Rectangle pauseDimm;
+    @FXML
+    private Pane startText;
+
+    private int secondsRemaining = 200;
     private Timeline timeline;
-
-
+    private boolean isPaused = false;
+    private boolean exitConfirmation = false;
     private boolean upPressed = false; //W + UP
     private boolean downPressed = false; //S + DOWN
     private boolean leftPressed = false; //A + LEFT
     private boolean rightPressed = false; //D + RIGHT
+    private boolean won = false;
+    private boolean stopTimer = false;
     private final int speed = GameSettings.speed; //Movement Speed Penguin
     private static final Image pgnStill = new Image("img/pgnStill.png",true);
     private static final Image pgnAnim = new Image("img/pgnAnim.gif",true);
     private MazeManager mazeM;
+
+    public Rectangle getDimmBackground() {
+        return dimmBackground;
+    }
+
+    public Pane getStartText() {
+        return startText;
+    }
 
     public void generateMaze(int sizeBoard){
         mazeM = new MazeManager(sizeBoard,tilePane);
@@ -83,35 +90,62 @@ public class GameManager implements Initializable {
         continuousMovement();
 
         // initialize Countdown
-        countdownLabel.setText("Time remaining: " + secondsRemaining + " seconds");
+        countdownLabel.setText(secondsRemaining + " seconds");
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            if (secondsRemaining > 0) {
+            if (!stopTimer && secondsRemaining > 1) {
                 secondsRemaining--;
-                countdownLabel.setText("Time remaining: " + secondsRemaining + " seconds");
-            } else {
+                countdownLabel.setText(secondsRemaining + " seconds");
+            } else if(!stopTimer && !won) {
                 countdownLabel.setText("Time's up!");
                 timeline.stop();
+            } else {
+                timeline.stop();
+                winScreen();
             }
         }));
+
+        // Load saved volume setting
+        String volumeSetting = MediaManager.loadSetting("volume", "0.1");
+        double volume = Double.parseDouble(volumeSetting);
+
+        // Initial value of volume slider
+        volumeSlider.setValue(volume);
+
+        // Loaded volume setting
+        MediaManager.setVolume(volume);
+
+        // Slider configuring
+        volumeSlider.setSnapToTicks(true);
+        volumeSlider.setMajorTickUnit(0.25);
+
+        // listener to save the volume setting whenever it is changed by the user
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            MediaManager.setVolume(newValue.doubleValue()); // Adjust and save the volume setting
+            MediaManager.saveSetting("volume", String.valueOf(newValue.doubleValue()));
+        });
+    }
+    public void startTimer(KeyEvent event){
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
 
     private void pauseGame() {
         // Zeige das Pause-Menü
+        stopTimer = true;
+        pauseDimm.setVisible(true);
         pauseMenu.setVisible(true);
-        //Blende, "Dimmen"
-        tilePane.setBlendMode(BlendMode.MULTIPLY);
         timeline.pause();
     }
 
     public void resumeGame() {
+        stopTimer = false;
+        pauseDimm.setVisible(false);
         tilePane.setVisible(true);
         pauseMenu.setVisible(false);
-        tilePane.setBlendMode(BlendMode.SRC_OVER);
         safe.setVisible(false);
         exitConfirmation = false;
         timeline.play();
+        isPaused = false;
     }
 
     public void backToMainMenu() {
@@ -159,37 +193,16 @@ public class GameManager implements Initializable {
         }
     }
 
-    @FXML
-    private void initialize() {
-        //Initialize the countdown label and start the countdown
-        countdownLabel.setText("Time remaining: " + secondsRemaining + " seconds");
-
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (secondsRemaining > 0) {
-                    secondsRemaining--;
-                    countdownLabel.setText("Time remaining: " + secondsRemaining + " seconds");
-                } else {
-                    countdownLabel.setText("Time's up!");
-                    timeline.stop();
-                }
-            }
-        }));
-
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-    }
-
     public void winScreen(){
+        won = true;
+        dimmBackground.setVisible(true);
         System.out.println("Win");
-        tilePane.setVisible(false);
         end.setVisible(true);
         timeline.pause();
     }
 
     public void keyPressed(KeyEvent event) {
-        if (event.getCode() == KeyCode.ESCAPE) {
+        if (!won && event.getCode() == KeyCode.ESCAPE) {
             if (!isPaused) {
                 pauseGame();
                 isPaused = true;
@@ -198,37 +211,42 @@ public class GameManager implements Initializable {
                 isPaused = false;
             }
         } else {
-            pgn.setImage(pgnAnim);
-            switch (event.getCode()) {
-                //WASD + ARROW KEYS
-                case W, UP:
-                    pgn.setRotate(0);
-                    upPressed = true;
-                    leftPressed = false;
-                    downPressed = false;
-                    rightPressed = false;
-                    break;
-                case A, LEFT:
-                    pgn.setRotate(-90);
-                    upPressed = false;
-                    leftPressed = true;
-                    downPressed = false;
-                    rightPressed = false;
-                    break;
-                case S, DOWN:
-                    pgn.setRotate(180);
-                    upPressed = false;
-                    downPressed = true;
-                    leftPressed = false;
-                    rightPressed = false;
-                    break;
-                case D, RIGHT:
-                    pgn.setRotate(90);
-                    upPressed = false;
-                    rightPressed = true;
-                    leftPressed = false;
-                    downPressed = false;
-                    break;
+            if (!won && !isPaused) {
+                switch (event.getCode()) {
+                    //WASD + ARROW KEYS
+                    case W, UP:
+                        pgn.setImage(pgnAnim);
+                        pgn.setRotate(0);
+                        upPressed = true;
+                        leftPressed = false;
+                        downPressed = false;
+                        rightPressed = false;
+                        break;
+                    case A, LEFT:
+                        pgn.setImage(pgnAnim);
+                        pgn.setRotate(-90);
+                        upPressed = false;
+                        leftPressed = true;
+                        downPressed = false;
+                        rightPressed = false;
+                        break;
+                    case S, DOWN:
+                        pgn.setImage(pgnAnim);
+                        pgn.setRotate(180);
+                        upPressed = false;
+                        downPressed = true;
+                        leftPressed = false;
+                        rightPressed = false;
+                        break;
+                    case D, RIGHT:
+                        pgn.setImage(pgnAnim);
+                        pgn.setRotate(90);
+                        upPressed = false;
+                        rightPressed = true;
+                        leftPressed = false;
+                        downPressed = false;
+                        break;
+                }
             }
         }
     }
@@ -281,7 +299,7 @@ public class GameManager implements Initializable {
                         possibleX -= speed;
                         possibleXWithPadding = possibleX - GameSettings.scale * 2;
                     }
-                    if (rightPressed /*&& borderStart < 1250 - playerWidth*/) {
+                    if (rightPressed && borderStart < 1240) {
                         possibleX += speed;
                         possibleXWithPadding = possibleX + GameSettings.scale * 2;
                         if (borderStart > 1250 - playerWidth) {
@@ -307,6 +325,18 @@ public class GameManager implements Initializable {
     public boolean canMoveTo(double newX, double newY) {
         return mazeM.getTileType((int) newX , (int) newY) == 0;
     }
+
+    public void changeVolume(){
+        if (volumeSlider.getOpacity() == 0) {
+            volumeSlider.setDisable(false);
+            volumeSlider.setOpacity(1);
+        }
+        else {
+            volumeSlider.setDisable(true);
+            volumeSlider.setOpacity(0);
+        }
+    }
+
 }
 
 

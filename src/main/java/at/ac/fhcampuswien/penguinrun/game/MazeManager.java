@@ -35,6 +35,7 @@ import java.util.Collections;
                     gameBoard[i][j] = 1;
                 }
             }
+            gameBoard[1][1] = 0;
         }
         public void recursion(int x, int y) {
             Collections.shuffle(directions);
