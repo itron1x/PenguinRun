@@ -55,7 +55,7 @@ public class GameManager implements Initializable {
 
     @FXML
     private Label countdownLabel;
-    private int secondsRemaining = 60;
+    private int secondsRemaining = 10;
     private Timeline timeline;
 
 
@@ -255,6 +255,11 @@ public class GameManager implements Initializable {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
+
+                if (secondsRemaining <= 0) {
+                    return;
+                }
+
 
                     double borderStart = pgn.getLayoutX();
                     double playerWidth = pgn.getFitWidth();
