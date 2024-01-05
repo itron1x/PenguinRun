@@ -150,3 +150,9 @@
         -fx-font-size: 30;
         -fx-effect: dropshadow(gaussian, #223d54, 0,0,0,1);
 }
+#volumeBtn {
+    -fx-background-color: transparent;
+    -fx-background-image: url("/img/btn/volumeOn.png");
+    -fx-background-size: 100%;
+    -fx-background-position: center;
+}

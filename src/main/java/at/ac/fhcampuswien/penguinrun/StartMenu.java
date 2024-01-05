@@ -21,6 +21,9 @@ public class StartMenu {
     @FXML
     private Slider volumeSlider;
 
+    @FXML
+    private Button volumeBtn;
+
     public void onStart(ActionEvent event) throws IOException {
         Stage stage = (Stage) startBtn.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("difficulty.fxml"));
@@ -47,11 +50,28 @@ public class StartMenu {
         volumeSlider.setSnapToTicks(true);
         volumeSlider.setMajorTickUnit(0.25);
 
+        if(volumeSlider.getValue() == 0){
+            String volumeOff = "/img/btn/volumeOff.png";
+            volumeBtn.setStyle("-fx-background-image: url(" + volumeOff + ")");
+        } else {
+            String volumeOn = "/img/btn/volumeOn.png";
+            volumeBtn.setStyle("-fx-background-image: url(" + volumeOn + ")");
+        }
+
         // listener to save the volume setting whenever it is changed by the user
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             MediaManager.setVolume(newValue.doubleValue()); // Adjust and save the volume setting
             MediaManager.saveSetting("volume", String.valueOf(newValue.doubleValue()));
+            if(volumeSlider.getValue() == 0){
+                String volumeOff = "/img/btn/volumeOff.png";
+                volumeBtn.setStyle("-fx-background-image: url(" + volumeOff + ")");
+            } else {
+                String volumeOn = "/img/btn/volumeOn.png";
+                volumeBtn.setStyle("-fx-background-image: url(" + volumeOn + ")");
+            }
         });
+
+
     }
 
     public void changeVolume(){

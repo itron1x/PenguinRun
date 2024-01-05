@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.penguinrun.game;
 
 import at.ac.fhcampuswien.penguinrun.Difficulty;
+import at.ac.fhcampuswien.penguinrun.StartMenu;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -9,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -51,7 +53,8 @@ public class GameManager implements Initializable {
     private Rectangle pauseDimm;
     @FXML
     private Pane startText;
-
+    @FXML
+    private Button volumeBtn;
     private int secondsRemaining = 200;
     private Timeline timeline;
     private boolean isPaused = false;
@@ -75,6 +78,10 @@ public class GameManager implements Initializable {
         return startText;
     }
 
+    public void setVolumeBtn(Button volumeBtn) {
+        this.volumeBtn = volumeBtn;
+    }
+
     public void generateMaze(int sizeBoard){
         mazeM = new MazeManager(sizeBoard,tilePane);
         mazeM.generateMaze();
@@ -89,6 +96,8 @@ public class GameManager implements Initializable {
         camera = new Camera(GameSettings.windowWidth, GameSettings.windowHeight,mapHeight);
         continuousMovement();
 
+        end.setVisible(false);
+
         // initialize Countdown
         countdownLabel.setText(secondsRemaining + " seconds");
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
@@ -98,7 +107,7 @@ public class GameManager implements Initializable {
             } else if(!stopTimer && !won) {
                 countdownLabel.setText("Time's up!");
                 timeline.stop();
-            } else {
+            } else if(won) {
                 timeline.stop();
                 winScreen();
             }
@@ -118,10 +127,25 @@ public class GameManager implements Initializable {
         volumeSlider.setSnapToTicks(true);
         volumeSlider.setMajorTickUnit(0.25);
 
+        if(volumeSlider.getValue() == 0){
+            String volumeOff = "/img/btn/volumeOff.png";
+            volumeBtn.setStyle("-fx-background-image: url(" + volumeOff + ")");
+        } else {
+            String volumeOn = "/img/btn/volumeOn.png";
+            volumeBtn.setStyle("-fx-background-image: url(" + volumeOn + ")");
+        }
+
         // listener to save the volume setting whenever it is changed by the user
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             MediaManager.setVolume(newValue.doubleValue()); // Adjust and save the volume setting
             MediaManager.saveSetting("volume", String.valueOf(newValue.doubleValue()));
+            if(volumeSlider.getValue() == 0){
+                String volumeOff = "/img/btn/volumeOff.png";
+                volumeBtn.setStyle("-fx-background-image: url(" + volumeOff + ")");
+            } else {
+                String volumeOn = "/img/btn/volumeOn.png";
+                volumeBtn.setStyle("-fx-background-image: url(" + volumeOn + ")");
+            }
         });
     }
     public void startTimer(KeyEvent event){

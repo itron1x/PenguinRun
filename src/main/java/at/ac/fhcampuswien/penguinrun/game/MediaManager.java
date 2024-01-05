@@ -15,7 +15,6 @@ public class MediaManager {
     private static final String SETTINGS_FILE = "settings.properties";
     private static MediaPlayer mediaPlayer;
 
-
     public static void initialize(Slider volumeSlider) {
         // Load saved volume setting
         String volumeSetting = MediaManager.loadSetting("volume", "0.1");

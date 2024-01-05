@@ -32,8 +32,10 @@ public class Difficulty {
 
     @FXML
     private Slider volumeSlider;
+    @FXML
+    private Button volumeBtn;
 
-   public void initialize() {
+    public void initialize() {
         // Load saved volume setting
         String volumeSetting = MediaManager.loadSetting("volume", "0.1");
         double volume = Double.parseDouble(volumeSetting);
@@ -48,10 +50,25 @@ public class Difficulty {
         volumeSlider.setSnapToTicks(true);
         volumeSlider.setMajorTickUnit(0.25);
 
+        if(volumeSlider.getValue() == 0){
+            String volumeOff = "/img/btn/volumeOff.png";
+            volumeBtn.setStyle("-fx-background-image: url(" + volumeOff + ")");
+        } else {
+            String volumeOn = "/img/btn/volumeOn.png";
+            volumeBtn.setStyle("-fx-background-image: url(" + volumeOn + ")");
+        }
+
         // listener to save the volume setting whenever it is changed by the user
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             MediaManager.setVolume(newValue.doubleValue()); // Adjust and save the volume setting
             MediaManager.saveSetting("volume", String.valueOf(newValue.doubleValue()));
+            if(volumeSlider.getValue() == 0){
+                String volumeOff = "/img/btn/volumeOff.png";
+                volumeBtn.setStyle("-fx-background-image: url(" + volumeOff + ")");
+            } else {
+                String volumeOn = "/img/btn/volumeOn.png";
+                volumeBtn.setStyle("-fx-background-image: url(" + volumeOn + ")");
+            }
         });
     }
 
