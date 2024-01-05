@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien.penguinrun.game;
 
 import at.ac.fhcampuswien.penguinrun.Difficulty;
-import at.ac.fhcampuswien.penguinrun.StartMenu;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -76,10 +75,6 @@ public class GameManager implements Initializable {
 
     public Pane getStartText() {
         return startText;
-    }
-
-    public void setVolumeBtn(Button volumeBtn) {
-        this.volumeBtn = volumeBtn;
     }
 
     public void generateMaze(int sizeBoard){
