@@ -127,3 +127,9 @@
     -fx-background-size: 100%;
     -fx-background-position: center;
 }
+#end {
+    -fx-background-color: transparent;
+    -fx-font-family: Maze;
+    -fx-text-fill: red;
+    -fx-font-size: 25;
+}

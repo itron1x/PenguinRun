@@ -17,6 +17,7 @@
          </image>
       </ImageView>
       <TilePane fx:id="tilePane" />
+      <Text fx:id="end" layoutX="520.0" layoutY="480.0" text="Sie haben gewonnen!" visible="false" />
       <!-- Inhalte des Pause-Menüs -->
       <Text fx:id="safe" layoutX="520.0" layoutY="480.0" text="Wollen Sie fortfahren? Ja Nein" visible="false" />
       <Pane fx:id="pauseMenu" visible="false">

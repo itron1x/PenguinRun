@@ -51,6 +51,9 @@ public class GameManager implements Initializable {
     private boolean exitConfirmation = false;
 
     @FXML
+    private Text end;
+
+    @FXML
     private Label countdownLabel;
     private int secondsRemaining = 60;
     private Timeline timeline;
@@ -178,6 +181,13 @@ public class GameManager implements Initializable {
         timeline.play();
     }
 
+    public void winScreen(){
+        System.out.println("Win");
+        tilePane.setVisible(false);
+        end.setVisible(true);
+        timeline.pause();
+    }
+
     public void keyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.ESCAPE) {
             if (!isPaused) {
@@ -247,6 +257,7 @@ public class GameManager implements Initializable {
             public void handle(long now) {
 
                     double borderStart = pgn.getLayoutX();
+                    double playerWidth = pgn.getFitWidth();
 
                     double possibleX = newX;
                     double possibleY = newY;
@@ -265,9 +276,12 @@ public class GameManager implements Initializable {
                         possibleX -= speed;
                         possibleXWithPadding = possibleX - GameSettings.scale * 2;
                     }
-                    if (rightPressed) {
+                    if (rightPressed /*&& borderStart < 1250 - playerWidth*/) {
                         possibleX += speed;
                         possibleXWithPadding = possibleX + GameSettings.scale * 2;
+                        if (borderStart > 1250 - playerWidth) {
+                            winScreen();
+                        }
                     }
 
                 if (canMoveTo(possibleXWithPadding, possibleYWithPadding)){
