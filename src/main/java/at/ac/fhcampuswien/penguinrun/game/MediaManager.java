@@ -45,7 +45,7 @@ public class MediaManager {
                 file.createNewFile();
             }
 
-            try (FileOutputStream out = new FileOutputStream(file, true)) {
+            try (FileOutputStream out = new FileOutputStream(file)) {
                 // Load existing properties
                 prop.load(new FileInputStream(file));
                 // Set property and save
