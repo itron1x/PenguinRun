@@ -1,9 +1,7 @@
 package at.ac.fhcampuswien.penguinrun.game;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -15,6 +13,11 @@ import java.util.Collections;
         private int[][] gameBoard;
         private final TilePane tilePane;
 
+        /**
+         * Constructor for the class.
+         * @param size describes the number of tiles horizontal and vertical.
+         * @param tilePane the object where the tiles are put into.
+         */
         public MazeManager(int size, TilePane tilePane) {
             this.gameBoard = new int[size][size];
             this.size = size;
@@ -23,12 +26,18 @@ import java.util.Collections;
             this.tilePane.setLayoutY(0);
         }
 
+        /**
+         * Four directions are created and added to the ArrayList directions.
+         */
         public void generateDirections() {
             for (int i = 1; i <= 4; i++) {
                 directions.add(i);
             }
         }
 
+        /**
+         * The game board is filled with walls (1) except for the start position which is 1/1.
+         */
         public void fillGameboard() {
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
@@ -37,58 +46,58 @@ import java.util.Collections;
             }
             gameBoard[1][1] = 0;
         }
-        public void recursion(int x, int y) {
+
+        /**
+         * The maze is being generated shuffling through all directions and filling the whole game board. This is achieved with a Depth first search algorithm.
+         * Inspiration: https://www.migapro.com/depth-first-search/
+         * @param y describes the vertical axis in the game board.
+         * @param x describes the horizontal axis in the game board.
+         */
+        public void recursion(int y, int x) {
             Collections.shuffle(directions);
             for (int i = 0; i < directions.size(); i++) {
                 //North
-                if (directions.get(i) == 1 && x - 2 <= 0) continue;
-                if (directions.get(i) == 1 && gameBoard[x - 2][y] != 0) {
-                    gameBoard[x - 1][y] = 0;
-                    gameBoard[x - 2][y] = 0;
-                    recursion(x - 2, y);
+                if (directions.get(i) == 1 && y - 2 <= 0) continue;
+                if (directions.get(i) == 1 && gameBoard[y - 2][x] != 0) {
+                    gameBoard[y - 1][x] = 0;
+                    gameBoard[y - 2][x] = 0;
+                    recursion(y - 2, x);
                 }
                 //South
-                if (directions.get(i) == 2 && x + 2 >= size - 1) continue;
-                if (directions.get(i) == 2 && gameBoard[x + 2][y] != 0) {
-                    gameBoard[x + 1][y] = 0;
-                    gameBoard[x + 2][y] = 0;
-                    recursion(x + 2, y);
+                if (directions.get(i) == 2 && y + 2 >= size - 1) continue;
+                if (directions.get(i) == 2 && gameBoard[y + 2][x] != 0) {
+                    gameBoard[y + 1][x] = 0;
+                    gameBoard[y + 2][x] = 0;
+                    recursion(y + 2, x);
                 }
                 //East
-                if (directions.get(i) == 3 && y + 2 >= size - 1) continue;
-                if (directions.get(i) == 3 && gameBoard[x][y + 2] != 0) {
-                    gameBoard[x][y + 1] = 0;
-                    gameBoard[x][y + 2] = 0;
-                    recursion(x, y + 2);
+                if (directions.get(i) == 3 && x + 2 >= size - 1) continue;
+                if (directions.get(i) == 3 && gameBoard[y][x + 2] != 0) {
+                    gameBoard[y][x + 1] = 0;
+                    gameBoard[y][x + 2] = 0;
+                    recursion(y, x + 2);
                 }
                 //West
-                if (directions.get(i) == 4 && y - 2 <= 0) continue;
-                if (directions.get(i) == 4 && gameBoard[x][y - 2] != 0) {
-                    gameBoard[x][y - 1] = 0;
-                    gameBoard[x][y - 2] = 0;
-                    recursion(x, y - 2);
+                if (directions.get(i) == 4 && x - 2 <= 0) continue;
+                if (directions.get(i) == 4 && gameBoard[y][x - 2] != 0) {
+                    gameBoard[y][x - 1] = 0;
+                    gameBoard[y][x - 2] = 0;
+                    recursion(y, x - 2);
                 }
             }
         }
+
+        /**
+         * The tile pane is set to its correct rows and columns and each tile is filled with the help of the tiles class its setTile method.
+         */
         public void drawTiles(){
             tilePane.setPrefColumns(size);
             tilePane.setPrefRows(size);
             tilePane.setPrefTileHeight(height);
             tilePane.setPrefTileWidth(width);
             TileManager tiles = new TileManager();
-            gameBoard = tiles.setCorners(gameBoard, size);
-            /*BackgroundImage bgImageOrange = new BackgroundImage(wall, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,new BackgroundSize(width,height,true,true,true,true));
-            BackgroundImage bgImageDark = new BackgroundImage(path, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,new BackgroundSize(width,height,true,true,true,true));
-            for (int i = 0; i < size; i++) {
-                for (int j = 0; j < size; j++) {
-                    Pane pane = new Pane();
-                    pane.setPrefHeight(height);
-                    pane.setPrefWidth(width);
-                    if (gameBoard[i][j] == 1)pane.setBackground(new Background(bgImageOrange));
-                    else pane.setBackground(new Background(bgImageDark));
-                    tilePane.getChildren().add(pane);
-                }
-            }*/
+            gameBoard = tiles.setWalls(gameBoard, size);
+
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                     ImageView image = new ImageView();
@@ -100,6 +109,10 @@ import java.util.Collections;
             }
         }
 
+        /**
+         * Print the maze in the console. For development purpose only.
+         * @param gameBoard the game board is given as an argument for this method.
+         */
         public void printMaze(int[][] gameBoard) {
             System.out.println();
             char space = (char) 32;
@@ -114,6 +127,9 @@ import java.util.Collections;
             }
         }
 
+        /**
+         * This method executes all methods in the correct order and also adds the entrance and exit.
+         */
         public void generateMaze() {
             generateDirections();
             fillGameboard();
@@ -123,9 +139,16 @@ import java.util.Collections;
             drawTiles();
             //printMaze(gameBoard);
         }
-        public int getTileType(int x, int y){
-            int indexY = (int) Math.floor(Math.abs(x)/(double) width);
-            int indexX = (int) Math.floor(Math.abs(y)/(double) height);
+
+        /**
+         * Returns the tile in relation to the coordinates of the character.
+         * @param y the vertical axis of the coordinates.
+         * @param x the horizontal axis of the coordinates.
+         * @return returns the Integer value of the corresponding game board tile.
+         */
+        public int getTileType(int y, int x){
+            int indexY = (int) Math.floor(Math.abs(y)/(double) width);
+            int indexX = (int) Math.floor(Math.abs(x)/(double) height);
             return gameBoard[indexX][indexY];
         }
     }

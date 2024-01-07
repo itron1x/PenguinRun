@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.Label;
@@ -69,14 +70,26 @@ public class GameManager implements Initializable {
     private static final Image pgnAnim = new Image("img/pgnAnim.gif",true);
     private MazeManager mazeM;
 
+    /**
+     * Getter for the dimm background.
+     * @return Rectangle for dimming the background.
+     */
     public Rectangle getDimmBackground() {
         return dimmBackground;
     }
 
+    /**
+     * Getter for the text displayed in the beginning of a game.
+     * @return the pane with the start text.
+     */
     public Pane getStartText() {
         return startText;
     }
 
+    /**
+     * Creates maze, sets the correct size of the player and its start position.
+     * @param sizeBoard the size of the maze.
+     */
     public void generateMaze(int sizeBoard){
         mazeM = new MazeManager(sizeBoard,tilePane);
         mazeM.generateMaze();
@@ -194,7 +207,7 @@ public class GameManager implements Initializable {
             Scene startMenuScene = new Scene(startMenuPane, GameSettings.windowWidth, GameSettings.windowHeight);
 
             // Lade css
-            startMenuScene.getStylesheets().add(getClass().getResource("/at/ac/fhcampuswien/penguinrun/style.css").toExternalForm());
+            startMenuScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/at/ac/fhcampuswien/penguinrun/style.css")).toExternalForm());
 
             // Hole die Stage vom aktuellen Node, Tilepane
             Stage stage = (Stage) tilePane.getScene().getWindow();

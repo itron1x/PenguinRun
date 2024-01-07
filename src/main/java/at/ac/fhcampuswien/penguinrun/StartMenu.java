@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien.penguinrun;
 
 import at.ac.fhcampuswien.penguinrun.game.MediaManager;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,7 +23,10 @@ public class StartMenu {
     @FXML
     private Button volumeBtn;
 
-    public void onStart(ActionEvent event) throws IOException {
+    /**
+     * Method for loading the difficulty screen.
+     */
+    public void onStart() throws IOException {
         Stage stage = (Stage) startBtn.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("difficulty.fxml"));
         Parent root = loader.load();

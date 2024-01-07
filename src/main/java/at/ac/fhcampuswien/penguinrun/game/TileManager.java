@@ -20,7 +20,13 @@ public class TileManager {
     public final static Image wallW = new Image("tiles/tileW.jpg", true);
     public final static Image wallE = new Image("tiles/tileE.jpg", true);
 
-    public int[][] setCorners(int[][] gameBoard, int size){
+    /**
+     * Changes the walls to an Integer value depending on where the neighbor walls are.
+     * @param gameBoard the game board of the maze.
+     * @param size the size of the maze.
+     * @return the new game board is being returned.
+     */
+    public int[][] setWalls(int[][] gameBoard, int size){
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 if (i == 0 & j == 0) gameBoard[i][j] = 9; //ES
@@ -80,6 +86,13 @@ public class TileManager {
         return gameBoard;
     }
 
+    /**
+     * Sets and returns the correct image according to the Integer value of the tile.
+     * @param gameBoard the game board of the maze.
+     * @param i the vertical axis of the game board.
+     * @param j the horizontal axis of the game board.
+     * @return the correct Image is being returned.
+     */
     public Image setTile(int[][] gameBoard, int i, int j){
         if (gameBoard[i][j] == 1) return wallNSWE;
         else if (gameBoard[i][j] == 2) return wallNS;

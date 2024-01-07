@@ -1,7 +1,5 @@
 package at.ac.fhcampuswien.penguinrun.game;
 
-import javafx.scene.image.Image;
-
 public class GameSettings {
     public static final int scale = 6; //Only even numbers
     public static final int windowWidth = 1280;

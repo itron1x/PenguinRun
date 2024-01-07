@@ -3,7 +3,6 @@ package at.ac.fhcampuswien.penguinrun;
 import at.ac.fhcampuswien.penguinrun.game.GameManager;
 import at.ac.fhcampuswien.penguinrun.game.GameSettings;
 import at.ac.fhcampuswien.penguinrun.game.MediaManager;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.Objects;
 
@@ -72,6 +70,9 @@ public class Difficulty {
         });
     }
 
+    /**
+     * Method to go back to the start screen.
+     */
     public void onBack() throws IOException {
         Stage stage = (Stage) backBtn.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("start-menu.fxml"));
@@ -82,6 +83,10 @@ public class Difficulty {
         stage.setTitle("PenguinRun");
         stage.setScene(scene);
     }
+    /**
+     * Game stage is loaded, key events are initialized and frozen start screen for the game is enabled.
+     * The difficulty is given to the game manager class.
+     */
     public void startGame() throws IOException {
         Stage stage = (Stage) backBtn.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("game.fxml"));
@@ -112,15 +117,25 @@ public class Difficulty {
         GameManager game = loader.getController();
         game.generateMaze(difficulty);
     }
-    public void setEasy(ActionEvent action) {
+
+    /**
+     * Difficulty set to easy.
+     */
+    public void setEasy() {
         startGame.setDisable(false);
         difficulty = GameSettings.easy;
     }
-    public void setMiddle(ActionEvent action) {
+    /**
+     * Difficulty set to middle.
+     */
+    public void setMiddle() {
         startGame.setDisable(false);
         difficulty = GameSettings.middle;
     }
-    public void setHard(ActionEvent action) {
+    /**
+     * Difficulty set to hard.
+     */
+    public void setHard() {
         startGame.setDisable(false);
         difficulty = GameSettings.hard;
     }

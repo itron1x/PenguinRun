@@ -12,11 +12,15 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class Main extends Application {
+    /**
+     * Startup of the game. Music is loaded and window settings are initialized.
+     * @param stage is the start stage
+     */
     @Override
     public void start(Stage stage) throws Exception {
         MediaManager.music();
         MediaManager.setVolume(0.1);
-        Font.loadFont(getClass().getResource("Maze.ttf").toExternalForm(),10);
+        Font.loadFont(Objects.requireNonNull(getClass().getResource("Maze.ttf")).toExternalForm(),10);
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("start-menu.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), GameSettings.windowWidth, GameSettings.windowHeight);
 
