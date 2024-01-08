@@ -23,6 +23,16 @@ public class CountdownManager extends Application {
         return countdownLabel;
     }
 
+    /**
+     * This is a class used to test the Countdown Timer code.
+     * It executes a separate window with a different timer. Was used to debug the
+     * countdown timer code.
+     *
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set.
+     * Applications may create other stages, if needed, but they will not be
+     * primary stages.
+     */
     @Override
     public void start(Stage primaryStage) {
         countdownLabel = new Label(secondsRemaining + " seconds");

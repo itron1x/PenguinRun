@@ -71,7 +71,7 @@ public class GameManager implements Initializable {
     private MazeManager mazeM;
 
     /**
-     * Getter for the dimm background.
+     * Getter for the dim background.
      * @return Rectangle for dimming the background.
      */
     public Rectangle getDimmBackground() {
@@ -99,6 +99,19 @@ public class GameManager implements Initializable {
         newX = GameSettings.scale * 5;
     }
 
+    /**
+     * Initializes the Camera Movement that follows the penguin (user) around the map,
+     * the Continuous Movement method,
+     * and the Countdown Timer used to let the player know how much time they have left.
+     *
+     * @param location
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resources
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources){
         camera = new Camera(GameSettings.windowWidth, GameSettings.windowHeight,mapHeight);
