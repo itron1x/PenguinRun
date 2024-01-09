@@ -37,6 +37,11 @@ public class MediaManager {
         });
     }
 
+    /**
+     * Saves a setting to a properties file. If the file doesn't exist, it creates one.
+     * @param key The key under which the setting will be saved.
+     * @param value The value of the setting.
+     */
     public static void saveSetting(String key, String value) {
         Properties prop = new Properties();
         try {
@@ -57,6 +62,13 @@ public class MediaManager {
         }
     }
 
+    /**
+     * Loads a setting from a properties file. If the file or the specified key doesn't exist,
+     * it returns a default value.
+     * @param key The key of the setting to load.
+     * @param defaultValue The default value to return if the key isn't found.
+     * @return The value of the setting or the default value.
+     */
     public static String loadSetting(String key, String defaultValue) {
         Properties prop = new Properties();
         try {
@@ -75,6 +87,9 @@ public class MediaManager {
         }
     }
 
+    /**
+     * Starts playing the background music on a loop.
+     */
     public static void music(){
         String path = "/music/BGMusic.mp3";
         Media media = new Media(Objects.requireNonNull(MediaManager.class.getResource(path)).toExternalForm());
@@ -83,6 +98,11 @@ public class MediaManager {
         mediaPlayer.play();
     }
 
+    /**
+     * Sets the volume of the currently playing media player. The volume value should be between
+     * 0.0 (mute) and 1.0 (full volume).
+     * @param volume The volume level to set for the media player.
+     */
     public static void setVolume(double volume) {
         if (mediaPlayer != null && volume >= 0.0 && volume <= 1.0) {
             mediaPlayer.setVolume(volume);

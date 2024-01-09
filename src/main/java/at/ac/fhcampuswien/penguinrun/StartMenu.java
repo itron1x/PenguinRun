@@ -37,6 +37,12 @@ public class StartMenu {
         stage.setScene(scene);
     }
 
+    /**
+     * Initializes the controller class. This method is automatically called after the FXML file has been loaded.
+     * It sets up the initial state of the volume slider based on the saved settings, configures it for proper
+     * increments, and establishes a listener to update and save the volume setting whenever it is adjusted by the user.
+     * It also updates the volume button's style to reflect the current volume state (on or off).
+     */
     public void initialize() {
         // Load saved volume setting
         String volumeSetting = MediaManager.loadSetting("volume", "0.1");
@@ -52,30 +58,30 @@ public class StartMenu {
         volumeSlider.setSnapToTicks(true);
         volumeSlider.setMajorTickUnit(0.25);
 
-        if(volumeSlider.getValue() == 0){
-            String volumeOff = "/img/btn/volumeOff.png";
-            volumeBtn.setStyle("-fx-background-image: url(" + volumeOff + ")");
-        } else {
-            String volumeOn = "/img/btn/volumeOn.png";
-            volumeBtn.setStyle("-fx-background-image: url(" + volumeOn + ")");
-        }
+        // Update the volume button icon based on the current volume
+        updateVolumeButtonIcon(volume);
 
         // listener to save the volume setting whenever it is changed by the user
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             MediaManager.setVolume(newValue.doubleValue()); // Adjust and save the volume setting
-            MediaManager.saveSetting("volume", String.valueOf(newValue.doubleValue()));
-            if(volumeSlider.getValue() == 0){
-                String volumeOff = "/img/btn/volumeOff.png";
-                volumeBtn.setStyle("-fx-background-image: url(" + volumeOff + ")");
-            } else {
-                String volumeOn = "/img/btn/volumeOn.png";
-                volumeBtn.setStyle("-fx-background-image: url(" + volumeOn + ")");
-            }
+            updateVolumeButtonIcon(newValue.doubleValue());
         });
-
-
     }
 
+    /**
+     * Updates the volume button's background image based on the current volume level.
+     * @param volume The current volume level.
+     */
+    private void updateVolumeButtonIcon(double volume) {
+        String iconPath = (volume == 0) ? "/img/btn/volumeOff.png" : "/img/btn/volumeOn.png";
+        volumeBtn.setStyle("-fx-background-image: url(" + iconPath + ")");
+    }
+
+/**
+ * Toggles the visibility and interactivity of the volume slider in the UI.
+ * If the slider is currently invisible (opacity is 0), it is made visible and interactive.
+ * If it is visible, it is made invisible and non-interactive.
+ */
     public void changeVolume(){
         if (volumeSlider.getOpacity() == 0) {
             volumeSlider.setDisable(false);

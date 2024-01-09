@@ -246,6 +246,12 @@ public class GameManager implements Initializable {
         timeline.pause();
     }
 
+    /**
+     * Handles the key press events for game controls and pause functionality.
+     * If ESCAPE is pressed, the game is either paused or resumed, depending on the current state.
+     * Movement controls are processed if the game is not won and not paused.
+     * @param event The KeyEvent triggered by pressing a key.
+     */
     public void keyPressed(KeyEvent event) {
         if (!won && event.getCode() == KeyCode.ESCAPE) {
             if (!isPaused) {
@@ -296,6 +302,10 @@ public class GameManager implements Initializable {
         }
     }
 
+    /**
+     * Handles key release events to stop movement in the respective direction.
+     * @param event The KeyEvent triggered by releasing a key.
+     */
     public void keyReleased(KeyEvent event) {
         pgn.setImage(pgnStill);
         switch (event.getCode()) {
@@ -314,6 +324,11 @@ public class GameManager implements Initializable {
                 break;
         }
     }
+
+    /**
+     * Continuously updates the character's position if movement keys are pressed.
+     * This method is called in every frame while the AnimationTimer is active.
+     */
      public void continuousMovement() {
         new AnimationTimer() {
             @Override
@@ -367,6 +382,13 @@ public class GameManager implements Initializable {
             }
         }.start();
     }
+
+    /**
+     * Determines if the character can move to the specified new X and Y positions based on tile type.
+     * @param newX The potential new X position for the character.
+     * @param newY The potential new Y position for the character.
+     * @return true if the character can move to the position, false otherwise.
+     */
     public boolean canMoveTo(double newX, double newY) {
         return mazeM.getTileType((int) newX , (int) newY) == 0;
     }
@@ -381,7 +403,6 @@ public class GameManager implements Initializable {
             volumeSlider.setOpacity(0);
         }
     }
-
 }
 
 
