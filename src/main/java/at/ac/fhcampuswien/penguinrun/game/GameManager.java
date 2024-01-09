@@ -174,14 +174,25 @@ public class GameManager implements Initializable {
         timeline.play();
     }
 
+    /**
+     * Pauses the game by performing the following actions:
+     * Sets the flag 'stopTimer' to true, indicating that the game timer should be paused.
+     * Makes the pause dimming overlay visible, providing a visual indication of the game pause.
+     * Displays the pause menu, allowing the player to access various options during the pause.
+     * Pauses the timeline
+     */
     private void pauseGame() {
-        // Zeige das Pause-Menü
         stopTimer = true;
         pauseDimm.setVisible(true);
         pauseMenu.setVisible(true);
         timeline.pause();
     }
 
+    /**
+     * Resumes the game, setting it back to normal state by hiding the pause dimming overlay,
+     * displaying the game TilePane, and hiding the pause menu. Additionally, any safety prompts
+     * or exit confirmations are hidden, and the game timer is allowed to continue.
+     */
     public void resumeGame() {
         stopTimer = false;
         pauseDimm.setVisible(false);
@@ -193,51 +204,66 @@ public class GameManager implements Initializable {
         isPaused = false;
     }
 
+    /**
+     * Handles the transition back to the main menu. If the exit confirmation is activated, it performs
+     * the actual return to the main menu. Otherwise, it displays the exit confirmation prompt.
+     */
     public void backToMainMenu() {
         if (exitConfirmation) {
-            // Wenn die Exit-Bestätigung aktiviert ist, dann führe die Rückkehr zum Hauptmenü durch
+            // Exit confirmation is activated
             performBackToMainMenu();
             safe.setVisible(false);
         } else {
-            // Wenn die Exit-Bestätigung nicht aktiviert ist, dann zeige die Bestätigungsfrage
+            // Exit confirmation is not activated
             showExitConfirmation();
         }
     }
 
+    /**
+     * Displays the exit confirmation prompt, activating the exitConfirmation flag and showing the
+     * confirmation message.
+     */
     private void showExitConfirmation() {
         exitConfirmation = true;
-        //System.out.println("Möchten Sie das Spiel wirklich beenden? Wenn ja drücken Sie nochmal auf den Hauptmenu Button");
         safe.setVisible(true);
     }
 
+    /**
+     * Performs the transition back to the main menu. Loads the start menu FXML file, creates a new
+     * scene with the start menu, sets the CSS styling, and sets the scene on the current stage (window).
+     * Shows the stage and resets the exit confirmation flag as the return to the main menu is completed.
+     */
     private void performBackToMainMenu() {
         try {
-            // Lade die Startmenü-FXML-Datei
+            // Load the start menu FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/at/ac/fhcampuswien/penguinrun/start-menu.fxml"));
             Pane startMenuPane = loader.load();
 
-            // Erstelle eine neue Szene mit dem Startmenü
+            // Create a new scene with the start menu
             Scene startMenuScene = new Scene(startMenuPane, GameSettings.windowWidth, GameSettings.windowHeight);
 
-            // Lade css
+            // Load css styling
             startMenuScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/at/ac/fhcampuswien/penguinrun/style.css")).toExternalForm());
 
-            // Hole die Stage vom aktuellen Node, Tilepane
+            // Get the stage from the current node (Tilepane)
             Stage stage = (Stage) tilePane.getScene().getWindow();
 
-            // Setze die Scene auf die Stage
+            /// Set the scene on the stage
             stage.setScene(startMenuScene);
 
-            // Zeigt Stage
             stage.show();
 
-            // Setze die Exit-Bestätigung zurück, da wir nun zum Hauptmenü zurückgekehrt sind
+            // Reset the exit confirmation, as we have now returned to the main menu
             exitConfirmation = false;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Displays the win screen when called. Sets the 'won' flag to true, makes the background dimmed,
+     * shows the win screen, and pauses the timeline.
+     */
     public void winScreen(){
         won = true;
         dimmBackground.setVisible(true);
@@ -393,6 +419,11 @@ public class GameManager implements Initializable {
         return mazeM.getTileType((int) newX , (int) newY) == 0;
     }
 
+    /**
+     * Toggles the visibility and enablement of the volume slider.
+     * If the volume slider is not visible (opacity is 0), it sets it to visible and enables it.
+     * If the volume slider is visible, it disables and hides it by setting the opacity to 0.
+     */
     public void changeVolume(){
         if (volumeSlider.getOpacity() == 0) {
             volumeSlider.setDisable(false);

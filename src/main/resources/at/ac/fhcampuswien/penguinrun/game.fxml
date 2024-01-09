@@ -43,7 +43,7 @@
                <Cursor fx:constant="HAND" />
             </cursor></Button>
       </Pane>
-      <!-- Inhalte des Pause-Menüs -->
+      <!-- Pause menu -->
       <Text fx:id="safe" fill="#ff3838" layoutX="480.0" layoutY="420.0" stroke="WHITE" strokeWidth="0.0" text="Das aktuelle Spiel wird hierbeibeendet!" visible="false" />
       <!--Countdown Label-->
       <Label id="whiteLabel" fx:id="countdownLabel" layoutX="1121.0" prefHeight="49.0" prefWidth="159.0" />
