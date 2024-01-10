@@ -144,6 +144,11 @@ public class Difficulty {
         difficulty = GameSettings.hard;
     }
 
+    /**
+     * Toggles the visibility and interactivity of the volume slider in the UI.
+     * If the slider is currently invisible (opacity is 0), it is made visible and interactive.
+     * If it is visible, it is made invisible and non-interactive.
+     */
     public void changeVolume(){
         if (volumeSlider.getOpacity() == 0) {
             volumeSlider.setDisable(false);

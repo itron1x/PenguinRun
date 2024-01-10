@@ -210,11 +210,9 @@ public class GameManager implements Initializable {
      */
     public void backToMainMenu() {
         if (exitConfirmation) {
-            // Exit confirmation is activated
             performBackToMainMenu();
             safe.setVisible(false);
         } else {
-            // Exit confirmation is not activated
             showExitConfirmation();
         }
     }
@@ -239,21 +237,14 @@ public class GameManager implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/at/ac/fhcampuswien/penguinrun/start-menu.fxml"));
             Pane startMenuPane = loader.load();
 
-            // Create a new scene with the start menu
             Scene startMenuScene = new Scene(startMenuPane, GameSettings.windowWidth, GameSettings.windowHeight);
 
-            // Load css styling
             startMenuScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/at/ac/fhcampuswien/penguinrun/style.css")).toExternalForm());
 
-            // Get the stage from the current node (Tilepane)
             Stage stage = (Stage) tilePane.getScene().getWindow();
-
-            /// Set the scene on the stage
             stage.setScene(startMenuScene);
-
             stage.show();
 
-            // Reset the exit confirmation, as we have now returned to the main menu
             exitConfirmation = false;
         } catch (IOException e) {
             e.printStackTrace();
@@ -363,8 +354,6 @@ public class GameManager implements Initializable {
                 if (secondsRemaining <= 0) {
                     return;
                 }
-
-
                     double borderStart = pgn.getLayoutX();
                     double playerWidth = pgn.getFitWidth();
 

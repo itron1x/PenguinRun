@@ -44,24 +44,15 @@ public class StartMenu {
      * It also updates the volume button's style to reflect the current volume state (on or off).
      */
     public void initialize() {
-        // Load saved volume setting
         String volumeSetting = MediaManager.loadSetting("volume", "0.1");
         double volume = Double.parseDouble(volumeSetting);
 
-        // Initial value of volume slider
         volumeSlider.setValue(volume);
-
-        // Loaded volume setting
         MediaManager.setVolume(volume);
-
-        // Slider configuring
         volumeSlider.setSnapToTicks(true);
         volumeSlider.setMajorTickUnit(0.25);
-
-        // Update the volume button icon based on the current volume
         updateVolumeButtonIcon(volume);
 
-        // listener to save the volume setting whenever it is changed by the user
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             MediaManager.setVolume(newValue.doubleValue()); // Adjust and save the volume setting
             updateVolumeButtonIcon(newValue.doubleValue());
