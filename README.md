@@ -15,6 +15,7 @@
         <p>The goal is to get to the end of the maze before the time runs out. 
         The exit is located at the bottom right of the maze.</p>
     </div>
-    <div id="image"><img src="src/main/resources/img/pgnBig.png" alt="Penguin Run" height="200"></div>
+    <h2 align="center">HAVE FUN</h2>
+    <div align="center"><img src="src/main/resources/img/pgnBig.png" alt="Penguin Run" height="200"></div>
 </div>
 
