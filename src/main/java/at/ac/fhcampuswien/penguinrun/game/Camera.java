@@ -26,8 +26,8 @@ public class Camera{
      * This method is responsible for the camera movement. It is used in the continuousMovement class. The character
      * is fixated in the middle of the screen, this method also makes sure that the camera movement works as it should
      * regarding the outer bounds of the map.
-     * @param penX this is the X coordinate of the camera position currently on the map
-     * @param penY this is the Y coordinate of the camera position currently on the map
+     * @param penX this is the X coordinate of the player position currently on the map
+     * @param penY this is the Y coordinate of the player position currently on the map
      */
     public void updateCamPos(double penX, double penY){
         cameraX = penX -((screenWidth)/2 - GameSettings.scale * 10);
