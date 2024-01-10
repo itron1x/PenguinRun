@@ -1,6 +1,6 @@
 <img src="src/main/resources/img/logo.png" alt="Penguin Run" width=100% height=100%>
 
-<div style="display: inline-flex">
+<div>
     <div id="text">
         <h2 style="color: #ed9e70"> How to start game </h2>
         <p>
@@ -15,6 +15,6 @@
         <p>The goal is to get to the end of the maze before the time runs out. 
         The exit is located at the bottom right of the maze.</p>
     </div>
-    <div id="image"><img src="src/main/resources/img/pgnBig.png" alt="Penguin Run"></div>
+    <div id="image"><img src="src/main/resources/img/pgnBig.png" alt="Penguin Run" height="200"></div>
 </div>
 
