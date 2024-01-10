@@ -31,7 +31,17 @@
             <Text id="startText" fill="WHITE" layoutX="320.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Drücken Sie eine beliebige Taste, um zu starten &gt;" />
             <Text id="startText" fill="#a1a1a1" layoutX="59.0" layoutY="705.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;- Lautstärke ändern!" />
          </children></Pane>
-      <Text fx:id="end" layoutX="520.0" layoutY="480.0" text="Sie haben gewonnen!" visible="false" />
+      <Pane id="gameWon" fx:id="gameWon" visible="false">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="720.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
+            <Text fill="WHITE" layoutX="393.0" layoutY="300.0" text="Sie haben gewonnen!" />
+            <Button fx:id="mainMenuBtn" layoutX="499.0" layoutY="348.0" mnemonicParsing="false" onAction="#backToMainMenu" text="SPIEL BEENDEN">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </Pane>
       <Pane fx:id="pauseMenu" visible="false">
          <Rectangle fx:id="pauseDimm" arcHeight="5.0" arcWidth="5.0" height="720.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" visible="false" width="1280.0" />
          <Button fx:id="resumeBtn" layoutX="500.0" layoutY="250.0" mnemonicParsing="false" onAction="#resumeGame" text="FORTSETZEN">

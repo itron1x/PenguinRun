@@ -132,11 +132,11 @@
     -fx-background-size: 100%;
     -fx-background-position: center;
 }
-#end {
+#gameWon{
     -fx-background-color: transparent;
     -fx-font-family: Maze;
-    -fx-text-fill: red;
-    -fx-font-size: 25;
+    -fx-text-fill: white;
+    -fx-font-size: 55;
 }
 #whiteLabel {
     -fx-font-family: Maze;

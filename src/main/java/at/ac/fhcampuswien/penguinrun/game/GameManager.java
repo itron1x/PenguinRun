@@ -44,6 +44,8 @@ public class GameManager implements Initializable {
     @FXML
     private Text end;
     @FXML
+    private Pane gameWon;
+    @FXML
     private Label countdownLabel;
     @FXML
     private Slider volumeSlider;
@@ -116,8 +118,6 @@ public class GameManager implements Initializable {
     public void initialize(URL location, ResourceBundle resources){
         camera = new Camera(GameSettings.windowWidth, GameSettings.windowHeight,mapHeight);
         continuousMovement();
-
-        end.setVisible(false);
 
         // initialize Countdown
         countdownLabel.setText(secondsRemaining + " seconds");
@@ -257,9 +257,8 @@ public class GameManager implements Initializable {
      */
     public void winScreen(){
         won = true;
-        dimmBackground.setVisible(true);
+        gameWon.setVisible(true);
         System.out.println("Win");
-        end.setVisible(true);
         timeline.pause();
     }
 
