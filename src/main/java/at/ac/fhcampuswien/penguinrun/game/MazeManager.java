@@ -146,7 +146,7 @@ import java.util.Collections;
          * @param x the horizontal axis of the coordinates.
          * @return returns the Integer value of the corresponding game board tile.
          */
-        public int getTileType(int y, int x){
+        public int getTileType(int y, int x) throws NullPointerException{
             int indexY = (int) Math.floor(Math.abs(y)/(double) width);
             int indexX = (int) Math.floor(Math.abs(x)/(double) height);
             return gameBoard[indexX][indexY];

@@ -9,7 +9,7 @@
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@/img/bgMenu.jpg" />
+            <Image url="@img/bgMenu.jpg" />
          </image>
       </ImageView>
       <Button id="backBtn" fx:id="backBtn" cancelButton="true" layoutX="14.0" layoutY="32.0" mnemonicParsing="false" onAction="#onBack" prefHeight="32.0" prefWidth="157.0" text="&lt; ZURÜCK">
@@ -33,9 +33,10 @@
             <Cursor fx:constant="HAND" />
          </cursor></Button>
       <Slider fx:id="volumeSlider" blockIncrement="0.1" disable="true" focusTraversable="false" layoutX="16.0" layoutY="534.0" majorTickUnit="0.25" max="1.0" opacity="0.0" orientation="VERTICAL" value="0.1" />
-      <Button fx:id="volumeBtn" focusTraversable="false" layoutX="7.0" layoutY="681.0" mnemonicParsing="false" onAction="#changeVolume" prefHeight="25.0" prefWidth="31.0">
+      <ImageView fx:id="volumeImage" fitHeight="25.0" fitWidth="31.0" layoutX="7.0" layoutY="681.0" onMouseClicked="#changeVolume" pickOnBounds="true" preserveRatio="true">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></Button>
+         </cursor>
+      </ImageView>
    </children>
 </Pane>

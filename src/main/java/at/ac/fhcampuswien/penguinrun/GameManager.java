@@ -1,6 +1,9 @@
-package at.ac.fhcampuswien.penguinrun.game;
+package at.ac.fhcampuswien.penguinrun;
 
-import at.ac.fhcampuswien.penguinrun.Difficulty;
+import at.ac.fhcampuswien.penguinrun.game.Camera;
+import at.ac.fhcampuswien.penguinrun.game.GameSettings;
+import at.ac.fhcampuswien.penguinrun.game.MazeManager;
+import at.ac.fhcampuswien.penguinrun.game.MediaManager;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -29,7 +32,7 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 
 public class GameManager implements Initializable {
-    public double mapHeight = (10*GameSettings.scale)*Difficulty.getDifficulty();
+    public double mapHeight = (10* GameSettings.scale)*Difficulty.getDifficulty();
     private double newX;
     private double newY;
     private Camera camera;
@@ -56,7 +59,7 @@ public class GameManager implements Initializable {
     @FXML
     private Pane startText;
     @FXML
-    private Button volumeBtn;
+    private ImageView volumeImage;
     private int secondsRemaining = 200;
     private Timeline timeline;
     private boolean isPaused = false;
@@ -68,8 +71,10 @@ public class GameManager implements Initializable {
     private boolean won = false;
     private boolean stopTimer = false;
     private final int speed = GameSettings.speed; //Movement Speed Penguin
-    private static final Image pgnStill = new Image("img/pgnStill.png",true);
-    private static final Image pgnAnim = new Image("img/pgnAnim.gif",true);
+    private static final Image pgnStill = new Image(Objects.requireNonNull(GameManager.class.getResource("img/pgnStill.png")).toExternalForm(),true);
+    private static final Image pgnAnim = new Image(Objects.requireNonNull(GameManager.class.getResource("img/pgnAnim.gif")).toExternalForm(),true);
+    private final Image volumeOff = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOff.png")).toExternalForm());
+    private final Image volumeOn = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOn.png")).toExternalForm());
     private MazeManager mazeM;
 
     /**
@@ -148,30 +153,28 @@ public class GameManager implements Initializable {
         volumeSlider.setSnapToTicks(true);
         volumeSlider.setMajorTickUnit(0.25);
 
-        if(volumeSlider.getValue() == 0){
-            String volumeOff = "/img/btn/volumeOff.png";
-            volumeBtn.setStyle("-fx-background-image: url(" + volumeOff + ")");
-        } else {
-            String volumeOn = "/img/btn/volumeOn.png";
-            volumeBtn.setStyle("-fx-background-image: url(" + volumeOn + ")");
-        }
+        updateVolumeButtonIcon(volume);
 
         // listener to save the volume setting whenever it is changed by the user
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             MediaManager.setVolume(newValue.doubleValue()); // Adjust and save the volume setting
             MediaManager.saveSetting("volume", String.valueOf(newValue.doubleValue()));
-            if(volumeSlider.getValue() == 0){
-                String volumeOff = "/img/btn/volumeOff.png";
-                volumeBtn.setStyle("-fx-background-image: url(" + volumeOff + ")");
-            } else {
-                String volumeOn = "/img/btn/volumeOn.png";
-                volumeBtn.setStyle("-fx-background-image: url(" + volumeOn + ")");
-            }
+            updateVolumeButtonIcon(newValue.doubleValue());
+
         });
     }
     public void startTimer(KeyEvent event){
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+    }
+
+    /**
+     * Updates the volume button's background image based on the current volume level.
+     * @param volume The current volume level.
+     */
+    private void updateVolumeButtonIcon(double volume) {
+        if(volume == 0) volumeImage.setImage(volumeOff);
+        else volumeImage.setImage(volumeOn);
     }
 
     /**
@@ -234,12 +237,12 @@ public class GameManager implements Initializable {
     private void performBackToMainMenu() {
         try {
             // Load the start menu FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/at/ac/fhcampuswien/penguinrun/start-menu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("start-menu.fxml"));
             Pane startMenuPane = loader.load();
 
             Scene startMenuScene = new Scene(startMenuPane, GameSettings.windowWidth, GameSettings.windowHeight);
 
-            startMenuScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/at/ac/fhcampuswien/penguinrun/style.css")).toExternalForm());
+            startMenuScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
 
             Stage stage = (Stage) tilePane.getScene().getWindow();
             stage.setScene(startMenuScene);

@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.penguinrun;
 
+import at.ac.fhcampuswien.penguinrun.game.GameSettings;
 import at.ac.fhcampuswien.penguinrun.game.MediaManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,18 +24,20 @@ public class StartMenu {
     private Slider volumeSlider;
 
     @FXML
-    private Button volumeBtn;
+    private ImageView volumeImage;
+    private final Image volumeOff = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOff.png")).toExternalForm());
+    private final Image volumeOn = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOn.png")).toExternalForm());
 
     /**
      * Method for loading the difficulty screen.
      */
     public void onStart() throws IOException {
         Stage stage = (Stage) startBtn.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("difficulty.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("difficulty.fxml"));
         Parent root = loader.load();
 
-        Scene scene = new Scene(root, 1280,720);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/at/ac/fhcampuswien/penguinrun/style.css")).toExternalForm());
+        Scene scene = new Scene(root, GameSettings.windowWidth,GameSettings.windowHeight);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
         stage.setTitle("PenguinRun");
         stage.setScene(scene);
     }
@@ -55,6 +60,7 @@ public class StartMenu {
 
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             MediaManager.setVolume(newValue.doubleValue()); // Adjust and save the volume setting
+            MediaManager.saveSetting("volume", String.valueOf(newValue.doubleValue()));
             updateVolumeButtonIcon(newValue.doubleValue());
         });
     }
@@ -64,8 +70,8 @@ public class StartMenu {
      * @param volume The current volume level.
      */
     private void updateVolumeButtonIcon(double volume) {
-        String iconPath = (volume == 0) ? "/img/btn/volumeOff.png" : "/img/btn/volumeOn.png";
-        volumeBtn.setStyle("-fx-background-image: url(" + iconPath + ")");
+        if(volume == 0) volumeImage.setImage(volumeOff);
+        else volumeImage.setImage(volumeOn);
     }
 
 /**

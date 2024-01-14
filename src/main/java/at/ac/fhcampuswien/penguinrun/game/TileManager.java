@@ -2,23 +2,25 @@ package at.ac.fhcampuswien.penguinrun.game;
 
 import javafx.scene.image.Image;
 
+import java.util.Objects;
+
 public class TileManager {
-    public final static Image bg = new Image("tiles/tileBG.jpg", true);
-    public final static Image wallNSWE = new Image("tiles/tileNSWE.jpg", true);
-    public final static Image wallNSW = new Image("tiles/tileNSW.jpg", true);
-    public final static Image wallNSE = new Image("tiles/tileNSE.jpg", true);
-    public final static Image wallNWE = new Image("tiles/tileNWE.jpg", true);
-    public final static Image wallSWE = new Image("tiles/tileSWE.jpg", true);
-    public final static Image wallNW = new Image("tiles/tileNW.jpg", true);
-    public final static Image wallNE = new Image("tiles/tileNE.jpg", true);
-    public final static Image wallSW = new Image("tiles/tileSW.jpg", true);
-    public final static Image wallSE = new Image("tiles/tileSE.jpg", true);
-    public final static Image wallNS = new Image("tiles/tileNS.jpg", true);
-    public final static Image wallWE = new Image("tiles/tileWE.jpg", true);
-    public final static Image wallN = new Image("tiles/tileN.jpg", true);
-    public final static Image wallS = new Image("tiles/tileS.jpg", true);
-    public final static Image wallW = new Image("tiles/tileW.jpg", true);
-    public final static Image wallE = new Image("tiles/tileE.jpg", true);
+    public final static Image bg = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileBG.jpg")).toExternalForm(), true);
+    public final static Image wallNSWE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNSWE.jpg")).toExternalForm(), true);
+    public final static Image wallNSW = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNSW.jpg")).toExternalForm(), true);
+    public final static Image wallNSE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNSE.jpg")).toExternalForm(), true);
+    public final static Image wallNWE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNWE.jpg")).toExternalForm(), true);
+    public final static Image wallSWE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileSWE.jpg")).toExternalForm(), true);
+    public final static Image wallNW = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNW.jpg")).toExternalForm(), true);
+    public final static Image wallNE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNE.jpg")).toExternalForm(), true);
+    public final static Image wallSW = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileSW.jpg")).toExternalForm(), true);
+    public final static Image wallSE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileSE.jpg")).toExternalForm(), true);
+    public final static Image wallNS = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNS.jpg")).toExternalForm(), true);
+    public final static Image wallWE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileWE.jpg")).toExternalForm(), true);
+    public final static Image wallN = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileN.jpg")).toExternalForm(), true);
+    public final static Image wallS = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileS.jpg")).toExternalForm(), true);
+    public final static Image wallW = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileW.jpg")).toExternalForm(), true);
+    public final static Image wallE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileE.jpg")).toExternalForm(), true);
 
     /**
      * Changes the walls to an Integer value depending on where the neighbor walls are.
@@ -79,7 +81,8 @@ public class TileManager {
         }
         gameBoard[0][0] = 13;
         gameBoard[1][0] = 0;
-        gameBoard[2][0] = 14;
+        if (gameBoard[2][1] == 0)gameBoard[2][0] = 14;
+        else gameBoard[2][0] = 9;
         gameBoard[size - 3][size - 1] = 12;
         gameBoard[size - 2][size - 1] = 0;
         gameBoard[size - 1][size - 1] = 15;

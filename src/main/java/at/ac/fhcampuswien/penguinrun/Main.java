@@ -24,8 +24,8 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("start-menu.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), GameSettings.windowWidth, GameSettings.windowHeight);
 
-        Image icon = new Image("/img/pgnBig.png");
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/at/ac/fhcampuswien/penguinrun/style.css")).toExternalForm());
+        Image icon = new Image(Objects.requireNonNull(getClass().getResource("img/pgnBig.png")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
         stage.setTitle("PenguinRun");
         stage.getIcons().add(icon);
         stage.setResizable(false);

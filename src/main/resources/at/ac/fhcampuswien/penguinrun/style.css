@@ -1,13 +1,13 @@
 #startBtn{
     -fx-background-color: transparent;
-    -fx-background-image: url("/img/btn/btnStartUnsel.png");
+    -fx-background-image: url("img/btn/btnStartUnsel.png");
     -fx-background-size: 105%;
     -fx-background-position: center;
 }
 
 #startBtn:hover{
     -fx-background-color: transparent;
-    -fx-background-image: url("/img/btn/btnStartSel.png");
+    -fx-background-image: url("img/btn/btnStartSel.png");
     -fx-background-size: 105%;
     -fx-background-position: center;
 }
@@ -30,58 +30,58 @@
 
 #einfachBtn{
     -fx-background-color: transparent;
-    -fx-background-image: url("/img/btn/einfachBW.png");
+    -fx-background-image: url("img/btn/einfachBW.png");
     -fx-background-size: 105%;
     -fx-background-position: center;
 }
 #einfachBtn:hover{
     -fx-background-color: transparent;
-    -fx-background-image: url("/img/btn/einfachUnsel.png");
+    -fx-background-image: url("img/btn/einfachUnsel.png");
     -fx-background-size: 105%;
     -fx-background-position: center;
 }
 #einfachBtn:focused{
     -fx-background-color: transparent;
-    -fx-background-image: url("/img/btn/einfachSel.png");
+    -fx-background-image: url("img/btn/einfachSel.png");
     -fx-background-size: 105%;
     -fx-background-position: center;
 }
 
 #mittelBtn{
     -fx-background-color: transparent;
-    -fx-background-image: url("/img/btn/mittelBW.png");
+    -fx-background-image: url("img/btn/mittelBW.png");
     -fx-background-size: 105%;
     -fx-background-position: center;
 }
 #mittelBtn:hover{
     -fx-background-color: transparent;
-    -fx-background-image: url("/img/btn/mittelUnsel.png");
+    -fx-background-image: url("img/btn/mittelUnsel.png");
     -fx-background-size: 105%;
     -fx-background-position: center;
 }
 #mittelBtn:focused{
     -fx-background-color: transparent;
-    -fx-background-image: url("/img/btn/mittelSel.png");
+    -fx-background-image: url("img/btn/mittelSel.png");
     -fx-background-size: 105%;
     -fx-background-position: center;
 }
 
 #schwerBtn{
     -fx-background-color: transparent;
-    -fx-background-image: url("/img/btn/schwerBW.png");
+    -fx-background-image: url("img/btn/schwerBW.png");
     -fx-background-size: 105%;
     -fx-background-position: center;
 }
 #schwerBtn:hover{
     -fx-background-color: transparent;
-    -fx-background-image: url("/img/btn/schwerUnsel.png");
+    -fx-background-image: url("img/btn/schwerUnsel.png");
     -fx-background-size: 105%;
     -fx-background-position: center;
     -fx-text-fill: orange;
 }
 #schwerBtn:focused{
     -fx-background-color: transparent;
-     -fx-background-image: url("/img/btn/schwerSel.png");
+     -fx-background-image: url("img/btn/schwerSel.png");
      -fx-background-size: 105%;
      -fx-background-position: center;
  }
@@ -110,25 +110,25 @@
 }
 #startGameBtn{
     -fx-background-color: transparent;
-    -fx-background-image: url("/img/btn/startgameUNSEL.png");
+    -fx-background-image: url("img/btn/startgameUNSEL.png");
     -fx-background-size: 100%;
     -fx-background-position: center;
 }
 #startGameBtn:hover{
     -fx-background-color: transparent;
-    -fx-background-image: url("/img/btn/startgameSEL.png");
+    -fx-background-image: url("img/btn/startgameSEL.png");
     -fx-background-size: 100%;
     -fx-background-position: center;
 }
 #startGameBtn:focused{
     -fx-background-color: transparent;
-    -fx-background-image: url("/img/btn/startgameSEL.png");
+    -fx-background-image: url("img/btn/startgameSEL.png");
     -fx-background-size: 100%;
     -fx-background-position: center;
 }
 #startGameBtn:disabled{
     -fx-background-color: transparent;
-    -fx-background-image: url("/img/btn/startgameGR.png");
+    -fx-background-image: url("img/btn/startgameGR.png");
     -fx-background-size: 100%;
     -fx-background-position: center;
 }
@@ -149,10 +149,4 @@
         -fx-text-fill: white;
         -fx-font-size: 30;
         -fx-effect: dropshadow(gaussian, #223d54, 0,0,0,1);
-}
-#volumeBtn {
-    -fx-background-color: transparent;
-    -fx-background-image: url("/img/btn/volumeOn.png");
-    -fx-background-size: 100%;
-    -fx-background-position: center;
 }

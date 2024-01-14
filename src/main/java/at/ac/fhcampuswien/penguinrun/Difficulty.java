@@ -1,6 +1,5 @@
 package at.ac.fhcampuswien.penguinrun;
 
-import at.ac.fhcampuswien.penguinrun.game.GameManager;
 import at.ac.fhcampuswien.penguinrun.game.GameSettings;
 import at.ac.fhcampuswien.penguinrun.game.MediaManager;
 import javafx.event.EventHandler;
@@ -10,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -31,7 +32,9 @@ public class Difficulty {
     @FXML
     private Slider volumeSlider;
     @FXML
-    private Button volumeBtn;
+    private ImageView volumeImage;
+    private final Image volumeOff = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOff.png")).toExternalForm());
+    private final Image volumeOn = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOn.png")).toExternalForm());
 
     /**
      * Initializes the controller class. This method is automatically called after the FXML file has been loaded.
@@ -60,8 +63,10 @@ public class Difficulty {
         // listener to save the volume setting whenever it is changed by the user
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             MediaManager.setVolume(newValue.doubleValue()); // Adjust and save the volume setting
+            MediaManager.saveSetting("volume", String.valueOf(newValue.doubleValue()));
             updateVolumeButtonIcon(newValue.doubleValue());
         });
+
     }
 
     /**
@@ -69,9 +74,10 @@ public class Difficulty {
      * @param volume The current volume level.
      */
     private void updateVolumeButtonIcon(double volume) {
-        String iconPath = (volume == 0) ? "/img/btn/volumeOff.png" : "/img/btn/volumeOn.png";
-        volumeBtn.setStyle("-fx-background-image: url(" + iconPath + ")");
+        if(volume == 0) volumeImage.setImage(volumeOff);
+        else volumeImage.setImage(volumeOn);
     }
+
 
 
     /**
@@ -83,7 +89,7 @@ public class Difficulty {
         Parent root = loader.load();
 
         Scene scene = new Scene(root, GameSettings.windowWidth,GameSettings.windowHeight);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/at/ac/fhcampuswien/penguinrun/style.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
         stage.setTitle("PenguinRun");
         stage.setScene(scene);
     }
@@ -93,12 +99,14 @@ public class Difficulty {
      */
     public void startGame() throws IOException {
         Stage stage = (Stage) backBtn.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("game.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("game.fxml"));
         Parent root = loader.load();
         GameManager controllerPlayer = loader.getController();
 
         Scene scene = new Scene(root, GameSettings.windowWidth,GameSettings.windowHeight);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/at/ac/fhcampuswien/penguinrun/style.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
+
+        controllerPlayer.generateMaze(difficulty);
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -117,9 +125,6 @@ public class Difficulty {
 
         stage.setTitle("PenguinRun");
         stage.setScene(scene);
-
-        GameManager game = loader.getController();
-        game.generateMaze(difficulty);
     }
 
     /**
