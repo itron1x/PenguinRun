@@ -18,8 +18,8 @@ public class Camera{
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.mapSize = mapSize;
-        this.cameraX = GameSettings.scale * 10;
-        this.cameraY = GameSettings.scale * 10;
+        this.cameraX = GameSettings.SCALE * 10;
+        this.cameraY = GameSettings.SCALE * 10;
     }
 
     /**
@@ -30,8 +30,8 @@ public class Camera{
      * @param penY this is the Y coordinate of the player position currently on the map
      */
     public void updateCamPos(double penX, double penY){
-        cameraX = penX -((screenWidth)/2 - GameSettings.scale * 10);
-        cameraY = penY - ((screenHeight)/2 - GameSettings.scale * 20);
+        cameraX = penX -((screenWidth)/2 - GameSettings.SCALE * 10);
+        cameraY = penY - ((screenHeight)/2 - GameSettings.SCALE * 20);
         cameraX = Math.max(0, Math.min(mapSize-screenWidth, cameraX));
         cameraY = Math.max(0,Math.min(mapSize-screenHeight,cameraY));
     }

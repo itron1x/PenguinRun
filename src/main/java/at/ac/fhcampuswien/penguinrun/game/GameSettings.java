@@ -1,11 +1,12 @@
 package at.ac.fhcampuswien.penguinrun.game;
 
 public class GameSettings {
-    public static final int scale = 6; //Only even numbers
-    public static final int windowWidth = 1280;
-    public static final int windowHeight = 720;
-    public static final int speed = 5;
-    public static final int easy = 25;
-    public static final int middle = 51;
-    public static final int hard = 101;
+    public static final int SCALE = 6; //Only even numbers
+    public static final int WINDOW_WIDTH = 1280;
+    public static final int WINDOW_HEIGHT = 720;
+    public static final int SPEED = 5;
+    public static final int EASY = 25;
+    public static final int MIDDLE = 51;
+    public static final int HARD = 101;
+    public static double volume = 0.5;
 }

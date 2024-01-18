@@ -36,37 +36,26 @@ public class Difficulty {
     private final Image volumeOff = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOff.png")).toExternalForm());
     private final Image volumeOn = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOn.png")).toExternalForm());
 
+    public Difficulty() {
+        volumeSlider = MediaManager.volumeSlider;
+        volumeImage = MediaManager.volumeImage;
+    }
+
     /**
      * Initializes the controller class. This method is automatically called after the FXML file has been loaded.
-     * It sets up the initial state of the volume slider based on the saved settings, configures it for proper
-     * increments, and establishes a listener to update and save the volume setting whenever it is adjusted by the user.
+     * It sets up the initial state of the volume slider based on the saved settings.
+     * And it establishes a listener to update and save the volume setting whenever it is adjusted by the user.
      * It also updates the volume button's style to reflect the current volume state (on or off).
      */
     public void initialize() {
-        // Load saved volume setting
-        String volumeSetting = MediaManager.loadSetting("volume", "0.1");
-        double volume = Double.parseDouble(volumeSetting);
-
-        // Initial value of volume slider
-        volumeSlider.setValue(volume);
-
-        // Loaded volume setting
-        MediaManager.setVolume(volume);
-
-        // Slider configuring
-        volumeSlider.setSnapToTicks(true);
-        volumeSlider.setMajorTickUnit(0.25);
-
-        // Update the volume button icon based on the current volume
-        updateVolumeButtonIcon(volume);
-
-        // listener to save the volume setting whenever it is changed by the user
-        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            MediaManager.setVolume(newValue.doubleValue()); // Adjust and save the volume setting
-            MediaManager.saveSetting("volume", String.valueOf(newValue.doubleValue()));
-            updateVolumeButtonIcon(newValue.doubleValue());
-        });
-
+        volumeSlider.setValue(GameSettings.volume);
+        if (GameSettings.volume == 0) volumeImage.setImage(MediaManager.volumeOff);
+        else volumeImage.setImage(MediaManager.volumeOn);
+        volumeSlider.valueProperty().
+                addListener((observable, oldValue, newValue) ->
+                {
+                    MediaManager.updateVolume(newValue.doubleValue(), volumeImage);
+                });
     }
 
     /**
@@ -88,11 +77,12 @@ public class Difficulty {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("start-menu.fxml"));
         Parent root = loader.load();
 
-        Scene scene = new Scene(root, GameSettings.windowWidth,GameSettings.windowHeight);
+        Scene scene = new Scene(root, GameSettings.WINDOW_WIDTH,GameSettings.WINDOW_HEIGHT);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
         stage.setTitle("PenguinRun");
         stage.setScene(scene);
     }
+
     /**
      * Game stage is loaded, key events are initialized and frozen start screen for the game is enabled.
      * The difficulty is given to the game manager class.
@@ -101,11 +91,11 @@ public class Difficulty {
         Stage stage = (Stage) backBtn.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("game.fxml"));
         Parent root = loader.load();
-        GameManager controllerPlayer = loader.getController();
 
-        Scene scene = new Scene(root, GameSettings.windowWidth,GameSettings.windowHeight);
+        Scene scene = new Scene(root, GameSettings.WINDOW_WIDTH,GameSettings.WINDOW_HEIGHT);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
 
+        GameManager controllerPlayer = loader.getController();
         controllerPlayer.generateMaze(difficulty);
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -132,21 +122,21 @@ public class Difficulty {
      */
     public void setEasy() {
         startGame.setDisable(false);
-        difficulty = GameSettings.easy;
+        difficulty = GameSettings.EASY;
     }
     /**
      * Difficulty set to middle.
      */
     public void setMiddle() {
         startGame.setDisable(false);
-        difficulty = GameSettings.middle;
+        difficulty = GameSettings.MIDDLE;
     }
     /**
      * Difficulty set to hard.
      */
     public void setHard() {
         startGame.setDisable(false);
-        difficulty = GameSettings.hard;
+        difficulty = GameSettings.HARD;
     }
 
     /**

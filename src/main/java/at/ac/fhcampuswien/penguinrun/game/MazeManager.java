@@ -8,8 +8,8 @@ import java.util.Collections;
     public class MazeManager {
         private final ArrayList<Integer> directions = new ArrayList<>();
         private final int size;
-        private final int height = 10 * GameSettings.scale;
-        private final int width = 10 * GameSettings.scale;
+        private final int height = 10 * GameSettings.SCALE;
+        private final int width = 10 * GameSettings.SCALE;
         private int[][] gameBoard;
         private final TilePane tilePane;
 

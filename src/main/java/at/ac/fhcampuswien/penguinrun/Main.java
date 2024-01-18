@@ -18,11 +18,9 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        MediaManager.music();
-        MediaManager.setVolume(0.1);
         Font.loadFont(Objects.requireNonNull(getClass().getResource("Maze.ttf")).toExternalForm(),10);
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("start-menu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), GameSettings.windowWidth, GameSettings.windowHeight);
+        Scene scene = new Scene(fxmlLoader.load(), GameSettings.WINDOW_WIDTH, GameSettings.WINDOW_HEIGHT);
 
         Image icon = new Image(Objects.requireNonNull(getClass().getResource("img/pgnBig.png")).toExternalForm());
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());

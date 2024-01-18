@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,7 +29,7 @@ import javafx.util.Duration;
 import at.ac.fhcampuswien.penguinrun.game.Countdown;
 
 public class GameManager implements Initializable {
-    public double mapHeight = (10* GameSettings.scale)*Difficulty.getDifficulty();
+    public double mapHeight = (10 * GameSettings.SCALE) * Difficulty.getDifficulty();
     private double newX;
     private double newY;
     private Camera camera;
@@ -67,18 +66,20 @@ public class GameManager implements Initializable {
     private boolean rightPressed = false; //D + RIGHT
     private boolean won = false;
     private boolean stopTimer = false;
-    private final int speed = GameSettings.speed; //Movement Speed Penguin
-    private static final Image pgnStill = new Image(Objects.requireNonNull(GameManager.class.getResource("img/pgnStill.png")).toExternalForm(),true);
-    private static final Image pgnAnim = new Image(Objects.requireNonNull(GameManager.class.getResource("img/pgnAnim.gif")).toExternalForm(),true);
-    private final Image volumeOff = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOff.png")).toExternalForm());
-    private final Image volumeOn = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOn.png")).toExternalForm());
+    private static final Image pgnStill = new Image(Objects.requireNonNull(GameManager.class.getResource("img/pgnStill.png")).toExternalForm(), true);
+    private static final Image pgnAnim = new Image(Objects.requireNonNull(GameManager.class.getResource("img/pgnAnim.gif")).toExternalForm(), true);
     private MazeManager mazeM;
-
-    private Countdown countdowntimer;
+    private Countdown countdownTimer;
     private Timeline labelUpdater;
+
+    public GameManager() {
+        volumeSlider = MediaManager.volumeSlider;
+        volumeImage = MediaManager.volumeImage;
+    }
 
     /**
      * Getter for the dim background.
+     *
      * @return Rectangle for dimming the background.
      */
     public Rectangle getDimmBackground() {
@@ -87,6 +88,7 @@ public class GameManager implements Initializable {
 
     /**
      * Getter for the text displayed in the beginning of a game.
+     *
      * @return the pane with the start text.
      */
     public Pane getStartText() {
@@ -95,15 +97,16 @@ public class GameManager implements Initializable {
 
     /**
      * Creates maze, sets the correct size of the player and its start position.
+     *
      * @param sizeBoard the size of the maze.
      */
-    public void generateMaze(int sizeBoard){
-        mazeM = new MazeManager(sizeBoard,tilePane);
+    public void generateMaze(int sizeBoard) {
+        mazeM = new MazeManager(sizeBoard, tilePane);
         mazeM.generateMaze();
-        pgn.setFitHeight(GameSettings.scale * 8);
-        pgn.setFitWidth(GameSettings.scale * 8);
-        newY = GameSettings.scale * 15;
-        newX = GameSettings.scale * 5;
+        pgn.setFitHeight(GameSettings.SCALE * 8);
+        pgn.setFitWidth(GameSettings.SCALE * 8);
+        newY = GameSettings.SCALE * 15;
+        newX = GameSettings.SCALE * 5;
     }
 
     /**
@@ -111,27 +114,24 @@ public class GameManager implements Initializable {
      * the Continuous Movement method,
      * and the Countdown Timer used to let the player know how much time they have left.
      *
-     * @param location
-     * The location used to resolve relative paths for the root object, or
-     * {@code null} if the location is not known.
-     *
-     * @param resources
-     * The resources used to localize the root object, or {@code null} if
-     * the root object was not localized.
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  {@code null} if the location is not known.
+     * @param resources The resources used to localize the root object, or {@code null} if
+     *                  the root object was not localized.
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources){
-        camera = new Camera(GameSettings.windowWidth, GameSettings.windowHeight,mapHeight);
+    public void initialize(URL location, ResourceBundle resources) {
+        camera = new Camera(GameSettings.WINDOW_WIDTH, GameSettings.WINDOW_HEIGHT, mapHeight);
         continuousMovement();
 
         // initialize Countdown
-        countdowntimer = new Countdown(200);
-        countdownLabel.setText(countdowntimer.getSecondsRemaining() + " seconds");
+        countdownTimer = new Countdown(200);
+        countdownLabel.setText(countdownTimer.getSecondsRemaining() + " seconds");
 
         // Set up a Timeline to update the label every second
         labelUpdater = new Timeline(
                 new KeyFrame(Duration.seconds(1), event -> {
-                    int secondsRemaining = countdowntimer.getSecondsRemaining();
+                    int secondsRemaining = countdownTimer.getSecondsRemaining();
                     if (secondsRemaining > 0) {
                         countdownLabel.setText(secondsRemaining + " seconds");
                     } else {
@@ -142,43 +142,18 @@ public class GameManager implements Initializable {
         );
         labelUpdater.setCycleCount(Animation.INDEFINITE);
 
-
-        // Load saved volume setting
-        String volumeSetting = MediaManager.loadSetting("volume", "0.1");
-        double volume = Double.parseDouble(volumeSetting);
-
-        // Initial value of volume slider
-        volumeSlider.setValue(volume);
-
-        // Loaded volume setting
-        MediaManager.setVolume(volume);
-
-        // Slider configuring
-        volumeSlider.setSnapToTicks(true);
-        volumeSlider.setMajorTickUnit(0.25);
-
-        updateVolumeButtonIcon(volume);
-
-        // listener to save the volume setting whenever it is changed by the user
-        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            MediaManager.setVolume(newValue.doubleValue()); // Adjust and save the volume setting
-            MediaManager.saveSetting("volume", String.valueOf(newValue.doubleValue()));
-            updateVolumeButtonIcon(newValue.doubleValue());
-
-        });
+        volumeSlider.setValue(GameSettings.volume);
+        if (GameSettings.volume == 0) volumeImage.setImage(MediaManager.volumeOff);
+        else volumeImage.setImage(MediaManager.volumeOn);
+        volumeSlider.valueProperty().
+                addListener((observable, oldValue, newValue) ->
+                {
+                    MediaManager.updateVolume(newValue.doubleValue(), volumeImage);
+                });
     }
     public void startTimer(KeyEvent event){
-        countdowntimer.start();
+        countdownTimer.start();
         labelUpdater.play();
-    }
-
-    /**
-     * Updates the volume button's background image based on the current volume level.
-     * @param volume The current volume level.
-     */
-    private void updateVolumeButtonIcon(double volume) {
-        if(volume == 0) volumeImage.setImage(volumeOff);
-        else volumeImage.setImage(volumeOn);
     }
 
     /**
@@ -192,7 +167,7 @@ public class GameManager implements Initializable {
         stopTimer = true;
         pauseDimm.setVisible(true);
         pauseMenu.setVisible(true);
-        countdowntimer.pause();
+        countdownTimer.pause();
     }
 
     /**
@@ -207,7 +182,7 @@ public class GameManager implements Initializable {
         pauseMenu.setVisible(false);
         safe.setVisible(false);
         exitConfirmation = false;
-        countdowntimer.start();
+        countdownTimer.start();
         isPaused = false;
     }
 
@@ -244,7 +219,7 @@ public class GameManager implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("start-menu.fxml"));
             Pane startMenuPane = loader.load();
 
-            Scene startMenuScene = new Scene(startMenuPane, GameSettings.windowWidth, GameSettings.windowHeight);
+            Scene startMenuScene = new Scene(startMenuPane, GameSettings.WINDOW_WIDTH, GameSettings.WINDOW_HEIGHT);
 
             startMenuScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
 
@@ -254,7 +229,7 @@ public class GameManager implements Initializable {
 
             exitConfirmation = false;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -262,17 +237,18 @@ public class GameManager implements Initializable {
      * Displays the win screen when called. Sets the 'won' flag to true, makes the background dimmed,
      * shows the win screen, and pauses the timeline.
      */
-    public void winScreen(){
+    public void winScreen() {
         won = true;
         gameWon.setVisible(true);
         System.out.println("Win");
-        countdowntimer.pause();
+        countdownTimer.pause();
     }
 
     /**
      * Handles the key press events for game controls and pause functionality.
      * If ESCAPE is pressed, the game is either paused or resumed, depending on the current state.
      * Movement controls are processed if the game is not won and not paused.
+     *
      * @param event The KeyEvent triggered by pressing a key.
      */
     public void keyPressed(KeyEvent event) {
@@ -327,6 +303,7 @@ public class GameManager implements Initializable {
 
     /**
      * Handles key release events to stop movement in the respective direction.
+     *
      * @param event The KeyEvent triggered by releasing a key.
      */
     public void keyReleased(KeyEvent event) {
@@ -352,51 +329,51 @@ public class GameManager implements Initializable {
      * Continuously updates the character's position if movement keys are pressed.
      * This method is called in every frame while the AnimationTimer is active.
      */
-     public void continuousMovement() {
+    public void continuousMovement() {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
 
-                if (countdowntimer.getSecondsRemaining() <= 0) {
+                if (countdownTimer.getSecondsRemaining() <= 0) {
                     return;
                 }
-                    double borderStart = pgn.getLayoutX();
-                    double playerWidth = pgn.getFitWidth();
+                double borderStart = pgn.getLayoutX();
+                double playerWidth = pgn.getFitWidth();
 
-                    double possibleX = newX;
-                    double possibleY = newY;
-                    double possibleXWithPadding = possibleX;
-                    double possibleYWithPadding = possibleY;
+                double possibleX = newX;
+                double possibleY = newY;
+                double possibleXWithPadding = possibleX;
+                double possibleYWithPadding = possibleY;
 
-                    if (upPressed) {
-                        possibleY -= speed;
-                        possibleYWithPadding = possibleY - GameSettings.scale * 2;
+                if (upPressed) {
+                    possibleY -= GameSettings.SPEED;
+                    possibleYWithPadding = possibleY - GameSettings.SCALE * 2;
+                }
+                if (downPressed) {
+                    possibleY += GameSettings.SPEED;
+                    possibleYWithPadding = possibleY + GameSettings.SCALE * 2;
+                }
+                if (leftPressed && borderStart > -15) {
+                    possibleX -= GameSettings.SPEED;
+                    possibleXWithPadding = possibleX - GameSettings.SCALE * 2;
+                }
+                if (rightPressed && borderStart < 1240) {
+                    possibleX += GameSettings.SPEED;
+                    possibleXWithPadding = possibleX + GameSettings.SCALE * 2;
+                    if (borderStart > 1250 - playerWidth) {
+                        winScreen();
                     }
-                    if (downPressed) {
-                        possibleY += speed;
-                        possibleYWithPadding = possibleY + GameSettings.scale * 2;
-                    }
-                    if (leftPressed && borderStart > -15){
-                        possibleX -= speed;
-                        possibleXWithPadding = possibleX - GameSettings.scale * 2;
-                    }
-                    if (rightPressed && borderStart < 1240) {
-                        possibleX += speed;
-                        possibleXWithPadding = possibleX + GameSettings.scale * 2;
-                        if (borderStart > 1250 - playerWidth) {
-                            winScreen();
-                        }
-                    }
+                }
 
-                if (canMoveTo(possibleXWithPadding, possibleYWithPadding)){
-                        newX = possibleX;
-                        newY = possibleY;
-                    }
+                if (canMoveTo(possibleXWithPadding, possibleYWithPadding)) {
+                    newX = possibleX;
+                    newY = possibleY;
+                }
 
-                camera.updateCamPos(newX,newY);
+                camera.updateCamPos(newX, newY);
 
-                pgn.setLayoutX(newX - (pgn.getFitHeight() / 2) -camera.getCameraX());
-                pgn.setLayoutY(newY - (pgn.getFitHeight() / 2) -camera.getCameraY());
+                pgn.setLayoutX(newX - (pgn.getFitHeight() / 2) - camera.getCameraX());
+                pgn.setLayoutY(newY - (pgn.getFitHeight() / 2) - camera.getCameraY());
 
                 tilePane.setTranslateX(-camera.getCameraX());
                 tilePane.setTranslateY(-camera.getCameraY());
@@ -406,12 +383,13 @@ public class GameManager implements Initializable {
 
     /**
      * Determines if the character can move to the specified new X and Y positions based on tile type.
+     *
      * @param newX The potential new X position for the character.
      * @param newY The potential new Y position for the character.
      * @return true if the character can move to the position, false otherwise.
      */
     public boolean canMoveTo(double newX, double newY) {
-        return mazeM.getTileType((int) newX , (int) newY) == 0;
+        return mazeM.getTileType((int) newX, (int) newY) == 0;
     }
 
     /**
@@ -419,16 +397,13 @@ public class GameManager implements Initializable {
      * If the volume slider is not visible (opacity is 0), it sets it to visible and enables it.
      * If the volume slider is visible, it disables and hides it by setting the opacity to 0.
      */
-    public void changeVolume(){
+    public void changeVolume() {
         if (volumeSlider.getOpacity() == 0) {
             volumeSlider.setDisable(false);
             volumeSlider.setOpacity(1);
-        }
-        else {
+        } else {
             volumeSlider.setDisable(true);
             volumeSlider.setOpacity(0);
         }
     }
 }
-
-
