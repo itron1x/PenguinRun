@@ -7,5 +7,5 @@ public class GameSettings {
     public static final int speed = 5;
     public static final int easy = 25;
     public static final int middle = 51;
-    public static final int hard = 201;
+    public static final int hard = 101;
 }

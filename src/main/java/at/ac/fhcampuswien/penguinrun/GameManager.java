@@ -1,9 +1,6 @@
 package at.ac.fhcampuswien.penguinrun;
 
-import at.ac.fhcampuswien.penguinrun.game.Camera;
-import at.ac.fhcampuswien.penguinrun.game.GameSettings;
-import at.ac.fhcampuswien.penguinrun.game.MazeManager;
-import at.ac.fhcampuswien.penguinrun.game.MediaManager;
+import at.ac.fhcampuswien.penguinrun.game.*;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -30,6 +27,7 @@ import java.util.ResourceBundle;
 
 import javafx.scene.control.Label;
 import javafx.util.Duration;
+import at.ac.fhcampuswien.penguinrun.game.Countdown;
 
 public class GameManager implements Initializable {
     public double mapHeight = (10* GameSettings.scale)*Difficulty.getDifficulty();
@@ -60,7 +58,6 @@ public class GameManager implements Initializable {
     private Pane startText;
     @FXML
     private ImageView volumeImage;
-    private int secondsRemaining = 200;
     private Timeline timeline;
     private boolean isPaused = false;
     private boolean exitConfirmation = false;
@@ -76,6 +73,9 @@ public class GameManager implements Initializable {
     private final Image volumeOff = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOff.png")).toExternalForm());
     private final Image volumeOn = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOn.png")).toExternalForm());
     private MazeManager mazeM;
+
+    private Countdown countdowntimer;
+    private Timeline labelUpdater;
 
     /**
      * Getter for the dim background.
@@ -125,19 +125,23 @@ public class GameManager implements Initializable {
         continuousMovement();
 
         // initialize Countdown
-        countdownLabel.setText(secondsRemaining + " seconds");
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            if (!stopTimer && secondsRemaining > 1) {
-                secondsRemaining--;
-                countdownLabel.setText(secondsRemaining + " seconds");
-            } else if(!stopTimer && !won) {
-                countdownLabel.setText("Time's up!");
-                timeline.stop();
-            } else if(won) {
-                timeline.stop();
-                winScreen();
-            }
-        }));
+        countdowntimer = new Countdown(200);
+        countdownLabel.setText(countdowntimer.getSecondsRemaining() + " seconds");
+
+        // Set up a Timeline to update the label every second
+        labelUpdater = new Timeline(
+                new KeyFrame(Duration.seconds(1), event -> {
+                    int secondsRemaining = countdowntimer.getSecondsRemaining();
+                    if (secondsRemaining > 0) {
+                        countdownLabel.setText(secondsRemaining + " seconds");
+                    } else {
+                        countdownLabel.setText("Time's up!");
+                        labelUpdater.stop(); // Stop updating the label once the time is up
+                    }
+                })
+        );
+        labelUpdater.setCycleCount(Animation.INDEFINITE);
+
 
         // Load saved volume setting
         String volumeSetting = MediaManager.loadSetting("volume", "0.1");
@@ -164,8 +168,8 @@ public class GameManager implements Initializable {
         });
     }
     public void startTimer(KeyEvent event){
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
+        countdowntimer.start();
+        labelUpdater.play();
     }
 
     /**
@@ -188,7 +192,7 @@ public class GameManager implements Initializable {
         stopTimer = true;
         pauseDimm.setVisible(true);
         pauseMenu.setVisible(true);
-        timeline.pause();
+        countdowntimer.pause();
     }
 
     /**
@@ -203,7 +207,7 @@ public class GameManager implements Initializable {
         pauseMenu.setVisible(false);
         safe.setVisible(false);
         exitConfirmation = false;
-        timeline.play();
+        countdowntimer.start();
         isPaused = false;
     }
 
@@ -262,7 +266,7 @@ public class GameManager implements Initializable {
         won = true;
         gameWon.setVisible(true);
         System.out.println("Win");
-        timeline.pause();
+        countdowntimer.pause();
     }
 
     /**
@@ -353,7 +357,7 @@ public class GameManager implements Initializable {
             @Override
             public void handle(long now) {
 
-                if (secondsRemaining <= 0) {
+                if (countdowntimer.getSecondsRemaining() <= 0) {
                     return;
                 }
                     double borderStart = pgn.getLayoutX();
