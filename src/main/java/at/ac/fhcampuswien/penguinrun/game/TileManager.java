@@ -21,6 +21,23 @@ public class TileManager {
     public final static Image wallS = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileS.jpg")).toExternalForm(), true);
     public final static Image wallW = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileW.jpg")).toExternalForm(), true);
     public final static Image wallE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileE.jpg")).toExternalForm(), true);
+    public final static Image finish = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/white.jpg")).toExternalForm(), true);
+
+    public Image getFinish(){
+        return finish;
+    }
+
+    public Image getWallNS(){
+        return wallNS;
+    }
+
+    public Image getW(){
+        return wallW;
+    }
+
+    public Image getN(){
+        return wallN;
+    }
 
     /**
      * Changes the walls to an Integer value depending on where the neighbor walls are.
@@ -83,9 +100,9 @@ public class TileManager {
         gameBoard[1][0] = 0;
         if (gameBoard[2][1] == 0)gameBoard[2][0] = 14;
         else gameBoard[2][0] = 9;
-        gameBoard[size - 3][size - 1] = 12;
+        gameBoard[size - 3][size - 1] = 2;
         gameBoard[size - 2][size - 1] = 0;
-        gameBoard[size - 1][size - 1] = 15;
+        gameBoard[size - 1][size - 1] = 11;
         return gameBoard;
     }
 

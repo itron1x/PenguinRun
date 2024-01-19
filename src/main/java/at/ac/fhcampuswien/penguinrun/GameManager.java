@@ -36,6 +36,8 @@ public class GameManager implements Initializable {
     @FXML
     private TilePane tilePane;
     @FXML
+    private Pane itemPane;
+    @FXML
     private ImageView pgn;
     @FXML
     private Pane pauseMenu;
@@ -57,7 +59,6 @@ public class GameManager implements Initializable {
     private Pane startText;
     @FXML
     private ImageView volumeImage;
-    private Timeline timeline;
     private boolean isPaused = false;
     private boolean exitConfirmation = false;
     private boolean upPressed = false; //W + UP
@@ -65,10 +66,10 @@ public class GameManager implements Initializable {
     private boolean leftPressed = false; //A + LEFT
     private boolean rightPressed = false; //D + RIGHT
     private boolean won = false;
-    private boolean stopTimer = false;
     private static final Image pgnStill = new Image(Objects.requireNonNull(GameManager.class.getResource("img/pgnStill.png")).toExternalForm(), true);
     private static final Image pgnAnim = new Image(Objects.requireNonNull(GameManager.class.getResource("img/pgnAnim.gif")).toExternalForm(), true);
     private MazeManager mazeM;
+    private Entities entitiesClass;
     private Countdown countdownTimer;
     private Timeline labelUpdater;
 
@@ -101,8 +102,9 @@ public class GameManager implements Initializable {
      * @param sizeBoard the size of the maze.
      */
     public void generateMaze(int sizeBoard) {
-        mazeM = new MazeManager(sizeBoard, tilePane);
+        mazeM = new MazeManager(sizeBoard, tilePane, itemPane);
         mazeM.generateMaze();
+        entitiesClass= mazeM.getItems();
         pgn.setFitHeight(GameSettings.SCALE * 8);
         pgn.setFitWidth(GameSettings.SCALE * 8);
         newY = GameSettings.SCALE * 15;
@@ -159,13 +161,11 @@ public class GameManager implements Initializable {
 
     /**
      * Pauses the game by performing the following actions:
-     * Sets the flag 'stopTimer' to true, indicating that the game timer should be paused.
      * Makes the pause dimming overlay visible, providing a visual indication of the game pause.
      * Displays the pause menu, allowing the player to access various options during the pause.
      * Pauses the timeline
      */
     private void pauseGame() {
-        stopTimer = true;
         pauseDimm.setVisible(true);
         pauseMenu.setVisible(true);
         countdownTimer.pause();
@@ -178,7 +178,6 @@ public class GameManager implements Initializable {
      * or exit confirmations are hidden, and the game timer is allowed to continue.
      */
     public void resumeGame() {
-        stopTimer = false;
         pauseDimm.setVisible(false);
         tilePane.setVisible(true);
         pauseMenu.setVisible(false);
@@ -380,6 +379,15 @@ public class GameManager implements Initializable {
 
                 tilePane.setTranslateX(-camera.getCameraX());
                 tilePane.setTranslateY(-camera.getCameraY());
+
+                itemPane.setTranslateX(-camera.getCameraX());
+                itemPane.setTranslateY(-camera.getCameraY());
+                entitiesClass.itemCollision(newY, newX);
+
+                if (entitiesClass.getItemCount() == 3) {
+                    mazeM.finishTile();
+                    mazeM.setWon();
+                }
             }
         }.start();
     }

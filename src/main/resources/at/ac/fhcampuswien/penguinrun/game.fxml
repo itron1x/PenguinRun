@@ -16,6 +16,7 @@
          </image>
       </ImageView>
       <TilePane fx:id="tilePane" />
+      <Pane fx:id="itemPane" />
       <ImageView fx:id="pgn" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
          <image>
             <Image url="@img/pgnStill.png" />

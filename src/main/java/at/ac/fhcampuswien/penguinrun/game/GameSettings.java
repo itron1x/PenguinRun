@@ -8,5 +8,5 @@ public class GameSettings {
     public static final int EASY = 25;
     public static final int MIDDLE = 51;
     public static final int HARD = 101;
-    public static double volume = 0.5;
+    public static double volume = 0.0;
 }

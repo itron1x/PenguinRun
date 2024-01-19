@@ -12,20 +12,32 @@ import java.util.Collections;
         private final int width = 10 * GameSettings.SCALE;
         private int[][] gameBoard;
         private final TilePane tilePane;
+        private boolean won;
+        Entities items;
+        TileManager tiles;
 
         /**
          * Constructor for the class.
          * @param size describes the number of tiles horizontal and vertical.
          * @param tilePane the object where the tiles are put into.
          */
-        public MazeManager(int size, TilePane tilePane) {
+        public MazeManager(int size, TilePane tilePane, Pane itemPane) {
             this.gameBoard = new int[size][size];
             this.size = size;
             this.tilePane = tilePane;
             this.tilePane.setLayoutX(0);
             this.tilePane.setLayoutY(0);
+            items = new Entities(gameBoard, itemPane);
+            tiles = new TileManager();
         }
 
+        public Entities getItems(){
+            return items;
+        }
+
+        public void setWon(){
+            won = true;
+        }
         /**
          * Four directions are created and added to the ArrayList directions.
          */
@@ -95,7 +107,6 @@ import java.util.Collections;
             tilePane.setPrefRows(size);
             tilePane.setPrefTileHeight(height);
             tilePane.setPrefTileWidth(width);
-            TileManager tiles = new TileManager();
             gameBoard = tiles.setWalls(gameBoard, size);
 
             for (int i = 0; i < size; i++) {
@@ -103,10 +114,31 @@ import java.util.Collections;
                     ImageView image = new ImageView();
                     image.setFitHeight(height);
                     image.setFitWidth(width);
-                    image.setImage(tiles.setTile(gameBoard,i,j));
+                    if (i == size - 2 && j == size - 1) image.setImage(tiles.getWallNS());
+                    else image.setImage(tiles.setTile(gameBoard,i,j));
                     tilePane.getChildren().add(image);
                 }
             }
+        }
+
+        public void finishTile(){
+            ImageView finish = new ImageView();
+            finish.setFitHeight(height);
+            finish.setFitWidth(width);
+            finish.setImage(tiles.getFinish());
+            tilePane.getChildren().set((tilePane.getPrefRows() * (tilePane.getPrefColumns() - 1)) - 1, finish);
+
+            ImageView aboveFinish = new ImageView();
+            aboveFinish.setFitHeight(height);
+            aboveFinish.setFitWidth(width);
+            aboveFinish.setImage(tiles.getW());
+            tilePane.getChildren().set((tilePane.getPrefRows() * (tilePane.getPrefColumns())) - 1, aboveFinish);
+
+            ImageView belowFinish = new ImageView();
+            belowFinish.setFitHeight(height);
+            belowFinish.setFitWidth(width);
+            belowFinish.setImage(tiles.getN());
+            tilePane.getChildren().set((tilePane.getPrefRows() * (tilePane.getPrefColumns() - 2)) - 1, belowFinish);
         }
 
         /**
@@ -137,6 +169,7 @@ import java.util.Collections;
             gameBoard[1][0] = 0;
             gameBoard[size - 2][size - 1] = 0;
             drawTiles();
+            items.generateItems();
             //printMaze(gameBoard);
         }
 
@@ -149,6 +182,8 @@ import java.util.Collections;
         public int getTileType(int y, int x) throws NullPointerException{
             int indexY = (int) Math.floor(Math.abs(y)/(double) width);
             int indexX = (int) Math.floor(Math.abs(x)/(double) height);
-            return gameBoard[indexX][indexY];
+            if (!won && indexY != size - 1 && indexX != size) return gameBoard[indexX][indexY];
+            else if (won) return gameBoard[indexX][indexY];
+            else return 1;
         }
     }

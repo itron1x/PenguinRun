@@ -30,8 +30,8 @@ public class Camera{
      * @param penY this is the Y coordinate of the player position currently on the map
      */
     public void updateCamPos(double penX, double penY){
-        cameraX = penX -((screenWidth)/2 - GameSettings.SCALE * 10);
-        cameraY = penY - ((screenHeight)/2 - GameSettings.SCALE * 20);
+        cameraX = penX -((screenWidth)/2);
+        cameraY = penY - ((screenHeight)/2);
         cameraX = Math.max(0, Math.min(mapSize-screenWidth, cameraX));
         cameraY = Math.max(0,Math.min(mapSize-screenHeight,cameraY));
     }
