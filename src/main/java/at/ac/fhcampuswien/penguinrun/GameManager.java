@@ -113,6 +113,7 @@ public class GameManager implements Initializable {
      * Initializes the Camera Movement that follows the penguin (user) around the map,
      * the Continuous Movement method,
      * and the Countdown Timer used to let the player know how much time they have left.
+     * The labelUpdater ensures that the countdown label displays the correct time.
      *
      * @param location  The location used to resolve relative paths for the root object, or
      *                  {@code null} if the location is not known.
@@ -168,6 +169,7 @@ public class GameManager implements Initializable {
         pauseDimm.setVisible(true);
         pauseMenu.setVisible(true);
         countdownTimer.pause();
+        labelUpdater.pause();
     }
 
     /**
@@ -182,7 +184,8 @@ public class GameManager implements Initializable {
         pauseMenu.setVisible(false);
         safe.setVisible(false);
         exitConfirmation = false;
-        countdownTimer.start();
+        countdownTimer.resume();
+        labelUpdater.play();
         isPaused = false;
     }
 
