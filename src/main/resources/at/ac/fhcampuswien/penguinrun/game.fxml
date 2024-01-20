@@ -41,7 +41,7 @@
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" height="720.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
             <Text fill="WHITE" layoutX="393.0" layoutY="300.0" text="Sie haben gewonnen!" />
-            <Button fx:id="mainMenuBtn" layoutX="499.0" layoutY="348.0" mnemonicParsing="false" onAction="#backToMainMenu" text="SPIEL BEENDEN">
+            <Button fx:id="mainMenuBtnWon" layoutX="490.0" layoutY="350.0" mnemonicParsing="false" onAction="#backToMainMenu" prefHeight="65.0" prefWidth="264.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
