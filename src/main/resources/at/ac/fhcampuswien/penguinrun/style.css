@@ -150,3 +150,33 @@
         -fx-font-size: 30;
         -fx-effect: dropshadow(gaussian, #223d54, 0,0,0,1);
 }
+#tryAgain {
+    -fx-background-color: transparent;
+    -fx-background-image: url("img/btn/tryAgainUNSEL.png");
+    -fx-background-size: 100%;
+    -fx-background-position: center;
+}
+#tryAgain:hover {
+    -fx-background-color: transparent;
+    -fx-background-image: url("img/btn/tryAgainSEL.png");
+    -fx-background-size: 100%;
+    -fx-background-position: center;
+}
+#mainMenuBtnOver {
+    -fx-background-color: transparent;
+    -fx-background-image: url("img/btn/zurueckStartUNSEL.png");
+    -fx-background-size: 100%;
+    -fx-background-position: center;
+}
+#mainMenuBtnOver:hover {
+    -fx-background-color: transparent;
+    -fx-background-image: url("img/btn/zurueckStartSEL.png");
+    -fx-background-size: 100%;
+    -fx-background-position: center;
+}
+#gameOverText {
+    -fx-background-color: transparent;
+    -fx-font-family: Maze;
+    -fx-text-fill: white;
+    -fx-font-size: 150;
+}

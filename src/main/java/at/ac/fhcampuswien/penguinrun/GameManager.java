@@ -5,6 +5,7 @@ import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -59,6 +60,14 @@ public class GameManager implements Initializable {
     private Pane startText;
     @FXML
     private ImageView volumeImage;
+    @FXML
+    private Pane gameOver;
+    @FXML
+    private Pane dimOverlay;
+    public static final Map<String, Scene> sceneManager = new HashMap<>();
+    public double mapHeight = (10 * GameSettings.SCALE) * Difficulty.getDifficulty();
+    private double newX;
+    private double newY;
     @FXML
     private ImageView fogImage;
     private boolean isPaused = false;
@@ -130,7 +139,7 @@ public class GameManager implements Initializable {
         continuousMovement();
 
         // initialize Countdown
-        countdownTimer = new Countdown(200);
+        countdownTimer = new Countdown(5);
         countdownLabel.setText(countdownTimer.getSecondsRemaining() + " seconds");
 
         // Set up a Timeline to update the label every second
@@ -141,6 +150,7 @@ public class GameManager implements Initializable {
                         countdownLabel.setText(secondsRemaining + " seconds");
                     } else {
                         countdownLabel.setText("Time's up!");
+                        gameOverScreen();
                         labelUpdater.stop(); // Stop updating the label once the time is up
                     }
                 })
@@ -159,6 +169,24 @@ public class GameManager implements Initializable {
     public void startTimer(KeyEvent event){
         countdownTimer.start();
         labelUpdater.play();
+    }
+
+    public void gameOverScreen(){
+        dimOverlay.setVisible(true);
+        gameOver.setVisible(true);
+    }
+
+    public void tryAgain() {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("difficulty.fxml"));
+            Scene difficulty = GameManager.sceneManager.get("difficulty");
+
+            difficulty.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
+
+            Stage stage = (Stage) tilePane.getScene().getWindow();
+            stage.setScene(difficulty);
+            stage.show();
+
+        gameOver.setVisible(false);
     }
 
     /**
@@ -218,23 +246,15 @@ public class GameManager implements Initializable {
      * Shows the stage and resets the exit confirmation flag as the return to the main menu is completed.
      */
     private void performBackToMainMenu() {
-        try {
-            // Load the start menu FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("start-menu.fxml"));
-            Pane startMenuPane = loader.load();
+        // Load the start menu FXML file
+        Scene mainMenu = GameManager.sceneManager.get("mainMenu");
+        mainMenu.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
 
-            Scene startMenuScene = new Scene(startMenuPane, GameSettings.WINDOW_WIDTH, GameSettings.WINDOW_HEIGHT);
+        Stage stage = (Stage) tilePane.getScene().getWindow();
+        stage.setScene(mainMenu);
+        stage.show();
 
-            startMenuScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
-
-            Stage stage = (Stage) tilePane.getScene().getWindow();
-            stage.setScene(startMenuScene);
-            stage.show();
-
-            exitConfirmation = false;
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        exitConfirmation = false;
     }
 
     /**
