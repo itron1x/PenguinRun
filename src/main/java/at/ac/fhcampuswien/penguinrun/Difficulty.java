@@ -23,8 +23,8 @@ public class Difficulty {
     @FXML
     private ImageView volumeImage;
     private static int difficulty = 51;
-    private final Image volumeOff = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOff.png")).toExternalForm());
-    private final Image volumeOn = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOn.png")).toExternalForm());
+    private final Image volumeOff = new Image(Objects.requireNonNull(this.getClass().getResource("game/img/btn/volumeOff.png")).toExternalForm());
+    private final Image volumeOn = new Image(Objects.requireNonNull(this.getClass().getResource("game/img/btn/volumeOn.png")).toExternalForm());
 
     public Difficulty() {
         volumeSlider = MediaManager.volumeSlider;

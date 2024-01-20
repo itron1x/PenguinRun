@@ -17,7 +17,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         SceneManager sceneManager = SceneManager.getInstance(stage);
         Scene mainMenu = SceneManager.sceneList.get("mainMenu");
-        Image icon = new Image(Objects.requireNonNull(SceneManager.class.getResource("img/pgnBig.png")).toExternalForm());
+        Image icon = new Image(Objects.requireNonNull(SceneManager.class.getResource("game/img/pgnBig.png")).toExternalForm());
 
         sceneManager.getStage().setScene(mainMenu);
         sceneManager.getStage().setTitle("PenguinRun");

@@ -32,17 +32,10 @@ public class Entities {
     public void generateItems() {
         List<Integer> tempListY = new ArrayList<>();
         List<Integer> tempListX = new ArrayList<>();
-        for (int y = 1; y < (gameBoard.length / 2); y++) {
-            for (int x = gameBoard.length / 2; x < gameBoard.length - 1; x++) {
-                if (validTile(y, x)) {
-                    tempListY.add(y);
-                    tempListX.add(x);
-                }
-            }
-        }
-        for (int y = gameBoard.length / 2; y < (gameBoard.length - 2); y++) {
+
+        for (int y = 1; y < (gameBoard.length - 2); y++) {
             for (int x = 1; x < gameBoard.length - 1; x++) {
-                if (validTile(y, x)) {
+                if (validTile(y, x) && y >= gameBoard.length / 2 || validTile(y, x) && x >= gameBoard.length / 2) {
                     tempListY.add(y);
                     tempListX.add(x);
                 }

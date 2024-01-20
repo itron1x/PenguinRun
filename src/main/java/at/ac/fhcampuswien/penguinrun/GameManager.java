@@ -71,9 +71,8 @@ public class GameManager{
     private boolean leftPressed = false; //A + LEFT
     private boolean rightPressed = false; //D + RIGHT
     private boolean won = false;
-    private static final Image pgnStill = new Image(Objects.requireNonNull(GameManager.class.getResource("img/pgnStill.png")).toExternalForm(), true);
-    private static final Image pgnAnim = new Image(Objects.requireNonNull(GameManager.class.getResource("img/pgnAnim.gif")).toExternalForm(), true);
-
+    private static final Image pgnStill = new Image(Objects.requireNonNull(GameManager.class.getResource("game/img/pgnStill.png")).toExternalForm(), true);
+    private static final Image pgnAnim = new Image(Objects.requireNonNull(GameManager.class.getResource("game/img/pgnAnim.gif")).toExternalForm(), true);
     private static final Image keyCount0 = new Image(Objects.requireNonNull(GameManager.class.getResource("game/icons/keyCount0.png")).toExternalForm(),true);
     private static final Image keyCount1 = new Image(Objects.requireNonNull(GameManager.class.getResource("game/icons/keyCount1.png")).toExternalForm(),true);
     private static final Image keyCount2 = new Image(Objects.requireNonNull(GameManager.class.getResource("game/icons/keyCount2.png")).toExternalForm(),true);
@@ -415,8 +414,8 @@ public class GameManager{
      * @param camY this is the y coordinate of the camera
      */
     private void updateFog(double pgnX, double pgnY, double camX, double camY) {
-        fogImage.setTranslateX(pgnX - fogImage.getFitWidth() / 2 - camX);
-        fogImage.setTranslateY(pgnY - fogImage.getFitHeight() / 2 - camY);
+        fogImage.setTranslateX(pgnX - fogImage.getFitWidth() / 2 - camX + GameSettings.SCALE * 5);
+        fogImage.setTranslateY(pgnY - fogImage.getFitHeight() / 2 - camY + GameSettings.SCALE * 15);
     }
 
     public void setFogWindowSize() {
