@@ -28,7 +28,7 @@
       <Rectangle fx:id="dimmBackground" arcHeight="5.0" arcWidth="5.0" height="720.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
       <ImageView fx:id="fogImage" fitHeight="2000" fitWidth="3700" preserveRatio="true">
          <image>
-         <Image url="@img/fog.png"/>
+         <Image url="@img/fog.png" />
       </image>
       </ImageView>
       <Pane fx:id="startText">
@@ -54,17 +54,22 @@
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor></Button>
-         <Button fx:id="mainMenuBtn" layoutX="490.0" layoutY="350.0" mnemonicParsing="false" onAction="#backToMainMenu" text="SPIEL BEENDEN">
+         <Button fx:id="mainMenuBtn" layoutX="490.0" layoutY="350.0" mnemonicParsing="false" onAction="#confirmationMainMenu" text="SPIEL BEENDEN">
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor></Button>
       </Pane>
       <Pane fx:id="gameOver" visible="false">
-         <Pane fx:id="dimOverlay" style="-fx-background-color: rgba(0, 0 , 0, 0.5);"
-               prefWidth="1280" prefHeight="720" visible="false" />
-         <Text fx:id="gameOverText" layoutX="315.0" layoutY="300.0" fill="white" text="GAME OVER"></Text>
-         <Button fx:id="mainMenuBtnOver" layoutX="490.0" layoutY="350.0" mnemonicParsing="false" onAction="#backToMainMenu" prefHeight="65.0" prefWidth="264.0"></Button>
-         <Button fx:id="tryAgain" layoutX="490.0" layoutY="420.0" mnemonicParsing="false" onAction="#tryAgain" prefHeight="65.0" prefWidth="264.0"></Button>
+         <Pane fx:id="dimOverlay" prefHeight="720" prefWidth="1280" style="-fx-background-color: rgba(0, 0 , 0, 0.5);" visible="false" />
+         <Text fx:id="gameOverText" fill="white" layoutX="315.0" layoutY="300.0" text="GAME OVER" />
+         <Button fx:id="mainMenuBtnOver" layoutX="490.0" layoutY="350.0" mnemonicParsing="false" onAction="#backToMainMenu" prefHeight="65.0" prefWidth="264.0">
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor></Button>
+         <Button fx:id="tryAgain" layoutX="490.0" layoutY="420.0" mnemonicParsing="false" onAction="#tryAgain" prefHeight="65.0" prefWidth="264.0">
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor></Button>
       </Pane>
       <!-- Pause menu -->
       <Text fx:id="safe" fill="#ff3838" layoutX="480.0" layoutY="420.0" stroke="WHITE" strokeWidth="0.0" text="Das aktuelle Spiel wird hierbeibeendet!" visible="false" />

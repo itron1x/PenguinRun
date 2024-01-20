@@ -5,7 +5,6 @@ import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,13 +19,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import javafx.scene.control.Label;
-import javafx.stage.Window;
 import javafx.util.Duration;
 import at.ac.fhcampuswien.penguinrun.game.Countdown;
 
@@ -88,6 +84,51 @@ public class GameManager implements Initializable {
     }
 
     /**
+     * Initializes the Camera Movement that follows the penguin (user) around the map,
+     * the Continuous Movement method,
+     * and the Countdown Timer used to let the player know how much time they have left.
+     * The labelUpdater ensures that the countdown label displays the correct time.
+     *
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  {@code null} if the location is not known.
+     * @param resources The resources used to localize the root object, or {@code null} if
+     *                  the root object was not localized.
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        camera = new Camera(GameSettings.WINDOW_WIDTH, GameSettings.WINDOW_HEIGHT, mapHeight);
+        continuousMovement();
+
+        // initialize Countdown
+        countdownTimer = new Countdown(200);
+        countdownLabel.setText(countdownTimer.getSecondsRemaining() + " seconds");
+
+        // Set up a Timeline to update the label every second
+        labelUpdater = new Timeline(
+                new KeyFrame(Duration.seconds(1), event -> {
+                    int secondsRemaining = countdownTimer.getSecondsRemaining();
+                    if (secondsRemaining > 0) {
+                        countdownLabel.setText(secondsRemaining + " seconds");
+                    } else {
+                        countdownLabel.setText("Time's up!");
+                        gameOverScreen();
+                        labelUpdater.stop(); // Stop updating the label once the time is up
+                    }
+                })
+        );
+        labelUpdater.setCycleCount(Animation.INDEFINITE);
+
+        volumeSlider.setValue(GameSettings.volume);
+        if (GameSettings.volume == 0) volumeImage.setImage(MediaManager.volumeOff);
+        else volumeImage.setImage(MediaManager.volumeOn);
+        volumeSlider.valueProperty().
+                addListener((observable, oldValue, newValue) ->
+                {
+                    MediaManager.updateVolume(newValue.doubleValue(), volumeImage);
+                });
+    }
+
+    /**
      * Getter for the dim background.
      *
      * @return Rectangle for dimming the background.
@@ -120,59 +161,8 @@ public class GameManager implements Initializable {
         newX = GameSettings.SCALE * 5;
     }
 
-    /**
-     * Initializes the Camera Movement that follows the penguin (user) around the map,
-     * the Continuous Movement method,
-     * and the Countdown Timer used to let the player know how much time they have left.
-     * The labelUpdater ensures that the countdown label displays the correct time.
-     *
-     * @param location  The location used to resolve relative paths for the root object, or
-     *                  {@code null} if the location is not known.
-     * @param resources The resources used to localize the root object, or {@code null} if
-     *                  the root object was not localized.
-     */
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        camera = new Camera(GameSettings.WINDOW_WIDTH, GameSettings.WINDOW_HEIGHT, mapHeight);
-        continuousMovement();
 
-        // initialize Countdown
-        countdownTimer = new Countdown(5);
-        countdownLabel.setText(countdownTimer.getSecondsRemaining() + " seconds");
 
-        // Set up a Timeline to update the label every second
-        labelUpdater = new Timeline(
-                new KeyFrame(Duration.seconds(1), event -> {
-                    int secondsRemaining = countdownTimer.getSecondsRemaining();
-                    if (secondsRemaining > 0) {
-                        countdownLabel.setText(secondsRemaining + " seconds");
-                    } else {
-                        countdownLabel.setText("Time's up!");
-                        gameOverScreen();
-                        labelUpdater.stop(); // Stop updating the label once the time is up
-                    }
-                })
-        );
-        labelUpdater.setCycleCount(Animation.INDEFINITE);
-
-        volumeSlider.setValue(GameSettings.volume);
-        if (GameSettings.volume == 0) volumeImage.setImage(MediaManager.volumeOff);
-        else volumeImage.setImage(MediaManager.volumeOn);
-        volumeSlider.valueProperty().
-                addListener((observable, oldValue, newValue) ->
-                {
-                    MediaManager.updateVolume(newValue.doubleValue(), volumeImage);
-                });
-    }
-    public void startTimer(KeyEvent event){
-        countdownTimer.start();
-        labelUpdater.play();
-    }
-
-    public void gameOverScreen(){
-        dimOverlay.setVisible(true);
-        gameOver.setVisible(true);
-    }
 
     public void tryAgain() {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("difficulty.fxml"));
@@ -185,6 +175,39 @@ public class GameManager implements Initializable {
             stage.show();
 
         gameOver.setVisible(false);
+    }
+
+    /**
+     * Performs the transition back to the main menu. Loads the start menu FXML file, creates a new
+     * scene with the start menu, sets the CSS styling, and sets the scene on the current stage (window).
+     * Shows the stage and resets the exit confirmation flag as the return to the main menu is completed.
+     */
+    public void backToMainMenu() {
+        // Load the start menu FXML file
+        Scene mainMenu = GameManager.sceneManager.get("mainMenu");
+        mainMenu.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
+
+        Stage stage = (Stage) tilePane.getScene().getWindow();
+        stage.setScene(mainMenu);
+        stage.show();
+
+        exitConfirmation = false;
+    }
+
+    /**
+     * Displays the win screen when called. Sets the 'won' flag to true, makes the background dimmed,
+     * shows the win screen, and pauses the timeline.
+     */
+    public void winScreen() {
+        won = true;
+        gameWon.setVisible(true);
+        System.out.println("Win");
+        countdownTimer.pause();
+    }
+
+    public void gameOverScreen(){
+        dimOverlay.setVisible(true);
+        gameOver.setVisible(true);
     }
 
     /**
@@ -220,9 +243,9 @@ public class GameManager implements Initializable {
      * Handles the transition back to the main menu. If the exit confirmation is activated, it performs
      * the actual return to the main menu. Otherwise, it displays the exit confirmation prompt.
      */
-    public void backToMainMenu() {
+    public void confirmationMainMenu() {
         if (exitConfirmation) {
-            performBackToMainMenu();
+            backToMainMenu();
             safe.setVisible(false);
         } else {
             showExitConfirmation();
@@ -239,33 +262,12 @@ public class GameManager implements Initializable {
     }
 
 
-    /**
-     * Performs the transition back to the main menu. Loads the start menu FXML file, creates a new
-     * scene with the start menu, sets the CSS styling, and sets the scene on the current stage (window).
-     * Shows the stage and resets the exit confirmation flag as the return to the main menu is completed.
-     */
-    private void performBackToMainMenu() {
-        // Load the start menu FXML file
-        Scene mainMenu = GameManager.sceneManager.get("mainMenu");
-        mainMenu.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
 
-        Stage stage = (Stage) tilePane.getScene().getWindow();
-        stage.setScene(mainMenu);
-        stage.show();
-
-        exitConfirmation = false;
+    public void startTimer(KeyEvent event){
+        countdownTimer.start();
+        labelUpdater.play();
     }
 
-    /**
-     * Displays the win screen when called. Sets the 'won' flag to true, makes the background dimmed,
-     * shows the win screen, and pauses the timeline.
-     */
-    public void winScreen() {
-        won = true;
-        gameWon.setVisible(true);
-        System.out.println("Win");
-        countdownTimer.pause();
-    }
 
     /**
      * Handles the key press events for game controls and pause functionality.

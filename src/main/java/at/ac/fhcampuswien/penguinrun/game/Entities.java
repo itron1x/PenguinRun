@@ -14,7 +14,7 @@ public class Entities {
     private Pane pane;
     private static int itemCount;
     private boolean temp;
-    public final static Image black = new Image(Objects.requireNonNull(Entities.class.getResource("tiles/black.jpg")).toExternalForm(), true);
+    public final static Image keyImage = new Image(Objects.requireNonNull(Entities.class.getResource("icons/Key.gif")).toExternalForm(), true);
 
     public Entities(int[][] gameBoard, Pane pane) {
         itemCount = 0;
@@ -70,7 +70,7 @@ public class Entities {
     public void drawItems(List<Integer> itemListY, List<Integer> itemListX) {
         for (int i = 0; i < itemListY.size(); i++) {
             ImageView image = new ImageView();
-            image.setImage(black);
+            image.setImage(keyImage);
             image.setFitWidth(GameSettings.SCALE * 10 - GameSettings.SCALE * 4);
             image.setFitHeight(GameSettings.SCALE * 10 - GameSettings.SCALE * 4);
             image.setLayoutY(itemListY.get(i) * GameSettings.SCALE * 10 + GameSettings.SCALE * 2);
