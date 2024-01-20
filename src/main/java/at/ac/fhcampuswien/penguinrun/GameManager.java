@@ -78,6 +78,8 @@ public class GameManager implements Initializable {
     private Countdown countdownTimer;
     private Timeline labelUpdater;
 
+
+
     public GameManager() {
         volumeSlider = MediaManager.volumeSlider;
         volumeImage = MediaManager.volumeImage;
@@ -159,6 +161,7 @@ public class GameManager implements Initializable {
         pgn.setFitWidth(GameSettings.SCALE * 8);
         newY = GameSettings.SCALE * 15;
         newX = GameSettings.SCALE * 5;
+        setFogWindowSize();
     }
 
 
@@ -395,8 +398,10 @@ public class GameManager implements Initializable {
                     newY = possibleY;
                 }
 
-                updateFog(newX,newY, camera.getCameraX(), camera.getCameraY());
+
                 camera.updateCamPos(newX, newY);
+
+                updateFog(newX,newY, camera.getCameraX(), camera.getCameraY());
 
                 pgn.setLayoutX(newX - (pgn.getFitHeight() / 2) - camera.getCameraX());
                 pgn.setLayoutY(newY - (pgn.getFitHeight() / 2) - camera.getCameraY());
@@ -418,6 +423,19 @@ public class GameManager implements Initializable {
     private void updateFog(double pgnX, double pgnY, double camX, double camY){
         fogImage.setTranslateX(pgnX-fogImage.getFitWidth()/2-camX);
         fogImage.setTranslateY(pgnY-fogImage.getFitHeight()/2-camY);
+    }
+    public void setFogWindowSize(){
+        int difficulty = Difficulty.getDifficulty();
+        if (difficulty==GameSettings.EASY){
+            fogImage.setFitWidth(6000);
+            fogImage.setFitHeight(3500);
+        }else if (difficulty == GameSettings.MIDDLE){
+            fogImage.setFitWidth(5500);
+            fogImage.setFitHeight(3200);
+        }else{
+            fogImage.setFitWidth(3500);
+            fogImage.setFitHeight(2000);
+        }
     }
 
     /**
