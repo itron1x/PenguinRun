@@ -59,6 +59,8 @@ public class GameManager implements Initializable {
     private Pane startText;
     @FXML
     private ImageView volumeImage;
+    @FXML
+    private ImageView fogImage;
     private boolean isPaused = false;
     private boolean exitConfirmation = false;
     private boolean upPressed = false; //W + UP
@@ -372,6 +374,7 @@ public class GameManager implements Initializable {
                     newY = possibleY;
                 }
 
+                updateFog(newX,newY, camera.getCameraX(), camera.getCameraY());
                 camera.updateCamPos(newX, newY);
 
                 pgn.setLayoutX(newX - (pgn.getFitHeight() / 2) - camera.getCameraX());
@@ -390,6 +393,10 @@ public class GameManager implements Initializable {
                 }
             }
         }.start();
+    }
+    private void updateFog(double pgnX, double pgnY, double camX, double camY){
+        fogImage.setTranslateX(pgnX-fogImage.getFitWidth()/2-camX);
+        fogImage.setTranslateY(pgnY-fogImage.getFitHeight()/2-camY);
     }
 
     /**
