@@ -6,7 +6,6 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
@@ -18,14 +17,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.net.URL;
 import java.util.*;
 
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 import at.ac.fhcampuswien.penguinrun.game.Countdown;
 
-public class GameManager implements Initializable {
+public class GameManager{
     @FXML
     private TilePane tilePane;
     @FXML
@@ -84,14 +82,8 @@ public class GameManager implements Initializable {
      * the Continuous Movement method,
      * and the Countdown Timer used to let the player know how much time they have left.
      * The labelUpdater ensures that the countdown label displays the correct time.
-     *
-     * @param location  The location used to resolve relative paths for the root object, or
-     *                  {@code null} if the location is not known.
-     * @param resources The resources used to localize the root object, or {@code null} if
-     *                  the root object was not localized.
      */
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
         camera = new Camera(GameSettings.WINDOW_WIDTH, GameSettings.WINDOW_HEIGHT, mapHeight);
         continuousMovement();
 
