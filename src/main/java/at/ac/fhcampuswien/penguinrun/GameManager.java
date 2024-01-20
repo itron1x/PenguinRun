@@ -54,6 +54,8 @@ public class GameManager{
     private Pane dimOverlay;
     @FXML
     private ImageView fogImage;
+    @FXML
+    private ImageView itemsCollected;
     private MazeManager mazeM;
     private Entities entitiesClass;
     private Countdown countdownTimer;
@@ -72,6 +74,11 @@ public class GameManager{
     private static final Image pgnStill = new Image(Objects.requireNonNull(GameManager.class.getResource("img/pgnStill.png")).toExternalForm(), true);
     private static final Image pgnAnim = new Image(Objects.requireNonNull(GameManager.class.getResource("img/pgnAnim.gif")).toExternalForm(), true);
 
+    private static final Image keyCount0 = new Image(Objects.requireNonNull(GameManager.class.getResource("game/icons/keyCount0.png")).toExternalForm(),true);
+    private static final Image keyCount1 = new Image(Objects.requireNonNull(GameManager.class.getResource("game/icons/keyCount1.png")).toExternalForm(),true);
+    private static final Image keyCount2 = new Image(Objects.requireNonNull(GameManager.class.getResource("game/icons/keyCount2.png")).toExternalForm(),true);
+    private static final Image keyCount3 = new Image(Objects.requireNonNull(GameManager.class.getResource("game/icons/keyCount3.png")).toExternalForm(),true);
+
     public GameManager() {
         volumeSlider = MediaManager.volumeSlider;
         volumeImage = MediaManager.volumeImage;
@@ -86,7 +93,7 @@ public class GameManager{
     public void initialize() {
         camera = new Camera(GameSettings.WINDOW_WIDTH, GameSettings.WINDOW_HEIGHT, mapHeight);
         continuousMovement();
-
+        itemsCollected.setImage(keyCount0);
         // initialize Countdown
         countdownTimer = new Countdown(Countdown.getAccordingTime());
         countdownLabel.setText(countdownTimer.getSecondsRemaining() + " seconds");
@@ -114,6 +121,7 @@ public class GameManager{
                 {
                     MediaManager.updateVolume(newValue.doubleValue(), volumeImage);
                 });
+
     }
 
     /**
@@ -387,8 +395,13 @@ public class GameManager{
                 entitiesClass.itemCollision(playerY, playerX);
 
                 if (entitiesClass.getItemCount() == 3) {
+                    itemsCollected.setImage(keyCount3);
                     mazeM.finishTile();
                     mazeM.setWon();
+                }if (entitiesClass.getItemCount()==2){
+                    itemsCollected.setImage(keyCount2);
+                }if (entitiesClass.getItemCount() == 1){
+                    itemsCollected.setImage(keyCount1);
                 }
             }
         }.start();
