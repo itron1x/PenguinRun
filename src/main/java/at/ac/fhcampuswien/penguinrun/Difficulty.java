@@ -5,7 +5,6 @@ import at.ac.fhcampuswien.penguinrun.game.MediaManager;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -18,17 +17,12 @@ import java.util.Objects;
 
 public class Difficulty {
     @FXML
-    private Button backBtn;
-
-    @FXML
     private Button startGame;
-
-    private static int difficulty = 51;
-
     @FXML
     private Slider volumeSlider;
     @FXML
     private ImageView volumeImage;
+    private static int difficulty = 51;
     private final Image volumeOff = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOff.png")).toExternalForm());
     private final Image volumeOn = new Image(Objects.requireNonNull(this.getClass().getResource("img/btn/volumeOn.png")).toExternalForm());
 
@@ -55,6 +49,7 @@ public class Difficulty {
                 addListener((observable, oldValue, newValue) ->
                 {
                     MediaManager.updateVolume(newValue.doubleValue(), volumeImage);
+                    updateVolumeButtonIcon(newValue.doubleValue());
                 });
     }
 
@@ -72,13 +67,9 @@ public class Difficulty {
      * Method to go back to the start screen.
      */
     public void onBack() throws IOException {
-        Stage stage = (Stage) backBtn.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("start-menu.fxml"));
-        Parent root = loader.load();
-
-        Scene mainMenu = GameManager.sceneManager.get("mainMenu");
-        mainMenu.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
-        stage.setTitle("PenguinRun");
+        Stage stage = SceneManager.getInstance().getStage();
+        SceneManager.getInstance().initializeScenes();
+        Scene mainMenu = SceneManager.sceneList.get("mainMenu");
         stage.setScene(mainMenu);
     }
 
@@ -87,16 +78,13 @@ public class Difficulty {
      * The difficulty is given to the game manager class.
      */
     public void startGame() throws IOException {
-        Stage stage = (Stage) backBtn.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("game.fxml"));
-        Parent root = loader.load();
+        Stage stage = SceneManager.getInstance().getStage();
+        FXMLLoader gameLoader = new FXMLLoader(this.getClass().getResource("game.fxml"));
 
-        Scene gameScene = new Scene(root, GameSettings.WINDOW_WIDTH,GameSettings.WINDOW_HEIGHT);
+        Scene gameScene = new Scene(gameLoader.load(), GameSettings.WINDOW_WIDTH,GameSettings.WINDOW_HEIGHT);
         gameScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
 
-        GameManager.sceneManager.put("game",gameScene);
-
-        GameManager controllerPlayer = loader.getController();
+        GameManager controllerPlayer = gameLoader.getController();
         controllerPlayer.generateMaze(difficulty);
         gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override

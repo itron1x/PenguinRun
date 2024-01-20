@@ -1,9 +1,6 @@
 package at.ac.fhcampuswien.penguinrun;
 
-import at.ac.fhcampuswien.penguinrun.game.GameSettings;
-import at.ac.fhcampuswien.penguinrun.game.MediaManager;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
@@ -18,20 +15,17 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
+        SceneManager sceneManager = SceneManager.getInstance(stage);
+        Scene mainMenu = SceneManager.sceneList.get("mainMenu");
+        Image icon = new Image(Objects.requireNonNull(SceneManager.class.getResource("img/pgnBig.png")).toExternalForm());
+
+        sceneManager.getStage().setScene(mainMenu);
+        sceneManager.getStage().setTitle("PenguinRun");
+        sceneManager.getStage().setResizable(false);
+        sceneManager.getStage().getIcons().add(icon);
+        sceneManager.getStage().show();
+
         Font.loadFont(Objects.requireNonNull(getClass().getResource("Maze.ttf")).toExternalForm(),10);
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("start-menu.fxml"));
-        Scene mainMenu = new Scene(fxmlLoader.load(), GameSettings.WINDOW_WIDTH, GameSettings.WINDOW_HEIGHT);
-
-        Image icon = new Image(Objects.requireNonNull(getClass().getResource("img/pgnBig.png")).toExternalForm());
-        mainMenu.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
-
-        GameManager.sceneManager.put("mainMenu",mainMenu);
-
-        stage.setTitle("PenguinRun");
-        stage.getIcons().add(icon);
-        stage.setResizable(false);
-        stage.setScene(mainMenu);
-        stage.show();
     }
 
     public static void main(String[] args) {

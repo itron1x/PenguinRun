@@ -32,17 +32,10 @@ public class StartMenu {
     /**
      * Method for loading the difficulty screen.
      */
-    public void onStart() throws IOException {
-        Stage stage = (Stage) startBtn.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("difficulty.fxml"));
-        Parent root = loader.load();
-
-        Scene difficulty = new Scene(root, GameSettings.WINDOW_WIDTH, GameSettings.WINDOW_HEIGHT);
-        difficulty.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
-
-        GameManager.sceneManager.put("difficulty",difficulty);
-
-        stage.setTitle("PenguinRun");
+    public void onStart(){
+        Stage stage = SceneManager.getInstance().getStage();
+        SceneManager.getInstance().initializeScenes();
+        Scene difficulty = SceneManager.sceneList.get("difficulty");
         stage.setScene(difficulty);
     }
 

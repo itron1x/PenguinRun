@@ -6,7 +6,6 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Slider;
@@ -58,7 +57,6 @@ public class GameManager implements Initializable {
     private Pane gameOver;
     @FXML
     private Pane dimOverlay;
-    public static final Map<String, Scene> sceneManager = new HashMap<>();
     public double mapHeight = (10 * GameSettings.SCALE) * Difficulty.getDifficulty();
     private double newX;
     private double newY;
@@ -77,7 +75,6 @@ public class GameManager implements Initializable {
     private Entities entitiesClass;
     private Countdown countdownTimer;
     private Timeline labelUpdater;
-
 
 
     public GameManager() {
@@ -156,7 +153,7 @@ public class GameManager implements Initializable {
     public void generateMaze(int sizeBoard) {
         mazeM = new MazeManager(sizeBoard, tilePane, itemPane);
         mazeM.generateMaze();
-        entitiesClass= mazeM.getItems();
+        entitiesClass = mazeM.getItems();
         pgn.setFitHeight(GameSettings.SCALE * 8);
         pgn.setFitWidth(GameSettings.SCALE * 8);
         newY = GameSettings.SCALE * 15;
@@ -164,18 +161,11 @@ public class GameManager implements Initializable {
         setFogWindowSize();
     }
 
-
-
-
     public void tryAgain() {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("difficulty.fxml"));
-            Scene difficulty = GameManager.sceneManager.get("difficulty");
-
-            difficulty.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
-
-            Stage stage = (Stage) tilePane.getScene().getWindow();
-            stage.setScene(difficulty);
-            stage.show();
+        Scene difficulty = SceneManager.sceneList.get("difficulty");
+        SceneManager.getInstance().initializeScenes();
+        Stage stage = SceneManager.getInstance().getStage();
+        stage.setScene(difficulty);
 
         gameOver.setVisible(false);
     }
@@ -186,15 +176,25 @@ public class GameManager implements Initializable {
      * Shows the stage and resets the exit confirmation flag as the return to the main menu is completed.
      */
     public void backToMainMenu() {
-        // Load the start menu FXML file
-        Scene mainMenu = GameManager.sceneManager.get("mainMenu");
-        mainMenu.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
-
-        Stage stage = (Stage) tilePane.getScene().getWindow();
+        Scene mainMenu = SceneManager.sceneList.get("mainMenu");
+        SceneManager.getInstance().initializeScenes();
+        Stage stage = SceneManager.getInstance().getStage();
         stage.setScene(mainMenu);
-        stage.show();
 
         exitConfirmation = false;
+    }
+
+    /**
+     * Handles the transition back to the main menu. If the exit confirmation is activated, it performs
+     * the actual return to the main menu. Otherwise, it displays the exit confirmation prompt.
+     */
+    public void confirmationMainMenu() {
+        if (exitConfirmation) {
+            backToMainMenu();
+            safe.setVisible(false);
+        } else {
+            showExitConfirmation();
+        }
     }
 
     /**
@@ -208,7 +208,7 @@ public class GameManager implements Initializable {
         countdownTimer.pause();
     }
 
-    public void gameOverScreen(){
+    public void gameOverScreen() {
         dimOverlay.setVisible(true);
         gameOver.setVisible(true);
     }
@@ -243,19 +243,6 @@ public class GameManager implements Initializable {
     }
 
     /**
-     * Handles the transition back to the main menu. If the exit confirmation is activated, it performs
-     * the actual return to the main menu. Otherwise, it displays the exit confirmation prompt.
-     */
-    public void confirmationMainMenu() {
-        if (exitConfirmation) {
-            backToMainMenu();
-            safe.setVisible(false);
-        } else {
-            showExitConfirmation();
-        }
-    }
-
-    /**
      * Displays the exit confirmation prompt, activating the exitConfirmation flag and showing the
      * confirmation message.
      */
@@ -264,13 +251,10 @@ public class GameManager implements Initializable {
         safe.setVisible(true);
     }
 
-
-
-    public void startTimer(KeyEvent event){
+    public void startTimer(KeyEvent event) {
         countdownTimer.start();
         labelUpdater.play();
     }
-
 
     /**
      * Handles the key press events for game controls and pause functionality.
@@ -401,7 +385,7 @@ public class GameManager implements Initializable {
 
                 camera.updateCamPos(newX, newY);
 
-                updateFog(newX,newY, camera.getCameraX(), camera.getCameraY());
+                updateFog(newX, newY, camera.getCameraX(), camera.getCameraY());
 
                 pgn.setLayoutX(newX - (pgn.getFitHeight() / 2) - camera.getCameraX());
                 pgn.setLayoutY(newY - (pgn.getFitHeight() / 2) - camera.getCameraY());
@@ -428,19 +412,20 @@ public class GameManager implements Initializable {
      * @param camX this is the x coordinate of the camera
      * @param camY this is the y coordinate of the camera
      */
-    private void updateFog(double pgnX, double pgnY, double camX, double camY){
-        fogImage.setTranslateX(pgnX-fogImage.getFitWidth()/2-camX);
-        fogImage.setTranslateY(pgnY-fogImage.getFitHeight()/2-camY);
+    private void updateFog(double pgnX, double pgnY, double camX, double camY) {
+        fogImage.setTranslateX(pgnX - fogImage.getFitWidth() / 2 - camX);
+        fogImage.setTranslateY(pgnY - fogImage.getFitHeight() / 2 - camY);
     }
-    public void setFogWindowSize(){
+
+    public void setFogWindowSize() {
         int difficulty = Difficulty.getDifficulty();
-        if (difficulty==GameSettings.EASY){
+        if (difficulty == GameSettings.EASY) {
             fogImage.setFitWidth(6000);
             fogImage.setFitHeight(3500);
-        }else if (difficulty == GameSettings.MIDDLE){
+        } else if (difficulty == GameSettings.MIDDLE) {
             fogImage.setFitWidth(5500);
             fogImage.setFitHeight(3200);
-        }else{
+        } else {
             fogImage.setFitWidth(3500);
             fogImage.setFitHeight(2000);
         }
