@@ -420,6 +420,14 @@ public class GameManager implements Initializable {
             }
         }.start();
     }
+
+    /***
+     * This method updates the position of the fog. It is supposed to follow the character at all times.
+     * @param pgnX this is the x coordinate of the character
+     * @param pgnY this is the y coordinate of the character
+     * @param camX this is the x coordinate of the camera
+     * @param camY this is the y coordinate of the camera
+     */
     private void updateFog(double pgnX, double pgnY, double camX, double camY){
         fogImage.setTranslateX(pgnX-fogImage.getFitWidth()/2-camX);
         fogImage.setTranslateY(pgnY-fogImage.getFitHeight()/2-camY);
