@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.penguinrun.game;
 
 
+import at.ac.fhcampuswien.penguinrun.Difficulty;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
@@ -13,6 +14,7 @@ public class Countdown {
     private int secondsRemaining;
     private Timeline timeline;
     private boolean paused;
+    private static int TimeLeft;
 
 
     public Countdown(int initialSeconds) {
@@ -54,6 +56,23 @@ public class Countdown {
 
     public int getSecondsRemaining() {
         return secondsRemaining;
+    }
+
+    /**
+     * Sets the time depending on which difficulty the player has chosen.
+     * @return
+     */
+    public static int getAccordingTime() {
+        if (Difficulty.getDifficulty() == GameSettings.EASY) {
+            TimeLeft = 90;
+        }
+        if (Difficulty.getDifficulty() == GameSettings.MIDDLE) {
+            TimeLeft = 150;
+        }
+        if (Difficulty.getDifficulty() == GameSettings.HARD) {
+            TimeLeft = 240;
+        }
+        return TimeLeft;
     }
 
 }

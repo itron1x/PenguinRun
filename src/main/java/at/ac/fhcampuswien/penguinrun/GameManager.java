@@ -102,7 +102,7 @@ public class GameManager implements Initializable {
         continuousMovement();
 
         // initialize Countdown
-        countdownTimer = new Countdown(200);
+        countdownTimer = new Countdown(Countdown.getAccordingTime());
         countdownLabel.setText(countdownTimer.getSecondsRemaining() + " seconds");
 
         // Set up a Timeline to update the label every second
