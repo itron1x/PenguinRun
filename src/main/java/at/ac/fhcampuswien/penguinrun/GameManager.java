@@ -238,6 +238,7 @@ public class GameManager implements Initializable {
         safe.setVisible(true);
     }
 
+
     /**
      * Performs the transition back to the main menu. Loads the start menu FXML file, creates a new
      * scene with the start menu, sets the CSS styling, and sets the scene on the current stage (window).

@@ -23,10 +23,6 @@ public class Difficulty {
     @FXML
     private Button startGame;
 
-    public static int getDifficulty() {
-        return difficulty;
-    }
-
     private static int difficulty = 51;
 
     @FXML
@@ -39,6 +35,10 @@ public class Difficulty {
     public Difficulty() {
         volumeSlider = MediaManager.volumeSlider;
         volumeImage = MediaManager.volumeImage;
+    }
+
+    public static int getDifficulty() {
+        return difficulty;
     }
 
     /**
