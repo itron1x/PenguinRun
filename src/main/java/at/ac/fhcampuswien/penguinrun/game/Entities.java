@@ -32,6 +32,7 @@ public class Entities {
     public void generateItems() {
         List<Integer> tempListY = new ArrayList<>();
         List<Integer> tempListX = new ArrayList<>();
+        Map<Integer, Integer> tempMap = new HashMap<>();
 
         for (int y = 1; y < (gameBoard.length - 2); y++) {
             for (int x = 1; x < gameBoard.length - 1; x++) {
@@ -41,11 +42,17 @@ public class Entities {
                 }
             }
         }
-        for (int i = 0; i < 3; i++) {
+        List<Integer> randomNums = new ArrayList<>();
+        for (int i = 1; i < 4; i++) {
             Random random = new Random();
             int index = random.nextInt(tempListX.size());
-            itemTilesY.add(tempListY.get(index));
-            itemTilesX.add(tempListX.get(index));
+            if (i == 0) randomNums.add(index);
+            else if(!randomNums.contains(index)) randomNums.add(index);
+            else i--;
+        }
+        for (Integer nums : randomNums) {
+            itemTilesY.add(tempListY.get(nums));
+            itemTilesX.add(tempListX.get(nums));
         }
         drawItems(itemTilesY, itemTilesX);
     }
