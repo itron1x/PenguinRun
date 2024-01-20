@@ -22,17 +22,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import javafx.scene.control.Label;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import at.ac.fhcampuswien.penguinrun.game.Countdown;
 
 public class GameManager implements Initializable {
-    public double mapHeight = (10 * GameSettings.SCALE) * Difficulty.getDifficulty();
-    private double newX;
-    private double newY;
     private Camera camera;
     @FXML
     private TilePane tilePane;

@@ -68,7 +68,6 @@ public class Difficulty {
     }
 
 
-
     /**
      * Method to go back to the start screen.
      */
@@ -77,10 +76,10 @@ public class Difficulty {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("start-menu.fxml"));
         Parent root = loader.load();
 
-        Scene scene = new Scene(root, GameSettings.WINDOW_WIDTH,GameSettings.WINDOW_HEIGHT);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
+        Scene mainMenu = GameManager.sceneManager.get("mainMenu");
+        mainMenu.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
         stage.setTitle("PenguinRun");
-        stage.setScene(scene);
+        stage.setScene(mainMenu);
     }
 
     /**
@@ -92,12 +91,14 @@ public class Difficulty {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("game.fxml"));
         Parent root = loader.load();
 
-        Scene scene = new Scene(root, GameSettings.WINDOW_WIDTH,GameSettings.WINDOW_HEIGHT);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
+        Scene gameScene = new Scene(root, GameSettings.WINDOW_WIDTH,GameSettings.WINDOW_HEIGHT);
+        gameScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
+
+        GameManager.sceneManager.put("game",gameScene);
 
         GameManager controllerPlayer = loader.getController();
         controllerPlayer.generateMaze(difficulty);
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 controllerPlayer.keyPressed(event);
@@ -106,7 +107,7 @@ public class Difficulty {
                 controllerPlayer.getStartText().setVisible(false);
             }
         });
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 controllerPlayer.keyReleased(event);
@@ -114,7 +115,7 @@ public class Difficulty {
         });
 
         stage.setTitle("PenguinRun");
-        stage.setScene(scene);
+        stage.setScene(gameScene);
     }
 
     /**
