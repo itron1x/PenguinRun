@@ -66,10 +66,10 @@ public class Countdown {
         if (Difficulty.getDifficulty() == GameSettings.EASY) {
             TimeLeft = 90;
         }
-        if (Difficulty.getDifficulty() == GameSettings.MIDDLE) {
+        else if (Difficulty.getDifficulty() == GameSettings.MIDDLE) {
             TimeLeft = 150;
         }
-        if (Difficulty.getDifficulty() == GameSettings.HARD) {
+        else if (Difficulty.getDifficulty() == GameSettings.HARD) {
             TimeLeft = 240;
         }
         return TimeLeft;
