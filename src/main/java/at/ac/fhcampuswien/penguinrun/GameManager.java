@@ -26,7 +26,6 @@ import javafx.util.Duration;
 import at.ac.fhcampuswien.penguinrun.game.Countdown;
 
 public class GameManager implements Initializable {
-    private Camera camera;
     @FXML
     private TilePane tilePane;
     @FXML
@@ -37,8 +36,6 @@ public class GameManager implements Initializable {
     private Pane pauseMenu;
     @FXML
     private Text safe;
-    @FXML
-    private Text end;
     @FXML
     private Pane gameWon;
     @FXML
@@ -57,11 +54,16 @@ public class GameManager implements Initializable {
     private Pane gameOver;
     @FXML
     private Pane dimOverlay;
-    public double mapHeight = (10 * GameSettings.SCALE) * Difficulty.getDifficulty();
-    private double newX;
-    private double newY;
     @FXML
     private ImageView fogImage;
+    private MazeManager mazeM;
+    private Entities entitiesClass;
+    private Countdown countdownTimer;
+    private Timeline labelUpdater;
+    private Camera camera;
+    public double mapHeight = (10 * GameSettings.SCALE) * Difficulty.getDifficulty();
+    private double playerX;
+    private double playerY;
     private boolean isPaused = false;
     private boolean exitConfirmation = false;
     private boolean upPressed = false; //W + UP
@@ -71,11 +73,6 @@ public class GameManager implements Initializable {
     private boolean won = false;
     private static final Image pgnStill = new Image(Objects.requireNonNull(GameManager.class.getResource("img/pgnStill.png")).toExternalForm(), true);
     private static final Image pgnAnim = new Image(Objects.requireNonNull(GameManager.class.getResource("img/pgnAnim.gif")).toExternalForm(), true);
-    private MazeManager mazeM;
-    private Entities entitiesClass;
-    private Countdown countdownTimer;
-    private Timeline labelUpdater;
-
 
     public GameManager() {
         volumeSlider = MediaManager.volumeSlider;
@@ -156,8 +153,8 @@ public class GameManager implements Initializable {
         entitiesClass = mazeM.getItems();
         pgn.setFitHeight(GameSettings.SCALE * 8);
         pgn.setFitWidth(GameSettings.SCALE * 8);
-        newY = GameSettings.SCALE * 15;
-        newX = GameSettings.SCALE * 5;
+        playerY = GameSettings.SCALE * 15;
+        playerX = GameSettings.SCALE * 5;
         setFogWindowSize();
     }
 
@@ -319,7 +316,6 @@ public class GameManager implements Initializable {
      * @param event The KeyEvent triggered by releasing a key.
      */
     public void keyReleased(KeyEvent event) {
-        pgn.setImage(pgnStill);
         switch (event.getCode()) {
             //WASD + ARROW KEYS
             case W, UP:
@@ -335,6 +331,7 @@ public class GameManager implements Initializable {
                 rightPressed = false;
                 break;
         }
+        if (!upPressed && !leftPressed &&!downPressed &&!rightPressed) pgn.setImage(pgnStill);
     }
 
     /**
@@ -352,8 +349,8 @@ public class GameManager implements Initializable {
                 double borderStart = pgn.getLayoutX();
                 double playerWidth = pgn.getFitWidth();
 
-                double possibleX = newX;
-                double possibleY = newY;
+                double possibleX = playerX;
+                double possibleY = playerY;
                 double possibleXWithPadding = possibleX;
                 double possibleYWithPadding = possibleY;
 
@@ -378,24 +375,24 @@ public class GameManager implements Initializable {
                 }
 
                 if (canMoveTo(possibleXWithPadding, possibleYWithPadding)) {
-                    newX = possibleX;
-                    newY = possibleY;
+                    playerX = possibleX;
+                    playerY = possibleY;
                 }
 
 
-                camera.updateCamPos(newX, newY);
+                camera.updateCamPos(playerX, playerY);
 
-                updateFog(newX, newY, camera.getCameraX(), camera.getCameraY());
+                updateFog(playerX, playerY, camera.getCameraX(), camera.getCameraY());
 
-                pgn.setLayoutX(newX - (pgn.getFitHeight() / 2) - camera.getCameraX());
-                pgn.setLayoutY(newY - (pgn.getFitHeight() / 2) - camera.getCameraY());
+                pgn.setLayoutX(playerX - (pgn.getFitHeight() / 2) - camera.getCameraX());
+                pgn.setLayoutY(playerY - (pgn.getFitHeight() / 2) - camera.getCameraY());
 
                 tilePane.setTranslateX(-camera.getCameraX());
                 tilePane.setTranslateY(-camera.getCameraY());
 
                 itemPane.setTranslateX(-camera.getCameraX());
                 itemPane.setTranslateY(-camera.getCameraY());
-                entitiesClass.itemCollision(newY, newX);
+                entitiesClass.itemCollision(playerY, playerX);
 
                 if (entitiesClass.getItemCount() == 3) {
                     mazeM.finishTile();

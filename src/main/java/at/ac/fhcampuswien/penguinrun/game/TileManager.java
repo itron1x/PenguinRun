@@ -48,6 +48,7 @@ public class TileManager {
     public int[][] setWalls(int[][] gameBoard, int size){
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
+                //Wall tiles.
                 if (i == 0 & j == 0) gameBoard[i][j] = 9; //ES
                 else if (i == 0 & j == (size - 1)) gameBoard[i][j] = 10; //SW
                 else if (i == size - 1 & j == 0) gameBoard[i][j] = 8; //NE
@@ -76,7 +77,9 @@ public class TileManager {
                     else if (gameBoard[i - 1][j] != 0 && gameBoard[i + 1][j] == 0 && gameBoard[i][j - 1] != 0) gameBoard[i][j] = 11; //NW
                     else if (gameBoard[i - 1][j] == 0 && gameBoard[i + 1][j] != 0 && gameBoard[i][j - 1] != 0) gameBoard[i][j] = 10; //WS
                 }
-                //         N                            S                              W                        E
+
+                //Rest of the tiles
+                //                 N                            S                              W                        E
                 else if (gameBoard[i][j] != 0){
                     if (gameBoard[i - 1][j] != 0 && gameBoard[i + 1][j] != 0 && gameBoard[i][j - 1] != 0 && gameBoard[i][j + 1] != 0) gameBoard[i][j] = 1; //NSWE
                     else if (gameBoard[i - 1][j] != 0 && gameBoard[i + 1][j] != 0 && gameBoard[i][j - 1] == 0 && gameBoard[i][j + 1] == 0) gameBoard[i][j] = 2; //NS
@@ -96,6 +99,8 @@ public class TileManager {
                 }
             }
         }
+
+        //Special set Tiles.
         gameBoard[0][0] = 13;
         gameBoard[1][0] = 0;
         if (gameBoard[2][1] == 0)gameBoard[2][0] = 14;
