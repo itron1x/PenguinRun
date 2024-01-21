@@ -64,13 +64,13 @@ public class Countdown {
      */
     public static int getAccordingTime() {
         if (Difficulty.getDifficulty() == GameSettings.EASY) {
-            TimeLeft = 100;
+            TimeLeft = 120;
         }
         else if (Difficulty.getDifficulty() == GameSettings.MIDDLE) {
-            TimeLeft = 250;
+            TimeLeft = 240;
         }
         else if (Difficulty.getDifficulty() == GameSettings.HARD) {
-            TimeLeft = 500;
+            TimeLeft = 720;
         }
         return TimeLeft;
     }
