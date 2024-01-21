@@ -163,6 +163,13 @@ public class GameManager {
         setFogWindowSize();
     }
 
+    /**
+     * Resets the game state and generates a new maze when the player chooses to try again.
+     * Starts again in difficulty menu.
+     * This method is invoked when the "Try Again" button is pressed on the game over screen.
+     * It retrieves the 'difficulty' scene from the scene manager, initializes all scenes, sets
+     * the difficulty scene as the current scene, and hides the game over screen.
+     */
     public void tryAgain() {
         Scene difficulty = SceneManager.sceneList.get("difficulty");
         SceneManager.getInstance().initializeScenes();
@@ -210,6 +217,11 @@ public class GameManager {
         countdownTimer.pause();
     }
 
+    /**
+     * Is called in `initialize` after timer says "Times up".
+     * Sets the visibility from the GameOverScreen true, so you can see the pane.
+     * dimOverlay is set in game.fxml and dims the background
+     */
     public void gameOverScreen() {
         dimOverlay.setVisible(true);
         gameOver.setVisible(true);
@@ -258,6 +270,10 @@ public class GameManager {
         safe.setVisible(true);
     }
 
+    /**
+     * Starts the countdown and timeline.
+     * @param event
+     */
     public void startTimer(KeyEvent event) {
         countdownTimer.start();
         labelUpdater.play();
