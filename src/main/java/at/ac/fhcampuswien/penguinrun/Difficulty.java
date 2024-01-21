@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/***
+ * Difficulty selection menu.
+ */
 public class Difficulty {
     @FXML
     private Button startGame;

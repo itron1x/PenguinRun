@@ -7,6 +7,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.util.Objects;
 
+/***
+ * Class to start the game.
+ */
 public class Main extends Application {
     /**
      * Startup of the game. Music is loaded and window settings are initialized.

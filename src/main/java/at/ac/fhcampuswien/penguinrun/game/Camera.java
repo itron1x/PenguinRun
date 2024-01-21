@@ -1,5 +1,8 @@
 package at.ac.fhcampuswien.penguinrun.game;
 
+/***
+ * Camera class.
+ */
 public class Camera{
     private double cameraX;
     private double cameraY;

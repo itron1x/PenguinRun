@@ -6,6 +6,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import java.util.*;
 
+/***
+ * This class selects tiles for the collectible items, puts the items there and checks for collision with them.
+ */
 public class Entities {
     private final int[][] gameBoard;
     private final List<Integer> itemTilesY;

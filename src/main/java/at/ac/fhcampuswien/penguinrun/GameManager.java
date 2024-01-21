@@ -21,6 +21,9 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 import at.ac.fhcampuswien.penguinrun.game.Countdown;
 
+/***
+ * Manager Class for everything regarding the game.
+ */
 public class GameManager {
     @FXML
     private TilePane tilePane;

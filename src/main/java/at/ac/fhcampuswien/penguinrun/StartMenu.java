@@ -8,6 +8,9 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+/***
+ * Start Menu Class.
+ */
 public class StartMenu {
     @FXML
     private Slider volumeSlider;

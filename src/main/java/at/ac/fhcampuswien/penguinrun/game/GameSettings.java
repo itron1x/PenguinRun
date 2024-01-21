@@ -1,5 +1,8 @@
 package at.ac.fhcampuswien.penguinrun.game;
 
+/***
+ * Settings for the game.
+ */
 public class GameSettings {
     public static final int SCALE = 6; //Only even numbers
     public static final int WINDOW_WIDTH = 1280;

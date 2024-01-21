@@ -7,6 +7,9 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.util.Objects;
 
+/***
+ * Class for the volume control.
+ */
 public class MediaManager {
     private static final Media media = new Media(Objects.requireNonNull(MediaManager.class.getResource("music/BGMusic.mp3")).toExternalForm());
     private static final MediaPlayer mediaPlayer = new MediaPlayer(media);

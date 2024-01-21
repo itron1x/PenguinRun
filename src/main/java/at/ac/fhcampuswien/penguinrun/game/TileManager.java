@@ -3,6 +3,9 @@ package at.ac.fhcampuswien.penguinrun.game;
 import javafx.scene.image.Image;
 import java.util.Objects;
 
+/***
+ * In this class all tiles are allocated to the right tile.
+ */
 public class TileManager {
     private final static Image bg = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileBG.jpg")).toExternalForm(), true);
     private final static Image wallNSWE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNSWE.jpg")).toExternalForm(), true);

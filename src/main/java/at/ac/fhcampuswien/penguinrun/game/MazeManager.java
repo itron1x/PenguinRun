@@ -5,6 +5,9 @@ import javafx.scene.layout.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/***
+ * Generation of the maze and the tile painting of it.
+ */
     public class MazeManager {
         private final ArrayList<Integer> directions = new ArrayList<>();
         private final int size;

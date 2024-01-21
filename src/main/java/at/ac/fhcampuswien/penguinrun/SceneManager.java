@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/***
+ * Class for managing the scenes.
+ */
 public class SceneManager {
     private static SceneManager sceneManager;
     public static final Map<String, Scene> sceneList = new HashMap<>();
