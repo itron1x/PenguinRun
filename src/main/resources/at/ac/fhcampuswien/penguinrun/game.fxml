@@ -33,7 +33,7 @@
       <Rectangle fx:id="dimmBackground" arcHeight="5.0" arcWidth="5.0" height="720.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
       <Pane fx:id="startText">
          <children>
-            <Text id="startText" fill="WHITE" layoutX="987.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer -&gt;" />
+            <Text id="startText" fill="WHITE" layoutX="1065.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer -&gt;" />
             <Text id="startText" fill="WHITE" layoutX="320.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;Drücken Sie eine beliebige Taste, um zu starten &gt;" />
             <Text id="startText" fill="WHITE" layoutX="59.0" layoutY="705.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;- Lautstärke ändern!" />
          </children></Pane>
@@ -68,7 +68,7 @@
       <!-- Pause menu -->
       <Text fx:id="safe" fill="#ff3838" layoutX="480.0" layoutY="420.0" stroke="WHITE" strokeWidth="0.0" text="Das aktuelle Spiel wird hierbeibeendet!" visible="false" />
       <!--Countdown Label-->
-      <Label id="whiteLabel" fx:id="countdownLabel" layoutX="1121.0" prefHeight="49.0" prefWidth="159.0" textFill="WHITE" />
+      <Label id="whiteLabel" fx:id="countdownLabel" layoutX="1200.0" prefHeight="49.0" prefWidth="159.0" textFill="WHITE" />
       <Slider fx:id="volumeSlider" blockIncrement="0.1" disable="true" focusTraversable="false" layoutX="16.0" layoutY="534.0" majorTickUnit="0.25" max="1.0" opacity="0.0" orientation="VERTICAL" value="0.1" />
       <ImageView fx:id="volumeImage" fitHeight="25.0" fitWidth="31.0" layoutX="7.0" layoutY="681.0" onMouseClicked="#changeVolume" pickOnBounds="true" preserveRatio="true">
          <cursor>
