@@ -61,7 +61,7 @@ import java.util.Collections;
 
         /**
          * The maze is being generated shuffling through all directions and filling the whole game board. This is achieved with a Depth first search algorithm.
-         * Inspiration: https://www.migapro.com/depth-first-search/
+         * Inspiration: <a href="https://www.migapro.com/depth-first-search/">Miguel Kano - Depth First Search Algorithm</a>
          * @param y describes the vertical axis in the game board.
          * @param x describes the horizontal axis in the game board.
          */
@@ -148,12 +148,12 @@ import java.util.Collections;
         public void printMaze(int[][] gameBoard) {
             System.out.println();
             char space = (char) 32;
-            char raute = (char) 217;
+            char specialChar = (char) 217;
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                     if (gameBoard[i][j] == 0) {
                         System.out.printf("\u001B[36m %2s", space);
-                    } else System.out.printf("\u001B[36m %2s", raute);
+                    } else System.out.printf("\u001B[36m %2s", specialChar);
                 }
                 System.out.println();
             }

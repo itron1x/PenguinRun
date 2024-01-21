@@ -16,9 +16,7 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.util.*;
-
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 import at.ac.fhcampuswien.penguinrun.game.Countdown;
@@ -56,6 +54,8 @@ public class GameManager {
     private ImageView fogImage;
     @FXML
     private ImageView itemsCollected;
+    @FXML
+    private Text exitText;
     private MazeManager mazeM;
     private Entities entitiesClass;
     private Countdown countdownTimer;
@@ -102,7 +102,6 @@ public class GameManager {
         // Set up a Timeline to update the label every second
         labelUpdater = new Timeline(
                 new KeyFrame(Duration.seconds(1), event -> {
-                    int secondsRemaining = countdownTimer.getSecondsRemaining();
                     if (countdownTimer.getSecondsRemaining() > 0) {
                         int mins = countdownTimer.getSecondsRemaining() / 60;
                         int secs = countdownTimer.getSecondsRemaining() % 60;
@@ -131,7 +130,6 @@ public class GameManager {
 
     /**
      * Getter for the dim background.
-     *
      * @return Rectangle for dimming the background.
      */
     public Rectangle getDimmBackground() {
@@ -140,7 +138,6 @@ public class GameManager {
 
     /**
      * Getter for the text displayed in the beginning of a game.
-     *
      * @return the pane with the start text.
      */
     public Pane getStartText() {
@@ -149,7 +146,6 @@ public class GameManager {
 
     /**
      * Creates maze, sets the correct size of the player and its start position.
-     *
      * @param sizeBoard the size of the maze.
      */
     public void generateMaze(int sizeBoard) {
@@ -185,7 +181,7 @@ public class GameManager {
      * Shows the stage and resets the exit confirmation flag as the return to the main menu is completed.
      */
     public void backToMainMenu() {
-        Scene mainMenu = SceneManager.sceneList.get("mainMenu");
+        Scene mainMenu = SceneManager.sceneList.get("start");
         SceneManager.getInstance().initializeScenes();
         Stage stage = SceneManager.getInstance().getStage();
         stage.setScene(mainMenu);
@@ -272,9 +268,8 @@ public class GameManager {
 
     /**
      * Starts the countdown and timeline.
-     * @param event
      */
-    public void startTimer(KeyEvent event) {
+    public void startTimer() {
         countdownTimer.start();
         labelUpdater.play();
     }
@@ -283,11 +278,9 @@ public class GameManager {
      * Handles the key press events for game controls and pause functionality.
      * If ESCAPE is pressed, the game is either paused or resumed, depending on the current state.
      * Movement controls are processed if the game is not won and not paused.
-     *
      * @param event The KeyEvent triggered by pressing a key.
      */
     public void keyPressed(KeyEvent event) {
-
         if (!won && !isPaused) {
             switch (event.getCode()) {
                 //WASD + ARROW KEYS
@@ -329,7 +322,6 @@ public class GameManager {
 
     /**
      * Handles key release events to stop movement in the respective direction.
-     *
      * @param event The KeyEvent triggered by releasing a key.
      */
     public void keyReleased(KeyEvent event) {
@@ -406,7 +398,7 @@ public class GameManager {
                     playerY = possibleY;
                 }
 
-
+                //Update the positions for various items.
                 camera.updateCamPos(playerX, playerY);
 
                 updateFog(playerX, playerY, camera.getCameraX(), camera.getCameraY());
@@ -422,8 +414,8 @@ public class GameManager {
                 entitiesClass.itemCollision(playerY, playerX);
 
                 //Item counter image is changed depending on number of collected items
-
                 if (entitiesClass.getItemCount() == 3) {
+                    exitText.setVisible(true);
                     itemsCollected.setImage(keyCount3);
                     mazeM.finishTile();
                     mazeM.setWon();
@@ -450,10 +442,9 @@ public class GameManager {
         fogImage.setTranslateY(pgnY - fogImage.getFitHeight() / 2 - camY + GameSettings.SCALE * 25);
     }
 
-    /*** This method scales the size of the fog picture, the easiest mode has the biggest window, the medium mode has a slightly smaller window and so an
-     *
+    /***
+     * This method scales the size of the fog picture, the easiest mode has the biggest window, the medium mode has a slightly smaller window and so an
      */
-
     public void setFogWindowSize() {
         int difficulty = Difficulty.getDifficulty();
         if (difficulty == GameSettings.EASY) {
@@ -470,7 +461,6 @@ public class GameManager {
 
     /**
      * Determines if the character can move to the specified new X and Y positions based on tile type.
-     *
      * @param newX The potential new X position for the character.
      * @param newY The potential new Y position for the character.
      * @return true if the character can move to the position, false otherwise.

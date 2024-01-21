@@ -1,30 +1,29 @@
 package at.ac.fhcampuswien.penguinrun.game;
 
 import javafx.scene.image.Image;
-
 import java.util.Objects;
 
 public class TileManager {
-    public final static Image bg = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileBG.jpg")).toExternalForm(), true);
-    public final static Image wallNSWE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNSWE.jpg")).toExternalForm(), true);
-    public final static Image wallNSW = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNSW.jpg")).toExternalForm(), true);
-    public final static Image wallNSE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNSE.jpg")).toExternalForm(), true);
-    public final static Image wallNWE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNWE.jpg")).toExternalForm(), true);
-    public final static Image wallSWE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileSWE.jpg")).toExternalForm(), true);
-    public final static Image wallNW = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNW.jpg")).toExternalForm(), true);
-    public final static Image wallNE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNE.jpg")).toExternalForm(), true);
-    public final static Image wallSW = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileSW.jpg")).toExternalForm(), true);
-    public final static Image wallSE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileSE.jpg")).toExternalForm(), true);
-    public final static Image wallNS = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNS.jpg")).toExternalForm(), true);
-    public final static Image wallWE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileWE.jpg")).toExternalForm(), true);
-    public final static Image wallN = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileN.jpg")).toExternalForm(), true);
-    public final static Image wallS = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileS.jpg")).toExternalForm(), true);
-    public final static Image wallW = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileW.jpg")).toExternalForm(), true);
-    public final static Image wallE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileE.jpg")).toExternalForm(), true);
-    public final static Image finish = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileGateOpen.jpg")).toExternalForm(), true);
-    public final static Image finishClosed0 = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileGateClosed0.jpg")).toExternalForm(), true);
-    public final static Image finishClosed1 = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileGateClosed1.jpg")).toExternalForm(), true);
-    public final static Image finishClosed2 = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileGateClosed2.jpg")).toExternalForm(), true);
+    private final static Image bg = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileBG.jpg")).toExternalForm(), true);
+    private final static Image wallNSWE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNSWE.jpg")).toExternalForm(), true);
+    private final static Image wallNSW = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNSW.jpg")).toExternalForm(), true);
+    private final static Image wallNSE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNSE.jpg")).toExternalForm(), true);
+    private final static Image wallNWE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNWE.jpg")).toExternalForm(), true);
+    private final static Image wallSWE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileSWE.jpg")).toExternalForm(), true);
+    private final static Image wallNW = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNW.jpg")).toExternalForm(), true);
+    private final static Image wallNE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNE.jpg")).toExternalForm(), true);
+    private final static Image wallSW = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileSW.jpg")).toExternalForm(), true);
+    private final static Image wallSE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileSE.jpg")).toExternalForm(), true);
+    private final static Image wallNS = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileNS.jpg")).toExternalForm(), true);
+    private final static Image wallWE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileWE.jpg")).toExternalForm(), true);
+    private final static Image wallN = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileN.jpg")).toExternalForm(), true);
+    private final static Image wallS = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileS.jpg")).toExternalForm(), true);
+    private final static Image wallW = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileW.jpg")).toExternalForm(), true);
+    private final static Image wallE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileE.jpg")).toExternalForm(), true);
+    private final static Image finish = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileGateOpen.jpg")).toExternalForm(), true);
+    private final static Image finishClosed0 = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileGateClosed0.jpg")).toExternalForm(), true);
+    private final static Image finishClosed1 = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileGateClosed1.jpg")).toExternalForm(), true);
+    private final static Image finishClosed2 = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileGateClosed2.jpg")).toExternalForm(), true);
 
     public Image getFinish(){
         return finish;
@@ -100,7 +99,7 @@ public class TileManager {
             }
         }
 
-        //Special set Tiles.
+        //Special Tiles.
         gameBoard[0][0] = 13;
         gameBoard[1][0] = 0;
         if (gameBoard[2][1] == 0)gameBoard[2][0] = 14;

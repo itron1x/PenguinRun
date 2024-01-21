@@ -16,7 +16,6 @@ public class Countdown {
     private boolean paused;
     private static int TimeLeft;
 
-
     public Countdown(int initialSeconds) {
         this.secondsRemaining = initialSeconds;
         initializeTimeline();
@@ -60,7 +59,7 @@ public class Countdown {
 
     /**
      * Sets the time depending on which difficulty the player has chosen.
-     * @return
+     * @return - Returns the start time for the right difficulty.
      */
     public static int getAccordingTime() {
         if (Difficulty.getDifficulty() == GameSettings.EASY) {

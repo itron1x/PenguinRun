@@ -3,9 +3,9 @@ package at.ac.fhcampuswien.penguinrun.game;
 public class Camera{
     private double cameraX;
     private double cameraY;
-    public double screenWidth;
-    public double screenHeight;
-    public double mapSize;
+    private final double screenWidth;
+    private final double screenHeight;
+    private final double mapSize;
 
     /**
      * This method is responsible for the camera movement. It moves with the character, once the character is close

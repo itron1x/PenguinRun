@@ -5,18 +5,17 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
 import java.util.Objects;
 
 public class Main extends Application {
     /**
      * Startup of the game. Music is loaded and window settings are initialized.
-     * @param stage is the start stage
+     * @param stage is the stage
      */
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         SceneManager sceneManager = SceneManager.getInstance(stage);
-        Scene mainMenu = SceneManager.sceneList.get("mainMenu");
+        Scene mainMenu = SceneManager.sceneList.get("start");
         Image icon = new Image(Objects.requireNonNull(SceneManager.class.getResource("game/img/pgnBig.png")).toExternalForm());
 
         sceneManager.getStage().setScene(mainMenu);

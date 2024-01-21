@@ -31,6 +31,10 @@ public class Difficulty {
         volumeImage = MediaManager.volumeImage;
     }
 
+    /***
+     * Get the current difficulty
+     * @return - Current difficulty.
+     */
     public static int getDifficulty() {
         return difficulty;
     }
@@ -66,10 +70,10 @@ public class Difficulty {
     /**
      * Method to go back to the start screen.
      */
-    public void onBack() throws IOException {
+    public void onBack() {
         Stage stage = SceneManager.getInstance().getStage();
         SceneManager.getInstance().initializeScenes();
-        Scene mainMenu = SceneManager.sceneList.get("mainMenu");
+        Scene mainMenu = SceneManager.sceneList.get("start");
         stage.setScene(mainMenu);
     }
 
@@ -86,16 +90,16 @@ public class Difficulty {
 
         GameManager controllerPlayer = gameLoader.getController();
         controllerPlayer.generateMaze(difficulty);
-        gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        gameScene.setOnKeyPressed(new EventHandler<>() {
             @Override
             public void handle(KeyEvent event) {
                 controllerPlayer.keyPressed(event);
-                controllerPlayer.startTimer(event);
+                controllerPlayer.startTimer();
                 controllerPlayer.getDimmBackground().setVisible(false);
                 controllerPlayer.getStartText().setVisible(false);
             }
         });
-        gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        gameScene.setOnKeyReleased(new EventHandler<>() {
             @Override
             public void handle(KeyEvent event) {
                 controllerPlayer.keyReleased(event);
@@ -143,6 +147,4 @@ public class Difficulty {
             volumeSlider.setOpacity(0);
         }
     }
-
-
 }

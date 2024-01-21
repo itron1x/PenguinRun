@@ -1,16 +1,16 @@
 package at.ac.fhcampuswien.penguinrun.game;
+
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
 import java.util.Objects;
 
 public class MediaManager {
-    public static final Slider volumeSlider = new Slider();
     private static final Media media = new Media(Objects.requireNonNull(MediaManager.class.getResource("music/BGMusic.mp3")).toExternalForm());
     private static final MediaPlayer mediaPlayer = new MediaPlayer(media);
+    public static final Slider volumeSlider = new Slider();
     public static final ImageView volumeImage = new ImageView();
     public static final Image volumeOff = new Image(Objects.requireNonNull(MediaManager.class.getResource("img/btn/volumeOff.png")).toExternalForm());
     public static final Image volumeOn = new Image(Objects.requireNonNull(MediaManager.class.getResource("img/btn/volumeOn.png")).toExternalForm());
