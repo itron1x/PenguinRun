@@ -95,22 +95,28 @@ public class GameManager {
         itemsCollected.setImage(keyCount0);
         // initialize Countdown
         countdownTimer = new Countdown(Countdown.getAccordingTime());
-        countdownLabel.setText(countdownTimer.getSecondsRemaining() + " seconds");
+        int minutes = countdownTimer.getSecondsRemaining() / 60;
+        int seconds = countdownTimer.getSecondsRemaining() % 60;
+        countdownLabel.setText(String.format("%02d:%02d", minutes, seconds));
 
         // Set up a Timeline to update the label every second
         labelUpdater = new Timeline(
                 new KeyFrame(Duration.seconds(1), event -> {
                     int secondsRemaining = countdownTimer.getSecondsRemaining();
-                    if (secondsRemaining > 0) {
-                        countdownLabel.setText(secondsRemaining + " seconds");
+                    if (countdownTimer.getSecondsRemaining() > 0) {
+                        int mins = countdownTimer.getSecondsRemaining() / 60;
+                        int secs = countdownTimer.getSecondsRemaining() % 60;
+
+                        countdownLabel.setText(String.format("%02d:%02d", mins, secs));
                     } else {
-                        countdownLabel.setText("Time's up!");
+                        countdownLabel.setVisible(false);
                         gameOverScreen();
                         labelUpdater.stop(); // Stop updating the label once the time is up
                     }
                 })
         );
         labelUpdater.setCycleCount(Animation.INDEFINITE);
+        labelUpdater.play();
 
         volumeSlider.setValue(GameSettings.volume);
         if (GameSettings.volume == 0) volumeImage.setImage(MediaManager.volumeOff);
