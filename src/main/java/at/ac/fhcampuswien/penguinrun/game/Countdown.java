@@ -18,7 +18,7 @@ public class Countdown {
 
     /**
      * Creates a timer that acts as the countdown for the game. This will be called in the GameManager class.
-     * @param initialSeconds
+     * @param initialSeconds - Give time for the level.
      */
     public Countdown(int initialSeconds) {
         this.secondsRemaining = initialSeconds;
@@ -69,7 +69,7 @@ public class Countdown {
 
     /**
      * A getter method for secondsRemaining.
-     * @return
+     * @return - Getter for the variable seconds remaining.
      */
     public int getSecondsRemaining() {
         return secondsRemaining;
