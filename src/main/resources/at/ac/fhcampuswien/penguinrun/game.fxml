@@ -81,5 +81,10 @@
             <Image url="@game/icons/keyCount0.png" />
          </image>
       </ImageView>
+      <Text fx:id="exitText" fill="#ffca28" layoutX="520.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Der Ausgang ist offen" visible="f">
+         <font>
+            <Font name="Arial Nova Cond Light" size="28.0" />
+         </font>
+      </Text>
    </children>
 </Pane>

@@ -405,6 +405,8 @@ public class GameManager {
                 itemPane.setTranslateY(-camera.getCameraY());
                 entitiesClass.itemCollision(playerY, playerX);
 
+                //Item counter image is changed depending on number of collected items
+
                 if (entitiesClass.getItemCount() == 3) {
                     itemsCollected.setImage(keyCount3);
                     mazeM.finishTile();
@@ -431,6 +433,10 @@ public class GameManager {
         fogImage.setTranslateX(pgnX - fogImage.getFitWidth() / 2 - camX - GameSettings.SCALE * 25);
         fogImage.setTranslateY(pgnY - fogImage.getFitHeight() / 2 - camY + GameSettings.SCALE * 25);
     }
+
+    /*** This method scales the size of the fog picture, the easiest mode has the biggest window, the medium mode has a slightly smaller window and so an
+     *
+     */
 
     public void setFogWindowSize() {
         int difficulty = Difficulty.getDifficulty();
