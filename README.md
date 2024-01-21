@@ -1,4 +1,4 @@
-<img src="src/main/resources/at/ac/fhcampuswien/penguinrun/img/logo.png" alt="Penguin Run" width=100% height=100%>
+<img src="src/main/resources/at/ac/fhcampuswien/penguinrun/game/img/logo.png" alt="Penguin Run" width=100% height=100%>
 
 <div>
     <div id="text">
@@ -16,6 +16,6 @@
         The exit is located at the bottom right of the maze.</p>
     </div>
     <h2 align="center">HAVE FUN</h2>
-    <div align="center"><img src="src/main/resources/at/ac/fhcampuswien/penguinrun/img/pgnBig.png" alt="Penguin Run" height="200"></div>
+    <div align="center"><img src="src/main/resources/at/ac/fhcampuswien/penguinrun/game/img/pgnBig.png" alt="Penguin Run" height="200"></div>
 </div>
 
