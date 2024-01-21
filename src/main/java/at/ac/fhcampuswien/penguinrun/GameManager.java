@@ -414,8 +414,8 @@ public class GameManager{
      * @param camY this is the y coordinate of the camera
      */
     private void updateFog(double pgnX, double pgnY, double camX, double camY) {
-        fogImage.setTranslateX(pgnX - fogImage.getFitWidth() / 2 - camX + GameSettings.SCALE * 5);
-        fogImage.setTranslateY(pgnY - fogImage.getFitHeight() / 2 - camY + GameSettings.SCALE * 15);
+        fogImage.setTranslateX(pgnX - fogImage.getFitWidth() / 2 - camX - GameSettings.SCALE * 25);
+        fogImage.setTranslateY(pgnY - fogImage.getFitHeight() / 2 - camY + GameSettings.SCALE * 25);
     }
 
     public void setFogWindowSize() {
@@ -427,8 +427,8 @@ public class GameManager{
             fogImage.setFitWidth(5500);
             fogImage.setFitHeight(3200);
         } else {
-            fogImage.setFitWidth(3500);
-            fogImage.setFitHeight(2000);
+            fogImage.setFitWidth(5500);
+            fogImage.setFitHeight(3200);
         }
     }
 

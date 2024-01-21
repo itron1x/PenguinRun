@@ -114,7 +114,7 @@ import java.util.Collections;
                     ImageView image = new ImageView();
                     image.setFitHeight(height);
                     image.setFitWidth(width);
-                    if (i == size - 2 && j == size - 1) image.setImage(tiles.getWallNS());
+                    if (i == size - 2 && j == size - 1) image.setImage(tiles.getFinishClosed1());
                     else image.setImage(tiles.setTile(gameBoard,i,j));
                     tilePane.getChildren().add(image);
                 }

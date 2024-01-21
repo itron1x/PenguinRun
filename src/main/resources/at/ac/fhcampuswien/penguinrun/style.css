@@ -140,9 +140,9 @@
 }
 #whiteLabel {
     -fx-font-family: Maze;
-    -fx-text-fill: #2e5c6b;
+    -fx-text-fill: white;
     -fx-font-size: 30;
-    -fx-effect: dropshadow(gaussian, #223d54, 0,0,0,1);
+    -fx-effect: dropshadow(gaussian, #6b6e79, 10,0.3,0,1);
 }
 #startText {
         -fx-font-family: Maze;

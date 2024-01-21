@@ -21,20 +21,20 @@ public class TileManager {
     public final static Image wallS = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileS.jpg")).toExternalForm(), true);
     public final static Image wallW = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileW.jpg")).toExternalForm(), true);
     public final static Image wallE = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileE.jpg")).toExternalForm(), true);
-    public final static Image finish = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/white.jpg")).toExternalForm(), true);
+    public final static Image finish = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileGateOpen.jpg")).toExternalForm(), true);
+    public final static Image finishClosed0 = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileGateClosed0.jpg")).toExternalForm(), true);
+    public final static Image finishClosed1 = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileGateClosed1.jpg")).toExternalForm(), true);
+    public final static Image finishClosed2 = new Image(Objects.requireNonNull(TileManager.class.getResource("tiles/tileGateClosed2.jpg")).toExternalForm(), true);
 
     public Image getFinish(){
         return finish;
     }
-
-    public Image getWallNS(){
-        return wallNS;
+    public Image getFinishClosed1(){
+        return finishClosed1;
     }
-
     public Image getW(){
         return wallW;
     }
-
     public Image getN(){
         return wallN;
     }
@@ -105,9 +105,9 @@ public class TileManager {
         gameBoard[1][0] = 0;
         if (gameBoard[2][1] == 0)gameBoard[2][0] = 14;
         else gameBoard[2][0] = 9;
-        gameBoard[size - 3][size - 1] = 2;
+        gameBoard[size - 3][size - 1] = 16;
         gameBoard[size - 2][size - 1] = 0;
-        gameBoard[size - 1][size - 1] = 11;
+        gameBoard[size - 1][size - 1] = 18;
         return gameBoard;
     }
 
@@ -134,6 +134,9 @@ public class TileManager {
         else if (gameBoard[i][j] == 13) return wallE;
         else if (gameBoard[i][j] == 14) return wallS;
         else if (gameBoard[i][j] == 15) return wallW;
+        else if (gameBoard[i][j] == 16) return finishClosed0;
+        else if (gameBoard[i][j] == 17) return finishClosed1;
+        else if (gameBoard[i][j] == 18) return finishClosed2;
         return bg;
     }
 

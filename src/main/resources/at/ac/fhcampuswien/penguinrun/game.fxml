@@ -25,7 +25,7 @@
             <Rectangle2D minX="10.0" minY="10.0" />
          </viewport>
       </ImageView>
-      <ImageView fx:id="fogImage" opacity="0.9" preserveRatio="true">
+      <ImageView fx:id="fogImage" preserveRatio="true">
          <image>
             <Image url="@game/img/fogFinal.png" />
          </image>
@@ -68,7 +68,7 @@
       <!-- Pause menu -->
       <Text fx:id="safe" fill="#ff3838" layoutX="480.0" layoutY="420.0" stroke="WHITE" strokeWidth="0.0" text="Das aktuelle Spiel wird hierbeibeendet!" visible="false" />
       <!--Countdown Label-->
-      <Label id="whiteLabel" fx:id="countdownLabel" layoutX="1121.0" prefHeight="49.0" prefWidth="159.0" />
+      <Label id="whiteLabel" fx:id="countdownLabel" layoutX="1121.0" prefHeight="49.0" prefWidth="159.0" textFill="WHITE" />
       <Slider fx:id="volumeSlider" blockIncrement="0.1" disable="true" focusTraversable="false" layoutX="16.0" layoutY="534.0" majorTickUnit="0.25" max="1.0" opacity="0.0" orientation="VERTICAL" value="0.1" />
       <ImageView fx:id="volumeImage" fitHeight="25.0" fitWidth="31.0" layoutX="7.0" layoutY="681.0" onMouseClicked="#changeVolume" pickOnBounds="true" preserveRatio="true">
          <cursor>

@@ -88,7 +88,7 @@ public class Entities {
                 if (temp) {
                     itemCount ++;
                     temp = false;
-                    System.out.println(itemCount);
+                    //System.out.println(itemCount);
                 }
                 image.setDisable(true);
             }
