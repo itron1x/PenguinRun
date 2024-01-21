@@ -23,7 +23,7 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 import at.ac.fhcampuswien.penguinrun.game.Countdown;
 
-public class GameManager{
+public class GameManager {
     @FXML
     private TilePane tilePane;
     @FXML
@@ -73,10 +73,10 @@ public class GameManager{
     private boolean won = false;
     private static final Image pgnStill = new Image(Objects.requireNonNull(GameManager.class.getResource("game/img/pgnStill.png")).toExternalForm(), true);
     private static final Image pgnAnim = new Image(Objects.requireNonNull(GameManager.class.getResource("game/img/pgnAnim.gif")).toExternalForm(), true);
-    private static final Image keyCount0 = new Image(Objects.requireNonNull(GameManager.class.getResource("game/icons/keyCount0.png")).toExternalForm(),true);
-    private static final Image keyCount1 = new Image(Objects.requireNonNull(GameManager.class.getResource("game/icons/keyCount1.png")).toExternalForm(),true);
-    private static final Image keyCount2 = new Image(Objects.requireNonNull(GameManager.class.getResource("game/icons/keyCount2.png")).toExternalForm(),true);
-    private static final Image keyCount3 = new Image(Objects.requireNonNull(GameManager.class.getResource("game/icons/keyCount3.png")).toExternalForm(),true);
+    private static final Image keyCount0 = new Image(Objects.requireNonNull(GameManager.class.getResource("game/icons/keyCount0.png")).toExternalForm(), true);
+    private static final Image keyCount1 = new Image(Objects.requireNonNull(GameManager.class.getResource("game/icons/keyCount1.png")).toExternalForm(), true);
+    private static final Image keyCount2 = new Image(Objects.requireNonNull(GameManager.class.getResource("game/icons/keyCount2.png")).toExternalForm(), true);
+    private static final Image keyCount3 = new Image(Objects.requireNonNull(GameManager.class.getResource("game/icons/keyCount3.png")).toExternalForm(), true);
 
     public GameManager() {
         volumeSlider = MediaManager.volumeSlider;
@@ -216,6 +216,11 @@ public class GameManager{
      * Pauses the timeline
      */
     private void pauseGame() {
+        upPressed = false;
+        downPressed = false;
+        leftPressed = false;
+        rightPressed = false;
+
         pauseDimm.setVisible(true);
         pauseMenu.setVisible(true);
         countdownTimer.pause();
@@ -260,51 +265,42 @@ public class GameManager{
      * @param event The KeyEvent triggered by pressing a key.
      */
     public void keyPressed(KeyEvent event) {
-        if (!won && event.getCode() == KeyCode.ESCAPE) {
-            if (!isPaused) {
-                pauseGame();
-                isPaused = true;
-            } else {
-                resumeGame();
-                isPaused = false;
-            }
-        } else {
-            if (!won && !isPaused) {
-                switch (event.getCode()) {
-                    //WASD + ARROW KEYS
-                    case W, UP:
-                        pgn.setImage(pgnAnim);
-                        pgn.setRotate(0);
-                        upPressed = true;
-                        leftPressed = false;
-                        downPressed = false;
-                        rightPressed = false;
-                        break;
-                    case A, LEFT:
-                        pgn.setImage(pgnAnim);
-                        pgn.setRotate(-90);
-                        upPressed = false;
-                        leftPressed = true;
-                        downPressed = false;
-                        rightPressed = false;
-                        break;
-                    case S, DOWN:
-                        pgn.setImage(pgnAnim);
-                        pgn.setRotate(180);
-                        upPressed = false;
-                        downPressed = true;
-                        leftPressed = false;
-                        rightPressed = false;
-                        break;
-                    case D, RIGHT:
-                        pgn.setImage(pgnAnim);
-                        pgn.setRotate(90);
-                        upPressed = false;
-                        rightPressed = true;
-                        leftPressed = false;
-                        downPressed = false;
-                        break;
-                }
+
+        if (!won && !isPaused) {
+            switch (event.getCode()) {
+                //WASD + ARROW KEYS
+                case W, UP:
+                    pgn.setImage(pgnAnim);
+                    pgn.setRotate(0);
+                    upPressed = true;
+                    leftPressed = false;
+                    downPressed = false;
+                    rightPressed = false;
+                    break;
+                case A, LEFT:
+                    pgn.setImage(pgnAnim);
+                    pgn.setRotate(-90);
+                    upPressed = false;
+                    leftPressed = true;
+                    downPressed = false;
+                    rightPressed = false;
+                    break;
+                case S, DOWN:
+                    pgn.setImage(pgnAnim);
+                    pgn.setRotate(180);
+                    upPressed = false;
+                    downPressed = true;
+                    leftPressed = false;
+                    rightPressed = false;
+                    break;
+                case D, RIGHT:
+                    pgn.setImage(pgnAnim);
+                    pgn.setRotate(90);
+                    upPressed = false;
+                    rightPressed = true;
+                    leftPressed = false;
+                    downPressed = false;
+                    break;
             }
         }
     }
@@ -315,22 +311,32 @@ public class GameManager{
      * @param event The KeyEvent triggered by releasing a key.
      */
     public void keyReleased(KeyEvent event) {
-        switch (event.getCode()) {
-            //WASD + ARROW KEYS
-            case W, UP:
-                upPressed = false;
-                break;
-            case A, LEFT:
-                leftPressed = false;
-                break;
-            case S, DOWN:
-                downPressed = false;
-                break;
-            case D, RIGHT:
-                rightPressed = false;
-                break;
+        if (!won && event.getCode() == KeyCode.ESCAPE) {
+            if (!isPaused) {
+                pauseGame();
+                isPaused = true;
+            } else {
+                resumeGame();
+                isPaused = false;
+            }
+        } else {
+            switch (event.getCode()) {
+                //WASD + ARROW KEYS
+                case W, UP:
+                    upPressed = false;
+                    break;
+                case A, LEFT:
+                    leftPressed = false;
+                    break;
+                case S, DOWN:
+                    downPressed = false;
+                    break;
+                case D, RIGHT:
+                    rightPressed = false;
+                    break;
+            }
+            if (!upPressed && !leftPressed && !downPressed && !rightPressed) pgn.setImage(pgnStill);
         }
-        if (!upPressed && !leftPressed &&!downPressed &&!rightPressed) pgn.setImage(pgnStill);
     }
 
     /**
@@ -397,9 +403,11 @@ public class GameManager{
                     itemsCollected.setImage(keyCount3);
                     mazeM.finishTile();
                     mazeM.setWon();
-                }if (entitiesClass.getItemCount()==2){
+                }
+                if (entitiesClass.getItemCount() == 2) {
                     itemsCollected.setImage(keyCount2);
-                }if (entitiesClass.getItemCount() == 1){
+                }
+                if (entitiesClass.getItemCount() == 1) {
                     itemsCollected.setImage(keyCount1);
                 }
             }
