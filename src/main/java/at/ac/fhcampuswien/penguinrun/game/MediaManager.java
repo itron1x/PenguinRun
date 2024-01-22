@@ -11,6 +11,13 @@ import java.util.Objects;
  * Class for the volume control.
  */
 public class MediaManager {
+    /***
+     * Music Title: Happy And Joyful Children <a href="https://www.patreon.com/posts/62276355">...</a>
+     * Released by: Oleg Mazur <a href="https://soundcloud.com/fm_freemusic">...</a>
+     * Music promoted by <a href="https://www.chosic.com/free-music/all/">...</a>
+     * Creative Commons CC BY 3.0
+     * <a href="https://creativecommons.org/licenses/by/3.0/">...</a>
+     */
     private static final Media media = new Media(Objects.requireNonNull(MediaManager.class.getResource("music/BGMusic.mp3")).toExternalForm());
     private static final MediaPlayer mediaPlayer = new MediaPlayer(media);
     public static final Slider volumeSlider = new Slider();
